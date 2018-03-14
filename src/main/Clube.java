@@ -1,11 +1,21 @@
 package main;
 
 public class Clube {
-	private String NomeClube;
+	private String nome;
 	private int qtdCampeonatos;
-	public void ganhaCampeonato(){
-		System.out.println("ganhei");
-		this.qtdCampeonatos++;
+	@Override
+	public String toString() {
+		return "Clube [nome=" + nome + "]";
+	}
+	public Clube(String nome) {
+		super();
+		this.nome = nome;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

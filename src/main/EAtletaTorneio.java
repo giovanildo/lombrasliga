@@ -11,16 +11,28 @@ public class EAtletaTorneio {
 	private int empates;
 	private int golsPro;
 	private int golsContra;
-	public void ganhaPartida(int golsPro, int golsContra){
-		
+	@Override
+	public String toString() {
+		return "EAtletaTorneio [eatleta=" + eatleta + ", torneio=" + torneio + ", clube=" + clube + ", pontos=" + pontos
+				+ ", jogos=" + jogos + ", vitorias=" + vitorias + ", derrotas=" + derrotas + ", empates=" + empates
+				+ ", golsPro=" + golsPro + ", golsContra=" + golsContra + "]";
 	}
-public void perdePartida(){
-		
+	public EAtleta getEatleta() {
+		return eatleta;
 	}
-public void empataPartida(){
-	
-}
-	
-	
-
+	public void setEatleta(EAtleta eatleta) {
+		this.eatleta = eatleta;
+	}
+	public Clube getClube() {
+		return clube;
+	}
+	public void setClube(Clube clube) {
+		this.clube = clube;
+	}
+	public EAtletaTorneio(Torneio torneio, EAtleta eatleta, Clube clube) {
+		super();
+		this.torneio = torneio;
+		this.eatleta = eatleta;
+		this.clube = clube;
+	}
 }
