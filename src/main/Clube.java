@@ -2,7 +2,7 @@ package main;
 
 public class Clube {
 	private String nome;
-	private int qtdCampeonatos;
+	//private int qtdCampeonatos;
 	@Override
 	public String toString() {
 		return "Clube [nome=" + nome + "]";

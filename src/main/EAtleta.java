@@ -3,8 +3,8 @@ package main;
 public class EAtleta {
 
 
-	private int qtdCampeonatos;
-	private int qtdCoca;
+//	private int qtdCampeonatos;
+//	private int qtdCoca;
 	private String nome;
 	@Override
 	public String toString() {
