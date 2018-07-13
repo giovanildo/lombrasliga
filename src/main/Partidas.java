@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Partidas {
+	private Scanner in;
+	List<String> clubes;
+
 	public void partidas() {
-		Scanner in = new Scanner(System.in);
-		List<String> clubes = new ArrayList<String>();
+		in = new Scanner(System.in);
+		clubes = new ArrayList<String>();
 		System.out.println("Entre com o nome dos clubes. Deixe em branco para terminar.");
 		String clube = "";
 		do {
@@ -16,25 +19,28 @@ public class Partidas {
 				clubes.add(clube);
 			}
 		} while (!clube.isEmpty());
-
+		// no de ser impar
 		if (clubes.size() % 2 == 1) {
 			clubes.add(0, "");
 		}
-
-		int t = clubes.size();
-		int m = clubes.size() / 2;
-		for (int i = 0; i < t - 1; i++) {
-			System.out.print((i + 1) + "a rodada: ");
-			for (int j = 0; j < m; j++) {
+		// variaveis que serão base para gerar tabela
+		int totalClubes = clubes.size();
+		int metadeClubes = totalClubes / 2;
+		// montando a tabela
+		for (int t = 0; t < (totalClubes - 1); t++) {//for de fora
+			System.out.print((t + 1) + "a rodada: ");
+			for (int m = 0; m < metadeClubes; m++) {//for de dentro
 				// Clube está de fora nessa rodada?
-				if (clubes.get(j).isEmpty())
+				if (clubes.get(m).isEmpty())
 					continue;
 
 				// Teste para ajustar o mando de campo
-				if (j % 2 == 1 || i % 2 == 1 && j == 0)
-					System.out.print(clubes.get(t - j - 1) + " x " + clubes.get(j) + "   ");
-				else
-					System.out.print(clubes.get(j) + " x " + clubes.get(t - j - 1) + "   ");
+				if (m % 2 == 1 || t % 2 == 1 && m == 0) {					
+					System.out.print(clubes.get(totalClubes - m - 1) + " x " + clubes.get(m) + "   ");
+					
+				} else {
+					System.out.print(clubes.get(m) + " x " + clubes.get(totalClubes - m - 1) + "   ");
+				}
 			}
 			System.out.println();
 			// Gira os clubes no sentido horário, mantendo o primeiro no lugar
