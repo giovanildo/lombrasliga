@@ -5,20 +5,25 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Partidas {
-	private Scanner in;
-	List<String> clubes;
+	
+	private List<String> clubes;
+
+	private clubes = new ArrayList<String>();
+public void adicionarClubes() {
+	String clube = "";
+	Scanner in = new Scanner(System.in);
+	do {
+		clube = in.nextLine().trim();
+		if (!clube.isEmpty()) {
+			clubes.add(clube);
+		}
+	} while (!clube.isEmpty());
+}
 
 	public void partidas() {
-		in = new Scanner(System.in);
-		clubes = new ArrayList<String>();
-		System.out.println("Entre com o nome dos clubes. Deixe em branco para terminar.");
-		String clube = "";
-		do {
-			clube = in.nextLine().trim();
-			if (!clube.isEmpty()) {
-				clubes.add(clube);
-			}
-		} while (!clube.isEmpty());
+		
+
+		System.out.println("Entre com o nome dos clubes. Deixe em branco para terminar.");		
 		// no de ser impar
 		if (clubes.size() % 2 == 1) {
 			clubes.add(0, "");
