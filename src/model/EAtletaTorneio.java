@@ -1,27 +1,21 @@
-package main;
+package model;
 
 public class EAtletaTorneio {
-	private EAtleta eatleta;
+	private EAtleta eAtleta;
 	private Torneio torneio;
 	private Clube clube;
-	private int pontos;
-	private int jogos;
-	private int vitorias;
-	private int derrotas;
-	private int empates;
-	private int golsPro;
-	private int golsContra;
-	@Override
-	public String toString() {
-		return "EAtletaTorneio [eatleta=" + eatleta + ", torneio=" + torneio + ", clube=" + clube + ", pontos=" + pontos
-				+ ", jogos=" + jogos + ", vitorias=" + vitorias + ", derrotas=" + derrotas + ", empates=" + empates
-				+ ", golsPro=" + golsPro + ", golsContra=" + golsContra + "]";
+	private int gols;
+	public EAtleta geteAtleta() {
+		return eAtleta;
 	}
-	public EAtleta getEatleta() {
-		return eatleta;
+	public void seteAtleta(EAtleta eAtleta) {
+		this.eAtleta = eAtleta;
 	}
-	public void setEatleta(EAtleta eatleta) {
-		this.eatleta = eatleta;
+	public Torneio getTorneio() {
+		return torneio;
+	}
+	public void setTorneio(Torneio torneio) {
+		this.torneio = torneio;
 	}
 	public Clube getClube() {
 		return clube;
@@ -29,10 +23,17 @@ public class EAtletaTorneio {
 	public void setClube(Clube clube) {
 		this.clube = clube;
 	}
-	public EAtletaTorneio(Torneio torneio, EAtleta eatleta, Clube clube) {
+	public int getGols() {
+		return gols;
+	}
+	public void setGols(int gols) {
+		this.gols = gols;
+	}
+	public EAtletaTorneio() {
 		super();
-		this.torneio = torneio;
-		this.eatleta = eatleta;
-		this.clube = clube;
+		this.eAtleta = new EAtleta();
+		this.torneio = new Torneio();
+		this.clube = new Clube();
+		this.gols = 0;
 	}
 }

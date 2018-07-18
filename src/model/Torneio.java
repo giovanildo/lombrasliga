@@ -1,20 +1,13 @@
-package main;
+package model;
 
-public class Torneio {
-	public Torneio(String nomeTorneio) {
-		super();
-		NomeTorneio = nomeTorneio;
-	}
+public class Torneio {	
 	private String NomeTorneio;
+
 	public String getNomeTorneio() {
 		return NomeTorneio;
 	}
+
 	public void setNomeTorneio(String nomeTorneio) {
 		NomeTorneio = nomeTorneio;
-	}
-	@Override
-	public String toString() {
-		return "Torneio [NomeTorneio=" + NomeTorneio + "]";
-	}
-
+	}	
 }

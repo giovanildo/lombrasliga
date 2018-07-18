@@ -1,18 +1,13 @@
-package main;
+package model;
 
 public class EAtleta {
-
-
-//	private int qtdCampeonatos;
-//	private int qtdCoca;
 	private String nome;
-	@Override
-	public String toString() {
-		return "EAtleta [nome=" + nome + "]";
+
+	public String getNome() {
+		return nome;
 	}
-	public EAtleta(String nome) {
-		super();
+
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 }
