@@ -1,13 +1,22 @@
 package model;
 
 public class Torneio {	
-	private String NomeTorneio;
 
-	public String getNomeTorneio() {
-		return NomeTorneio;
+
+	private String Nome;
+
+	public Torneio(String nome) {
+		super();
+		Nome = nome;
 	}
 
-	public void setNomeTorneio(String nomeTorneio) {
-		NomeTorneio = nomeTorneio;
-	}	
+	public String getNome() {
+		return Nome;
+	}
+
+	public void setNome(String nome) {
+		Nome = nome;
+	}
+	
+
 }

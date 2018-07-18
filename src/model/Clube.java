@@ -12,6 +12,11 @@ public class Clube {
 	 */
 	private String nome;
 
+	
+	public Clube(String nome) {
+		super();
+		this.nome = nome;
+	}
 	/**
 	 * 
 	 * @return String nome

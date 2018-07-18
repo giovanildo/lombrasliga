@@ -16,6 +16,10 @@ public class EAtleta {
 	public String getNome() {
 		return nome;
 	}
+public EAtleta(String nome) {
+	super();
+	this.nome = nome;
+}
 /**
  * 
  * @param nome

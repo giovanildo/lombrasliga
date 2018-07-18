@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Clube;
+import model.EAtleta;
 import model.EAtletaTorneio;
 import model.Torneio;
 
@@ -12,14 +14,16 @@ public class Tabela {
 	 * Array de clubes
 	 */
 	private List<String> clubes = new ArrayList<>();
-	private List<EAtletaTorneio> eatlista = new ArrayList<>();
-	
+
 	/**
 	 * Métodos para adicionar clubes a partir de uma entrada scanner
 	 */
-
 	public void adicionarClubes() {
+		Torneio t = new Torneio("Meu torneio de bola");
+		EAtleta eat = new EAtleta("Giovanildo");
+		Clube c = new Clube("Ceará");
 		
+		EAtletaTorneio eatt = new EAtletaTorneio(eat, t, c, 2); 
 		
 		System.out.println("Entre com o nome dos clubes. Deixe em branco para terminar.");
 		String clube = "";
@@ -78,9 +82,7 @@ public class Tabela {
 							System.out.print(clubes.get(m) + " x " + clubes.get(mando) + "   ");
 						} else {
 							System.out.print(clubes.get(mando) + " x " + clubes.get(m) + "   ");
-						}
-							
-						
+						}	
 					}
 				}
 				System.out.println();
