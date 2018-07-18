@@ -1,39 +1,96 @@
 package model;
-
+/**
+ * 
+ * @author giovanildo
+ * classe que guarda as informações do clube/jogador de vídeo na partida
+ */
 public class EAtletaTorneio {
+	/**
+	 * Jogador de Video Game
+	 */
 	private EAtleta eAtleta;
+	/**
+	 * Torneio da partida
+	 */
 	private Torneio torneio;
+	/**
+	 * clube que o jogador de vídeogame vai jogar
+	 */
 	private Clube clube;
+	/**
+	 * quantos gols o time fez na partida
+	 */
 	private int gols;
+	/**
+	 * 
+	 * @return o jogador de videogame
+	 */
 	public EAtleta geteAtleta() {
 		return eAtleta;
 	}
+	/**
+	 * 
+	 * @param eAtleta o jogador de videogame
+	 * 
+	 */
 	public void seteAtleta(EAtleta eAtleta) {
 		this.eAtleta = eAtleta;
 	}
+	/**
+	 * 
+	 * @return o torneio
+	 */
 	public Torneio getTorneio() {
 		return torneio;
 	}
+	/**
+	 * 
+	 * @param torneio
+	 */
 	public void setTorneio(Torneio torneio) {
 		this.torneio = torneio;
 	}
+	/**
+	 * 
+	 * @return o clube que o jogador de video game está jogando
+	 */
 	public Clube getClube() {
 		return clube;
 	}
+	/**
+	 * 
+	 * @param clube
+	 */
 	public void setClube(Clube clube) {
 		this.clube = clube;
 	}
+	/**
+	 * 
+	 * @return quantidade de gols feitos
+	 */
 	public int getGols() {
 		return gols;
 	}
+	/**
+	 * 
+	 * @param gols
+	 */
 	public void setGols(int gols) {
 		this.gols = gols;
 	}
-	public EAtletaTorneio() {
+	/**
+	 * 
+	 * @param eAtleta
+	 * @param torneio
+	 * @param clube
+	 * @param gols
+	 */
+	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube, int gols) {
 		super();
-		this.eAtleta = new EAtleta();
-		this.torneio = new Torneio();
-		this.clube = new Clube();
-		this.gols = 0;
+		this.eAtleta = eAtleta;
+		this.torneio = torneio;
+		this.clube = clube;
+		this.gols = gols;
 	}
+	
 }

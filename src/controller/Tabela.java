@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.EAtletaTorneio;
+import model.Torneio;
+
 public class Tabela {
 	/**
 	 * Array de clubes
 	 */
 	private List<String> clubes = new ArrayList<>();
+	private List<EAtletaTorneio> eatlista = new ArrayList<>();
 	
 	/**
 	 * Métodos para adicionar clubes a partir de uma entrada scanner
 	 */
 
 	public void adicionarClubes() {
+		
+		
 		System.out.println("Entre com o nome dos clubes. Deixe em branco para terminar.");
 		String clube = "";
 		Scanner in = new Scanner(System.in);
@@ -22,6 +28,7 @@ public class Tabela {
 			clube = in.nextLine().trim();
 			if (!clube.isEmpty()) {
 				clubes.add(clube);
+				 
 			}
 		} while (!clube.isEmpty());
 		in.close();
