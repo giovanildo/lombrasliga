@@ -92,6 +92,7 @@ public class Tabela {
 		clubes.add("Fabiano");
 		clubes.add("Zaldir");
 		clubes.add("Giovanildo");
+		clubes.add("teste");
 
 		qtdClubesImpar();
 		gerarTabela();
