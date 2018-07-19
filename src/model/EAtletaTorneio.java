@@ -16,11 +16,7 @@ public class EAtletaTorneio {
 	/**
 	 * clube que o jogador de vídeogame vai jogar
 	 */
-	private Clube clube;
-	/**
-	 * quantos gols o time fez na partida
-	 */
-	private int gols;
+	private Clube clube;	
 	/**
 	 * 
 	 * @return o jogador de videogame
@@ -63,34 +59,19 @@ public class EAtletaTorneio {
 	 */
 	public void setClube(Clube clube) {
 		this.clube = clube;
-	}
-	/**
-	 * 
-	 * @return quantidade de gols feitos
-	 */
-	public int getGols() {
-		return gols;
-	}
-	/**
-	 * 
-	 * @param gols
-	 */
-	public void setGols(int gols) {
-		this.gols = gols;
-	}
+	}	
+	
 	/**
 	 * 
 	 * @param eAtleta
 	 * @param torneio
 	 * @param clube
-	 * @param gols
 	 */
 	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube, int gols) {
 		super();
 		this.eAtleta = eAtleta;
 		this.torneio = torneio;
-		this.clube = clube;
-		this.gols = gols;
+		this.clube = clube;		
 	}
 	
 }

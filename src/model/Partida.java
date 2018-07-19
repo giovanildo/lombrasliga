@@ -8,36 +8,38 @@ public class Partida {
 	/**
 	 * clube que joga em casa
 	 */
-	private EAtletaTorneio anfitriao;
+	private Anfitriao anfitriao;
 	/**
 	 * clube que joga fora
 	 */
-	private EAtletaTorneio visitante;	
+	private Visitante visitante;	
 	 /**
 	  * @return o anfitrião da partida
 	 */
-	public EAtletaTorneio getAnfitriao() {
+	
+	public Anfitriao getAnfitriao() {
 		return anfitriao;
+		
 	}
 	/**
 	 * 
 	 * @param anfitriao
 	 */
-	public void setAnfitriao(EAtletaTorneio anfitriao) {
+	public void setAnfitriao(Anfitriao anfitriao) {
 		this.anfitriao = anfitriao;
 	}
 	/**
 	 * 
 	 * @return a equipe que joga fora de casa
 	 */
-	public EAtletaTorneio getVisitante() {
+	public Visitante getVisitante() {
 		return visitante;
 	}
 	/**
 	 * 
 	 * @param visitante
 	 */
-	public void setVisitante(EAtletaTorneio visitante) {
+	public void setVisitante(Visitante visitante) {
 		this.visitante = visitante;
 	}	
 	
