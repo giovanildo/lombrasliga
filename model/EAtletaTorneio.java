@@ -67,11 +67,12 @@ public class EAtletaTorneio {
 	 * @param torneio
 	 * @param clube
 	 */
-	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube, int gols) {
+	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube) {
 		super();
 		this.eAtleta = eAtleta;
 		this.torneio = torneio;
 		this.clube = clube;		
 	}
+
 	
 }

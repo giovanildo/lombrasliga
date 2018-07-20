@@ -5,6 +5,11 @@ package model;
  *classe que configura as partidas
  */
 public class Partida {
+	public Partida(Anfitriao anfitriao, Visitante visitante) {
+		super();
+		this.anfitriao = anfitriao;
+		this.visitante = visitante;
+	}
 	/**
 	 * clube que joga em casa
 	 */

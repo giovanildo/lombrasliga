@@ -2,12 +2,16 @@ package model;
 
 public abstract class EquipeEmCampo {
 	EAtletaTorneio eAtletaTorneio;
-	int gols;
 	public EAtletaTorneio geteAtletaTorneio() {
 		return eAtletaTorneio;
 	}
 	public void seteAtletaTorneio(EAtletaTorneio eAtletaTorneio) {
 		this.eAtletaTorneio = eAtletaTorneio;
+	}
+	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio, int gols) {
+		super();
+		this.eAtletaTorneio = eAtletaTorneio;
+		this.gols = gols;
 	}
 	public int getGols() {
 		return gols;
@@ -15,4 +19,5 @@ public abstract class EquipeEmCampo {
 	public void setGols(int gols) {
 		this.gols = gols;
 	}
+	int gols;
 }

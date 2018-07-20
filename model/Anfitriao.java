@@ -2,8 +2,10 @@ package model;
 
 public class Anfitriao extends EquipeEmCampo {
 
-	public Anfitriao() {
-		super();
+	public Anfitriao(EAtletaTorneio eAtletaTorneio, int gols) {
+		super(eAtletaTorneio, gols);
 	}
+
+
 	
 }
