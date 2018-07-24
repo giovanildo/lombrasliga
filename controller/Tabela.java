@@ -12,6 +12,7 @@ import model.Partida;
 import model.Torneio;
 import model.Visitante;
 
+
 public class Tabela {
 	/**
 	 * Array de clubes
