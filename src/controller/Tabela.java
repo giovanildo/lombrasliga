@@ -16,18 +16,20 @@ public class Tabela {
 	/**
 	 * Array de clubes
 	 */
-	private List<Partida> listaPartida = new ArrayList<>();
+	private List<Partida> listaPartidas;
 	/**
 	 * Array de times e Jogadores Videogame
 	 */
-	private List<EAtletaTorneio> listaEAtletaTorneio = new ArrayList<>();
+	private List<EAtletaTorneio> listaEAtletaTorneio;
 
 	/**
 	 * Gerando as partidas
 	 */
 
 	public void partidas() {
-
+		boolean impar = false;
+		listaPartidas = new ArrayList<>();
+		listaEAtletaTorneio = new ArrayList<>();
 		/**
 		 * criando os clubes e jogadores de videogame
 		 */
@@ -39,92 +41,84 @@ public class Tabela {
 				new Clube("fab"));
 		EAtletaTorneio zal = new EAtletaTorneio(new EAtleta("zal"), new Torneio("Meu torneio de bola"),
 				new Clube("zal"));
-		// EAtletaTorneio outro = new EAtletaTorneio(new EAtleta("outro"), new
-		// Torneio("Meu torneio de bola"),
-		// new Clube("outro"));
-
+		EAtletaTorneio outro = new EAtletaTorneio(new EAtleta("outro"), new Torneio("Meu torneio de bola"),
+				new Clube("outro"));
+		EAtletaTorneio quinto = new EAtletaTorneio(new EAtleta("outro"), new Torneio("Meu torneio de bola"),
+				new Clube("quinto"));
+		EAtletaTorneio sexto = new EAtletaTorneio(new EAtleta("outro"), new Torneio("Meu torneio de bola"),
+				new Clube("sexto"));
 		// adicionando no array list
 		listaEAtletaTorneio.add(fab);
 
 		listaEAtletaTorneio.add(gen);
 		listaEAtletaTorneio.add(zal);
 
-		listaEAtletaTorneio.add(gio);
-
-		// listaEAtletaTorneio.add(outro);
+//		 listaEAtletaTorneio.add(gio);
+//		 listaEAtletaTorneio.add(quinto);
+//		 listaEAtletaTorneio.add(sexto);
 
 		// em caso de partidas clubes impares
 		if (listaEAtletaTorneio.size() % 2 == 1) {
-			listaEAtletaTorneio.add(0, null);
+			listaEAtletaTorneio.add(0, outro);
+			impar = true;
 		}
 
 		// variaveis que serao base para gerar tabela
 		int totalClubes = listaEAtletaTorneio.size();
 		int metadeClubes = totalClubes / 2;
-		int mando = 0;
 		// int m1 = 0;
 		// int t1 = 0;
 		// int m0 = 0;
-		for (int r = 0; r < 2; r++) {
-			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
-				// System.out.print((t + 1) + "a rodada: ");
-				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
-					mando = totalClubes - m - 1;
-					// Clube está de fora nessa rodada?
-					if (listaEAtletaTorneio.get(m) == null)
-						continue;
-
-					// m1 = m % 2;
-					// t1 = t % 2;
-					// m0 = m;
-
-					// Teste para ajustar o mando de campo
-					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
-						if (r == 0) {
-							listaPartida.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(mando), 0),
-									new Visitante(listaEAtletaTorneio.get(m), 0)));
-						} else {
-							listaPartida.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(mando), 0)));
-						}
-
-					} else {
-						if (r == 1) {
-							listaPartida.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(mando), 0)));
-						} else {
-							listaPartida.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(mando), 0),
-									new Visitante(listaEAtletaTorneio.get(m), 0)));
-						}
-					}
+		for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
+			for (int m = 0; m < metadeClubes; m++) {// for dos jogos
+				// Clube está de fora nessa rodada?
+				if (listaEAtletaTorneio.get(m).getClube().getNome().equals("outro")) {
+					continue;
 				}
+				// Teste para ajustar o mando de campo
+				if (m % 2 == 1 || t % 2 == 1 && m == 0) {
+					listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
+							new Visitante(listaEAtletaTorneio.get(m), 0)));
 
-				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
-
-				EAtletaTorneio remove = listaEAtletaTorneio.remove(listaEAtletaTorneio.size() - 1);
-				listaEAtletaTorneio.add(1, remove);
+				} else {
+					listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
+							new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
+				}
 			}
+			// Gira os clubes no sentido horário, mantendo o primeiro no lugar
+			EAtletaTorneio remove = listaEAtletaTorneio.remove(listaEAtletaTorneio.size() - 1);
+			listaEAtletaTorneio.add(1, remove);
+			System.out.println(remove.getClube().getNome());
+		}
+		
+		//desfazando a adição de um clube vazio
+		if (impar) {
+			listaEAtletaTorneio.remove(0);
+			totalClubes = listaEAtletaTorneio.size();
+			System.out.println(" total  de clube é impar " + totalClubes);
+			metadeClubes = totalClubes/2;
 		}
 
-		// mostrando a arraylist
+		
+		// mostrando a arraylist das partidas
 		int p = 0;
 		int r = 0;
-		int metadePartidas = listaEAtletaTorneio.size() / 2;
-		for (Partida partida : listaPartida) {
-			p++;
-			if (p % metadePartidas == 1) {
+		
+		
+		for (Partida partida : listaPartidas) {
+			if ((p % metadeClubes) ==  0) {
 				r++;
-				System.out.println(r + "a rodada ");
+				System.out.println(r + "a rodada " + (p%metadeClubes) + " metade dos clubes " + metadeClubes);
 			}
+			
+			System.out.print("teste " + p%metadeClubes + " metade " + metadeClubes + "  ");
 			String anfitriao = partida.getAnfitriao().geteAtletaTorneio().getClube().getNome();
 			int golsa = partida.getAnfitriao().getGols();
 			String visitante = partida.getVisitante().geteAtletaTorneio().getClube().getNome();
 			int golsv = partida.getVisitante().getGols();
-
 			System.out.println(p + " " + anfitriao + " " + golsa + " x " + visitante + " " + golsv);
-
+			p++;
 		}
-
 	}
 
 	/**
@@ -150,8 +144,5 @@ public class Tabela {
 	/**
 	 * em casos de clubes impar adiciona um clube com um texto vazio
 	 */
-
-	public void gerarTabela() {
-	}
 
 }
