@@ -7,6 +7,7 @@ import model.Anfitriao;
 import model.Clube;
 import model.EAtleta;
 import model.EAtletaTorneio;
+import model.EquipeEmCampo;
 import model.Partida;
 import model.Torneio;
 import model.Visitante;
@@ -164,21 +165,27 @@ public class Tabela {
 		equipesImpar();
 		arrayPartidas();
 		removeClubeVazio();
-		for(Partida partida : listaPartidas) {
-			if(partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals("gio")) {
+		for (Partida partida : listaPartidas) {
+			if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals("gio")) {
 				partida.getAnfitriao().setGols(1);
-				partida.getVisitante().setGols(-1);
+				partida.getVisitante().setGols(0);
 			}
 		}
-		
-		mostrarArrayPartidas();
+
 		gerarTabela();
+		mostrarArrayPartidas();
 	}
 
 	public void gerarTabela() {
 		System.out.println();
 		System.out.println("Tabela");
 		System.out.println("Time, Pontos, Jogos, Vitórias, Empates, Derrotas, Gols Pro, Gols Contra, Saldo, % Aprov, ");
+		int pontospossiveis = (listaEAtletaTorneio.size() - 1) * 3 * 2;
+
+		for (Partida partida : listaPartidas) {
+			partida.fimDePartida();
+
+		}
 		for (EAtletaTorneio eat : listaEAtletaTorneio) {
 			int pontos = 0;
 			int jogos = 0;
@@ -190,21 +197,37 @@ public class Tabela {
 			int saldo = 0;
 			int aproveitamento = 0;
 			for (Partida partida : listaPartidas) {
-				// se o anfitriao fez mais gols que o visitante então anfitriao soma + 3 pontos.
-
 				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
-					if(partida.getAnfitriao().getGols()>partida.getVisitante().getGols()) vitorias++;
-					if(partida.getAnfitriao().getGols()<partida.getVisitante().getGols()) derrotas++;
-					if(partida.getAnfitriao().getGols()==partida.getVisitante().getGols()) empates++;
+					pontos += partida.getAnfitriao().getPontos();
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.VITORIA)
+						vitorias++;
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.EMPATE)
+						empates++;
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.DERROTA)
+						derrotas++;
+					golspro += partida.getAnfitriao().getGols();
+					golscontra += partida.getAnfitriao().getGolscontra();
+					saldo += golspro - golscontra;
 					jogos++;
 				} else if (partida.getVisitante().geteAtletaTorneio().getClube().getNome()
 						.equals(eat.getClube().getNome())) {
+					pontos += partida.getVisitante().getPontos();
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.VITORIA)
+						vitorias++;
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.EMPATE)
+						empates++;
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.DERROTA)
+						derrotas++;
+					golspro += partida.getVisitante().getGols();
+					golscontra += partida.getVisitante().getGolscontra();
+					saldo += golspro - golscontra;
 					jogos++;
 				}
 			}
+			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
 			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
 					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
-					+ golscontra + "        " + saldo + "      " + aproveitamento);
+					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
 		}
 	}
 }

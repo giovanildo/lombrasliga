@@ -12,22 +12,20 @@ public class Partida {
 	}
 
 	public void fimDePartida() {
-		
 		int golsfora = this.getVisitante().getGols();
 		int golscasa = this.getAnfitriao().getGols();
-		
-		//preencher gols contra
+		// preencher gols contra
 		this.getAnfitriao().setGolscontra(golsfora);
 		this.getVisitante().setGolscontra(golscasa);
-		//preenchendo resultado da partida
+		// preenchendo resultado da partida
 		if (golscasa == golsfora) {
-			this.getAnfitriao().empatou();			
-			this.getVisitante().empatou();			
+			this.getAnfitriao().empatou();
+			this.getVisitante().empatou();
 			return;
 		}
 		if (golscasa > golsfora) {
 			this.getVisitante().perdeu();
-			this.getAnfitriao().ganhou();			
+			this.getAnfitriao().ganhou();
 		} else {
 			this.getVisitante().ganhou();
 			this.getAnfitriao().perdeu();
