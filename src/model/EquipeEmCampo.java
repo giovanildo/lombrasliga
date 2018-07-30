@@ -46,10 +46,9 @@ public abstract class EquipeEmCampo {
 		this.eAtletaTorneio = eAtletaTorneio;
 	}
 
-	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio, int gols) {
+	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio) {
 		super();
-		this.eAtletaTorneio = eAtletaTorneio;
-		this.gols = gols;
+		this.eAtletaTorneio = eAtletaTorneio;		
 	}
 
 	public int getGols() {

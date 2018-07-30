@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import model.Anfitriao;
 import model.Clube;
@@ -33,6 +34,8 @@ public class Tabela {
 	 * Array de times e Jogadores Videogame
 	 */
 	private List<EAtletaTorneio> listaEAtletaTorneio;
+	private Scanner entrada;
+	private Torneio t;
 
 	/**
 	 * adiciona as equipes e seus jogadores de videogame
@@ -160,20 +163,46 @@ public class Tabela {
 
 	public void partidas() {
 
-		listaPartidas = new ArrayList<>();
-		adicionandoEquipes();
-		equipesImpar();
-		arrayPartidas();
-		removeClubeVazio();
-		for (Partida partida : listaPartidas) {
-			if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals("gio")) {
-				partida.getAnfitriao().setGols(1);
-				partida.getVisitante().setGols(0);
-			}
-		}
+//		listaPartidas = new ArrayList<>();
+//		adicionandoEquipes();
+//		equipesImpar();
+//		arrayPartidas();
+//		removeClubeVazio();
+//		for (Partida partida : listaPartidas) {
+//			if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals("gio")) {
+//				partida.getAnfitriao().setGols(1);
+//				partida.getVisitante().setGols(0);
+//			}
+//		}
+//
+//		gerarTabela();
+//		mostrarArrayPartidas();
+		adicionandoEquipesScanner();
+	}
 
-		gerarTabela();
-		mostrarArrayPartidas();
+	public void adicionandoEquipesScanner() {
+		listaEAtletaTorneio = new ArrayList<>();
+		entrada = new Scanner(System.in);
+		System.out.print(" Torneio ");
+
+		String torneio = entrada.nextLine();
+		System.out.println(torneio);
+		String eatleta = "jogador";
+		while (!eatleta.isEmpty()) {
+			System.out.println("Jogador de Videogame ");
+			eatleta = entrada.nextLine();
+			System.out.println("Clube");
+			String clube = entrada.nextLine();
+			System.out.println(torneio+eatleta+clube);
+			listaEAtletaTorneio.add(new EAtletaTorneio(new EAtleta(eatleta), new Torneio(torneio), new Clube(clube)));
+		}
+//		do {
+//			clube = in.nextLine().trim();
+//			if (!clube.isEmpty()) {
+//				clubes.add(clube);
+//			}
+//		} while (!clube.isEmpty());
+
 	}
 
 	public void gerarTabela() {
@@ -197,6 +226,10 @@ public class Tabela {
 			int saldo = 0;
 			int aproveitamento = 0;
 			for (Partida partida : listaPartidas) {
+				if (partida.isEncerrada() == false) {
+					System.out.println("Partida não foi encerrada");
+					return;
+				}
 				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
 					pontos += partida.getAnfitriao().getPontos();
 					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.VITORIA)
@@ -220,11 +253,12 @@ public class Tabela {
 						derrotas++;
 					golspro += partida.getVisitante().getGols();
 					golscontra += partida.getVisitante().getGolscontra();
-					saldo += golspro - golscontra;
+
 					jogos++;
 				}
 			}
 			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
+			saldo = golspro - golscontra;
 			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
 					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
 					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
