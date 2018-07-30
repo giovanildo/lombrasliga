@@ -5,10 +5,17 @@ package model;
  *classe grava informações do jogador de videogame
  */
 public class EAtleta {
+	private int id;
 	/**
 	 * Nome do Jogador de Vídeo Game
 	 */
 	private String nome;
+public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 /**
  * 
  * @return nome do tipo String

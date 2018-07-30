@@ -6,13 +6,19 @@ package model;
  *Essa classe grava informações referente ao Clube de Futebol
  */
 public class Clube {
-	
+	private int id;
 	/**
 	 * nome do clube
 	 */
 	private String nome;
 
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Clube(String nome) {
 		super();
 		this.nome = nome;

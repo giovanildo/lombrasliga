@@ -10,6 +10,15 @@ public class Partida {
 		this.anfitriao = anfitriao;
 		this.visitante = visitante;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	private int id;
 	/**
 	 * clube que joga em casa
 	 */

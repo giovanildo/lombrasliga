@@ -50,9 +50,9 @@ public class Tabela {
 		EAtletaTorneio zal = new EAtletaTorneio(new EAtleta("zal"), new Torneio("Meu torneio de bola"),
 				new Clube("zal"));
 		EAtletaTorneio quinto = new EAtletaTorneio(new EAtleta("quinto"), new Torneio("Meu torneio de bola"),
-				new Clube("quinto"));
+				new Clube("qui"));
 		EAtletaTorneio sexto = new EAtletaTorneio(new EAtleta("sexto"), new Torneio("Meu torneio de bola"),
-				new Clube("sexto"));
+				new Clube("sex"));
 		// adicionando no array list
 		listaEAtletaTorneio.add(fab);
 		listaEAtletaTorneio.add(gen);
@@ -164,6 +164,47 @@ public class Tabela {
 		equipesImpar();
 		arrayPartidas();
 		removeClubeVazio();
+		for(Partida partida : listaPartidas) {
+			if(partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals("gio")) {
+				partida.getAnfitriao().setGols(1);
+				partida.getVisitante().setGols(-1);
+			}
+		}
+		
 		mostrarArrayPartidas();
+		gerarTabela();
+	}
+
+	public void gerarTabela() {
+		System.out.println();
+		System.out.println("Tabela");
+		System.out.println("Time, Pontos, Jogos, Vitórias, Empates, Derrotas, Gols Pro, Gols Contra, Saldo, % Aprov, ");
+		for (EAtletaTorneio eat : listaEAtletaTorneio) {
+			int pontos = 0;
+			int jogos = 0;
+			int vitorias = 0;
+			int empates = 0;
+			int derrotas = 0;
+			int golspro = 0;
+			int golscontra = 0;
+			int saldo = 0;
+			int aproveitamento = 0;
+			for (Partida partida : listaPartidas) {
+				// se o anfitriao fez mais gols que o visitante então anfitriao soma + 3 pontos.
+
+				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
+					if(partida.getAnfitriao().getGols()>partida.getVisitante().getGols()) vitorias++;
+					if(partida.getAnfitriao().getGols()<partida.getVisitante().getGols()) derrotas++;
+					if(partida.getAnfitriao().getGols()==partida.getVisitante().getGols()) empates++;
+					jogos++;
+				} else if (partida.getVisitante().geteAtletaTorneio().getClube().getNome()
+						.equals(eat.getClube().getNome())) {
+					jogos++;
+				}
+			}
+			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
+					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
+					+ golscontra + "        " + saldo + "      " + aproveitamento);
+		}
 	}
 }

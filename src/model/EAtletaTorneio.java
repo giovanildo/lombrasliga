@@ -5,10 +5,18 @@ package model;
  * classe que guarda as informações do clube/jogador de vídeo na partida
  */
 public class EAtletaTorneio {
+	private int id;
 	/**
 	 * Jogador de Video Game
 	 */
 	private EAtleta eAtleta;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/**
 	 * Torneio da partida
 	 */
