@@ -1,11 +1,9 @@
 package controller;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import model.Anfitriao;
 import model.Clube;
@@ -14,7 +12,6 @@ import model.EAtletaTorneio;
 import model.EquipeEmCampo;
 import model.Partida;
 import model.Tabela;
-import model.TabelaComparator;
 import model.Torneio;
 import model.Visitante;
 
@@ -297,5 +294,6 @@ public class TabelaController {
 		for(Tabela t : listaTabela) {
 			System.out.println(t.toString());
 		}
+		
 	}
 }
