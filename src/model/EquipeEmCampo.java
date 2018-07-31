@@ -34,7 +34,6 @@ public abstract class EquipeEmCampo {
 	}
 
 	public void perdeu() {
-		pontos -= 3;
 		resultado = DERROTA;
 	}
 

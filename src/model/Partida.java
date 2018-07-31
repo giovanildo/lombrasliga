@@ -15,6 +15,9 @@ public class Partida {
 	 * clube que joga fora
 	 */
 	private Visitante visitante;
+	/**
+	 * saber se a partida foi encerrada ou não
+	 */
 	private boolean encerrada;
 
 	/**
@@ -29,22 +32,25 @@ public class Partida {
 	}
 
 	/**
-	 * encerra a partida e 
-	 * efetiva o placar da partida
+	 * encerra a partida e efetiva o placar da partida
 	 */
 	public void fimDePartida() {
 		this.setEncerrada(true);
+
 		int golsfora = this.getVisitante().getGols();
 		int golscasa = this.getAnfitriao().getGols();
+
 		// preencher gols contra
 		this.getAnfitriao().setGolscontra(golsfora);
 		this.getVisitante().setGolscontra(golscasa);
+
 		// preenchendo resultado da partida
 		if (golscasa == golsfora) {
 			this.getAnfitriao().empatou();
 			this.getVisitante().empatou();
 			return;
 		}
+
 		if (golscasa > golsfora) {
 			this.getVisitante().perdeu();
 			this.getAnfitriao().ganhou();
@@ -53,6 +59,7 @@ public class Partida {
 			this.getAnfitriao().perdeu();
 		}
 	}
+
 	/**
 	 * 
 	 * @return id
@@ -60,6 +67,7 @@ public class Partida {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -102,15 +110,15 @@ public class Partida {
 	}
 
 	/**
-	 * @return the encerrada 
-	 * verifica se a partida está encerrada
+	 * @return the encerrada verifica se a partida está encerrada
 	 */
 	public boolean isEncerrada() {
 		return encerrada;
 	}
 
 	/**
-	 * @param encerrada the encerrada to set
+	 * @param encerrada
+	 *            the encerrada to set
 	 */
 	public void setEncerrada(boolean encerrada) {
 		this.encerrada = encerrada;

@@ -1,11 +1,11 @@
 package main;
 
-import controller.Tabela;
+import controller.TabelaController;
 
 public class Main {
 
 	public static void main(String[] args) {
-		new Tabela().partidas();
+		new TabelaController().partidas();
 	}
 
 }
