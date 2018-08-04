@@ -6,7 +6,6 @@ public abstract class EquipeEmCampo {
 	int golscontra;
 	int resultado;
 	int pontos;
-	
 
 	public int getGolscontra() {
 		return golscontra;
@@ -48,7 +47,7 @@ public abstract class EquipeEmCampo {
 
 	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio) {
 		super();
-		this.eAtletaTorneio = eAtletaTorneio;		
+		this.eAtletaTorneio = eAtletaTorneio;
 	}
 
 	public int getGols() {

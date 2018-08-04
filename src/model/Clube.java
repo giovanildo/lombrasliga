@@ -36,7 +36,8 @@ public class Clube {
 
 	/**
 	 * 
-	 * @param nome permite colocar o nome do clube
+	 * @param nome
+	 *            permite colocar o nome do clube
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;

@@ -1,6 +1,6 @@
 package model;
 
-public class Torneio {	
+public class Torneio {
 	/**
 	 * id do torneio
 	 */
@@ -9,6 +9,7 @@ public class Torneio {
 	 * nome do torneio
 	 */
 	private String Nome;
+
 	/**
 	 * 
 	 * @return id
@@ -16,6 +17,7 @@ public class Torneio {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -26,12 +28,14 @@ public class Torneio {
 
 	/**
 	 * 
-	 * @param nome torneio
+	 * @param nome
+	 *            torneio
 	 */
 	public Torneio(String nome) {
 		super();
 		Nome = nome;
 	}
+
 	/**
 	 * 
 	 * @return nome do torneio
@@ -39,6 +43,7 @@ public class Torneio {
 	public String getNome() {
 		return Nome;
 	}
+
 	/**
 	 * 
 	 * @param nome

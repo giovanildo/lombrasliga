@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 import model.Anfitriao;
 import model.Clube;
 import model.EAtleta;
@@ -14,10 +13,10 @@ import model.Partida;
 import model.Classificacao;
 import model.Torneio;
 import model.Visitante;
+
 /**
  * 
- * @author Francisco Giovanildo Teixeira de Souza
- * Classe núcleo do sistema
+ * @author Francisco Giovanildo Teixeira de Souza Classe nï¿½cleo do sistema
  * 
  */
 public class TabelaController {
@@ -170,8 +169,8 @@ public class TabelaController {
 
 	public void partidas() {
 		listaPartidas = new ArrayList<>();
-		 adicionandoEquipes();
-		//adicionandoEquipesScanner();
+		adicionandoEquipes();
+		// adicionandoEquipesScanner();
 		equipesImpar();
 		geraPartidas();
 		removeClubeVazio();
@@ -184,7 +183,7 @@ public class TabelaController {
 	 * Preenche partidas com os gols
 	 */
 	public void preenchendoPartidas() {
-		
+
 		System.out.println("preenchendo partidas");
 		// preenchendo a arraylist das partidas
 		int p = 0;
@@ -252,14 +251,14 @@ public class TabelaController {
 			partida.fimDePartida();
 		}
 		for (EAtletaTorneio eat : listaEAtletaTorneio) {
-			
+
 			int jogos = 0;
 			int vitorias = 0;
 			int empates = 0;
 			int derrotas = 0;
 			int golspro = 0;
 			int golscontra = 0;
-			
+
 			int aproveitamento = 0;
 			for (Partida partida : listaPartidas) {
 				if (!partida.isEncerrada()) {
@@ -293,16 +292,16 @@ public class TabelaController {
 			}
 			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
 			saldo = golspro - golscontra;
-			listaTabela.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates, derrotas, golspro,
-					golscontra, saldo, aproveitamento));
+			listaTabela.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates, derrotas,
+					golspro, golscontra, saldo, aproveitamento));
 
 			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
 					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
 					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
 		}
-		for(Classificacao t : listaTabela) {
+		for (Classificacao t : listaTabela) {
 			System.out.println(t.toString());
 		}
-		
+
 	}
 }

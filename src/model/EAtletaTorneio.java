@@ -12,7 +12,6 @@ public class EAtletaTorneio {
 	 */
 	private EAtleta eAtleta;
 
-	
 	/**
 	 * Torneio da partida
 	 */
@@ -21,6 +20,7 @@ public class EAtletaTorneio {
 	 * clube que o jogador de vídeogame vai jogar
 	 */
 	private Clube clube;
+
 	/**
 	 * 
 	 * @return id
@@ -28,6 +28,7 @@ public class EAtletaTorneio {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -46,7 +47,8 @@ public class EAtletaTorneio {
 
 	/**
 	 * 
-	 * @param eAtleta o jogador de videogame
+	 * @param eAtleta
+	 *            o jogador de videogame
 	 * 
 	 */
 	public void seteAtleta(EAtleta eAtleta) {

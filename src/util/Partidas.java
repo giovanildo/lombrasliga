@@ -49,5 +49,5 @@ public class Partidas {
 			clubes.add(1, teste);
 			System.out.println(teste);
 		}
-	}	
+	}
 }
