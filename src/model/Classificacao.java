@@ -1,7 +1,17 @@
 package model;
 
-public class Tabela implements Comparable<Tabela>{
+public class Classificacao implements Comparable<Classificacao>{
 	private String clube;
+	private Integer pontos;
+	private int jogos;
+	private int vitorias;
+	private int empates;
+	private int derrotas;
+	private int golspro;
+	private int golscontra;
+	private int saldo;
+	private int aproveitamento;
+	
 	public String getClube() {
 		return clube;
 	}
@@ -68,7 +78,7 @@ public class Tabela implements Comparable<Tabela>{
 				+ ", empates=" + empates + ", derrotas=" + derrotas + ", golspro=" + golspro + ", golscontra="
 				+ golscontra + ", saldo=" + saldo + ", aproveitamento=" + aproveitamento + "]";
 	}
-	public Tabela(String clube, int pontos, int jogos, int vitorias, int empates, int derrotas, int golspro,
+	public Classificacao(String clube, int pontos, int jogos, int vitorias, int empates, int derrotas, int golspro,
 			int golscontra, int saldo, int aproveitamento) {
 		super();
 		this.clube = clube;
@@ -82,21 +92,12 @@ public class Tabela implements Comparable<Tabela>{
 		this.saldo = saldo;
 		this.aproveitamento = aproveitamento;
 	}
-	private String serialNumber;
-	private Integer pontos;
-	private int jogos;
-	private int vitorias;
-	private int empates;
-	private int derrotas;
-	private int golspro;
-	private int golscontra;
-	private int saldo;
-	private int aproveitamento;
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(Tabela o) {
+	public int compareTo(Classificacao o) {
 		// TODO Auto-generated method stub
 		Integer p = pontos;
 		return p.compareTo(o.getPontos());
