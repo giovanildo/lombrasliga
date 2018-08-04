@@ -14,7 +14,12 @@ import model.Partida;
 import model.Classificacao;
 import model.Torneio;
 import model.Visitante;
-
+/**
+ * 
+ * @author Francisco Giovanildo Teixeira de Souza
+ * Classe núcleo do sistema
+ * 
+ */
 public class TabelaController {
 	/**
 	 * Quantidades de clubes no torneio
@@ -36,7 +41,10 @@ public class TabelaController {
 	 * Array de times e Jogadores Videogame
 	 */
 	private List<EAtletaTorneio> listaEAtletaTorneio;
-	private Scanner entrada;
+	/**
+	 * Entrada de dados na linha de comando
+	 */
+	private Scanner entrada = new Scanner(System.in);
 
 	/**
 	 * adiciona as equipes e seus jogadores de videogame
@@ -163,7 +171,7 @@ public class TabelaController {
 	public void partidas() {
 		listaPartidas = new ArrayList<>();
 		 adicionandoEquipes();
-//		adicionandoEquipesScanner();
+		//adicionandoEquipesScanner();
 		equipesImpar();
 		geraPartidas();
 		removeClubeVazio();
@@ -176,6 +184,7 @@ public class TabelaController {
 	 * Preenche partidas com os gols
 	 */
 	public void preenchendoPartidas() {
+		
 		System.out.println("preenchendo partidas");
 		// preenchendo a arraylist das partidas
 		int p = 0;
