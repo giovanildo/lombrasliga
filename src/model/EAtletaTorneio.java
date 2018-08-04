@@ -12,14 +12,7 @@ public class EAtletaTorneio {
 	 */
 	private EAtleta eAtleta;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	/**
 	 * Torneio da partida
 	 */
@@ -28,6 +21,20 @@ public class EAtletaTorneio {
 	 * clube que o jogador de vídeogame vai jogar
 	 */
 	private Clube clube;
+	/**
+	 * 
+	 * @return id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	/**
 	 * 

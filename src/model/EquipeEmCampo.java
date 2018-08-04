@@ -3,9 +3,10 @@ package model;
 public abstract class EquipeEmCampo {
 	EAtletaTorneio eAtletaTorneio;
 	int gols;
+	int golscontra;
 	int resultado;
 	int pontos;
-	int golscontra;
+	
 
 	public int getGolscontra() {
 		return golscontra;

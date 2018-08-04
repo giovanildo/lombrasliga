@@ -11,7 +11,7 @@ import model.EAtleta;
 import model.EAtletaTorneio;
 import model.EquipeEmCampo;
 import model.Partida;
-import model.Tabela;
+import model.Classificacao;
 import model.Torneio;
 import model.Visitante;
 
@@ -162,8 +162,8 @@ public class TabelaController {
 
 	public void partidas() {
 		listaPartidas = new ArrayList<>();
-		// adicionandoEquipes();
-		adicionandoEquipesScanner();
+		 adicionandoEquipes();
+//		adicionandoEquipesScanner();
 		equipesImpar();
 		geraPartidas();
 		removeClubeVazio();
@@ -238,7 +238,7 @@ public class TabelaController {
 		System.out.println("Tabela");
 		System.out.println("Time, Pontos, Jogos, Vitórias, Empates, Derrotas, Gols Pro, Gols Contra, Saldo, % Aprov, ");
 		int pontospossiveis = (listaEAtletaTorneio.size() - 1) * 3 * 2;
-		List<Tabela> listaTabela = new ArrayList<>();
+		List<Classificacao> listaTabela = new ArrayList<>();
 		for (Partida partida : listaPartidas) {
 			partida.fimDePartida();
 		}
@@ -284,14 +284,14 @@ public class TabelaController {
 			}
 			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
 			saldo = golspro - golscontra;
-			listaTabela.add(new Tabela(eat.getClube().getNome(), pontos, jogos, vitorias, empates, derrotas, golspro,
+			listaTabela.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates, derrotas, golspro,
 					golscontra, saldo, aproveitamento));
 
 			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
 					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
 					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
 		}
-		for(Tabela t : listaTabela) {
+		for(Classificacao t : listaTabela) {
 			System.out.println(t.toString());
 		}
 		
