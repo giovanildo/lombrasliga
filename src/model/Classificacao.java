@@ -120,10 +120,10 @@ public class Classificacao implements Comparable<Classificacao> {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(Classificacao o) {
-		// TODO Auto-generated method stub
-		Integer p = pontos;
-		return p.compareTo(o.getPontos());
+	public int compareTo(Classificacao outro) {
+		Integer p = this.pontos;
+		Integer o = outro.getPontos();
+		return o.compareTo(p);
 	}
 
 }
