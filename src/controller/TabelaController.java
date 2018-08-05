@@ -170,8 +170,8 @@ public class TabelaController {
 
 	public void partidas() {
 		listaPartidas = new ArrayList<>();
-		adicionandoEquipes();
-		// adicionandoEquipesScanner();
+		//adicionandoEquipes();
+		adicionandoEquipesScanner();
 		equipesImpar();
 		geraPartidas();
 		removeClubeVazio();
@@ -233,11 +233,13 @@ public class TabelaController {
 			System.out.println(" Clube ");
 			String clube = entrada.nextLine();
 			listaEAtletaTorneio.add(new EAtletaTorneio(new EAtleta(eatleta), new Torneio(torneio), new Clube(clube)));
+			//torneio, jogador, clube
+			//
 		}
 	}
 
 	/**
-	 * Gera tabela
+	 * Gera a tabela de classificação
 	 * 
 	 */
 	public void gerarClassificacao() {
