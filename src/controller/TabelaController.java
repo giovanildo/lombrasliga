@@ -1,16 +1,17 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Anfitriao;
+import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.EAtletaTorneio;
 import model.EquipeEmCampo;
 import model.Partida;
-import model.Classificacao;
 import model.Torneio;
 import model.Visitante;
 
@@ -175,7 +176,7 @@ public class TabelaController {
 		geraPartidas();
 		removeClubeVazio();
 		preenchendoPartidas();
-		gerarTabela();
+		gerarClassificacao();
 		mostrarPartidas();
 	}
 
@@ -239,27 +240,27 @@ public class TabelaController {
 	 * Gera tabela
 	 * 
 	 */
-	public void gerarTabela() {
-		int pontos = 0;
-		int saldo = 0;
-		System.out.println();
-		System.out.println("Tabela");
-		System.out.println("Time, Pontos, Jogos, Vitórias, Empates, Derrotas, Gols Pro, Gols Contra, Saldo, % Aprov, ");
-		int pontospossiveis = (listaEAtletaTorneio.size() - 1) * 3 * 2;
-		List<Classificacao> listaTabela = new ArrayList<>();
+	public void gerarClassificacao() {
+		// encerrando a partida
 		for (Partida partida : listaPartidas) {
 			partida.fimDePartida();
 		}
-		for (EAtletaTorneio eat : listaEAtletaTorneio) {
 
+		List<Classificacao> listaClassificacao = new ArrayList<>();
+
+		int pontospossiveis = (listaEAtletaTorneio.size() - 1) * 3 * 2;
+
+		for (EAtletaTorneio eat : listaEAtletaTorneio) {
 			int jogos = 0;
 			int vitorias = 0;
 			int empates = 0;
 			int derrotas = 0;
 			int golspro = 0;
 			int golscontra = 0;
-
+			int pontos = 0;
+			int saldo = 0;
 			int aproveitamento = 0;
+
 			for (Partida partida : listaPartidas) {
 				if (!partida.isEncerrada()) {
 					System.out.println("Partida não acabou ainda");
@@ -292,15 +293,16 @@ public class TabelaController {
 			}
 			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
 			saldo = golspro - golscontra;
-			listaTabela.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates, derrotas,
-					golspro, golscontra, saldo, aproveitamento));
+			listaClassificacao.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates,
+					derrotas, golspro, golscontra, saldo, aproveitamento));
 
 			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
 					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
 					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
 		}
-		for (Classificacao t : listaTabela) {
-			System.out.println(t.toString());
+		Collections.sort(listaClassificacao);
+		for (Classificacao classificacao : listaClassificacao) {
+			System.out.println(classificacao.toString());
 		}
 
 	}
