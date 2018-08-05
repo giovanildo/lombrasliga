@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Partidas {
+public class AlgoritmoGerarPartidaOriginal {
 
 	private Scanner in;
 	List<String> clubes;
