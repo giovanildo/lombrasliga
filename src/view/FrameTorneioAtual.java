@@ -54,10 +54,6 @@ public class FrameTorneioAtual extends JFrame {
 		lblLombrasDaMadrugada.setBounds(10, 11, 476, 44);
 		painel1.add(lblLombrasDaMadrugada);
 		
-		list = new JList();
-		list.setModel(new EAtletaTorneio(new EAtleta("Giovanildo"), new Clube("PSG")) {
-		
-		});
 		list.setBounds(24, 146, 290, 53);
 		painel1.add(list);
 		
