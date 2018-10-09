@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui;
+package estudos;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -36,7 +36,7 @@ public class ControleTextArea extends JFrame implements ActionListener{
 	 * exercicio sobre text area
 	 */
 	public ControleTextArea() {	
-		super("Controle Text Área");
+		super("Controle Text ï¿½rea");
 		
 		texto = new JTextArea();
 		JScrollPane rolar = new JScrollPane(texto);

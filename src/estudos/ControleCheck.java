@@ -1,4 +1,4 @@
-package gui;
+package estudos;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;

@@ -1,4 +1,4 @@
-package gui;
+package estudos;
 
 import javax.swing.*;
 

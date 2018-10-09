@@ -1,4 +1,4 @@
-package gui;
+package estudos;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

@@ -1,4 +1,4 @@
-package gui;
+package estudos;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -19,7 +19,7 @@ public class ControleCombo extends JFrame implements ItemListener {
 			new ImageIcon(getClass().getResource("/fotos/04.JPG")) };
 
 	public ControleCombo() {
-		super("Álbum de Fotos");
+		super("ï¿½lbum de Fotos");
 
 		Container c = getContentPane();
 

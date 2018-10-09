@@ -1,4 +1,4 @@
-package gui;
+package estudos;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -72,7 +72,7 @@ public class ControleText extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			System.out.println("botão cancela");
+			System.out.println("botï¿½o cancela");
 			txtLogin.setText("");
 			passwordSenha.setText("");
 		}
