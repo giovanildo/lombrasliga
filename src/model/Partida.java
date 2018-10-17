@@ -19,6 +19,7 @@ public class Partida {
 	 * saber se a partida foi encerrada ou não
 	 */
 	private boolean encerrada;
+
 	/**
 	 * 
 	 * @param anfitriao
@@ -112,13 +113,12 @@ public class Partida {
 	 * @return the encerrada verifica se a partida está encerrada
 	 */
 	public boolean isEncerrada() {
-		
+
 		return encerrada;
 	}
 
 	/**
-	 * @param encerrada
-	 *            the encerrada to set
+	 * @param encerrada the encerrada to set
 	 */
 	public void setEncerrada(boolean encerrada) {
 		this.encerrada = encerrada;

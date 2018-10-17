@@ -14,6 +14,8 @@ import model.EquipeEmCampo;
 import model.Partida;
 import model.Torneio;
 import model.Visitante;
+import view.FrameCadastros;
+import view.FrameTorneios;
 
 /**
  * 
@@ -170,7 +172,7 @@ public class TabelaController {
 
 	public void partidas() {
 		listaPartidas = new ArrayList<>();
-		//adicionandoEquipes();
+		// adicionandoEquipes();
 		adicionandoEquipesScanner();
 		equipesImpar();
 		geraPartidas();
@@ -178,6 +180,10 @@ public class TabelaController {
 		preenchendoPartidas();
 		gerarClassificacao();
 		mostrarPartidas();
+	}
+
+	public void iniciar() {
+		new FrameCadastros();
 	}
 
 	/**
@@ -233,7 +239,7 @@ public class TabelaController {
 			System.out.println(" Clube ");
 			String clube = entrada.nextLine();
 			listaEAtletaTorneio.add(new EAtletaTorneio(new EAtleta(eatleta), new Torneio(torneio), new Clube(clube)));
-			//torneio, jogador, clube
+			// torneio, jogador, clube
 			//
 		}
 	}

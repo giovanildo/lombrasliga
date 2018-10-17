@@ -1,13 +1,10 @@
 package main;
 
-import view.FrameTorneios;
+import controller.TabelaController;
 
 public class Main {
-
 	public static void main(String[] args) {
-//		new TabelaController().partidas();
-		new FrameTorneios();
-		
+		TabelaController lombras = new TabelaController();
+		lombras.iniciar();
 	}
-
 }

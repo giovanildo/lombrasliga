@@ -47,8 +47,7 @@ public class EAtletaTorneio {
 
 	/**
 	 * 
-	 * @param eAtleta
-	 *            o jogador de videogame
+	 * @param eAtleta o jogador de videogame
 	 * 
 	 */
 	public void seteAtleta(EAtleta eAtleta) {

@@ -28,8 +28,7 @@ public class Torneio {
 
 	/**
 	 * 
-	 * @param nome
-	 *            torneio
+	 * @param nome torneio
 	 */
 	public Torneio(String nome) {
 		super();
