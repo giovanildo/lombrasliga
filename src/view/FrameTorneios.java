@@ -1,11 +1,14 @@
 package view;
 
-import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+
+import model.Clube;
+import model.EAtleta;
 
 public class FrameTorneios extends JFrame {
 
@@ -13,36 +16,26 @@ public class FrameTorneios extends JFrame {
 	private JTextField txtNometorneio;
 	private JTextField txtPorqueDoNome;
 	private JTextField txtData;
-	private JTextField txtClube;
-	private JTextField txtEatleta;
+	private JComboBox<Clube> txtClube;
+	private JComboBox<EAtleta> txtEatleta;
 
+		
 	public FrameTorneios() {
-
+		
 		super("Torneio Lombra da Madrugada");
 		getContentPane().setLayout(null);
 
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] { "Palmeiras", "São Paulo", "Santos", "Ceará", "Fortaleza" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setBounds(47, 73, 643, 114);
-		getContentPane().add(list);
+		JList jlstTorneios = new JList();		
+		jlstTorneios.setBounds(47, 73, 643, 114);
+		getContentPane().add(jlstTorneios);
 
 		JLabel lblTorneios = new JLabel("TORNEIOS");
 		lblTorneios.setBounds(373, 35, 70, 15);
 		getContentPane().add(lblTorneios);
 
-		JButton btnNewButton = new JButton("Novo Torneio");
-		btnNewButton.setBounds(57, 208, 643, 25);
-		getContentPane().add(btnNewButton);
+		JButton btnNovoTorneio = new JButton("Novo Torneio");
+		btnNovoTorneio.setBounds(57, 208, 643, 25);
+		getContentPane().add(btnNovoTorneio);
 
 		JLabel lblNomeDoTorneio = new JLabel("Nome do Torneio");
 		lblNomeDoTorneio.setBounds(69, 261, 145, 36);
@@ -74,6 +67,14 @@ public class FrameTorneios extends JFrame {
 		getContentPane().add(txtData);
 		txtData.setColumns(10);
 
+		
+//			Clube[] clubes = new Clube[jlstClubes.getModel().getSize()];
+//			for (int i = 0; i < jlstClubes.getModel().getSize(); i++) {
+//				clubes[i] = jlstClubes.getModel().getElementAt(i);
+//			}
+		
+		
+		
 		JLabel lblClube = new JLabel("Clube");
 		lblClube.setBounds(89, 369, 70, 15);
 		getContentPane().add(lblClube);
@@ -82,51 +83,27 @@ public class FrameTorneios extends JFrame {
 		lblEatleta.setBounds(69, 396, 70, 15);
 		getContentPane().add(lblEatleta);
 
-		txtClube = new JTextField();
-		txtClube.setText("Clube");
+		txtClube = new JComboBox<Clube>();		
 		txtClube.setBounds(232, 354, 114, 19);
 		getContentPane().add(txtClube);
-		txtClube.setColumns(10);
 
-		txtEatleta = new JTextField();
-		txtEatleta.setText("EAtleta");
+		txtEatleta = new JComboBox<EAtleta>();
 		txtEatleta.setBounds(232, 385, 114, 19);
 		getContentPane().add(txtEatleta);
-		txtEatleta.setColumns(10);
 
-		JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] { "çljsaçlkajsdfç", "çalskjdfçlasjkdlçkjasdf", "aslçfjkasçldkjsadlçfkj" };
+		JList jlstEatletaClube = new JList<>();
+		jlstEatletaClube.setBounds(418, 245, 241, 166);
+		getContentPane().add(jlstEatletaClube);
 
-			public int getSize() {
-				return values.length;
-			}
+		JList jlstClassif = new JList();
+		jlstClassif.setBounds(63, 437, 627, 139);
+		getContentPane().add(jlstClassif);
 
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_1.setBounds(505, 277, 1, 1);
-		getContentPane().add(list_1);
-
-		JList list_2 = new JList();
-		list_2.setModel(new AbstractListModel() {
-			String[] values = new String[] { "çjasdfçljasdçfljk", "sadlçfkjsdflçakjasçdlkf", "asçldfjçlasdfjfd" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_2.setBounds(418, 245, 241, 166);
-		getContentPane().add(list_2);
-
-		JList list_3 = new JList();
-		list_3.setBounds(63, 437, 627, 139);
-		getContentPane().add(list_3);
-
+	}
+	public JComboBox<Clube> getTxtClube() {
+		return txtClube;
+	}
+	public JComboBox<EAtleta> getTxtEatleta() {
+		return txtEatleta;
 	}
 }

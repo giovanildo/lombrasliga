@@ -1,10 +1,10 @@
 package main;
 
-import controller.TabelaController;
+import controller.TorneioController;
 
 public class Main {
 	public static void main(String[] args) {
-		TabelaController lombras = new TabelaController();
-		lombras.iniciar();
+		TorneioController torneio = new TorneioController();
+		torneio.iniciar();
 	}
 }

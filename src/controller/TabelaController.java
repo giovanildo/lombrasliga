@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import model.Anfitriao;
 import model.Classificacao;
 import model.Clube;
@@ -15,6 +17,7 @@ import model.Partida;
 import model.Torneio;
 import model.Visitante;
 import view.FrameCadastros;
+import view.FramePartidas;
 import view.FrameTorneios;
 
 /**
@@ -47,7 +50,19 @@ public class TabelaController {
 	 * Entrada de dados na linha de comando
 	 */
 	private Scanner entrada = new Scanner(System.in);
-
+	/**
+	 * view dos cadastros, clubes e jogadores
+	 */
+	private FrameCadastros frameCadastros;
+	/**
+	 * view dos torneios
+	 */
+	private FrameTorneios frameTorneios;
+	/**
+	 * view das partidas
+	 */
+	private FramePartidas framePartidas;
+	
 	/**
 	 * adiciona as equipes e seus jogadores de videogame
 	 */
@@ -73,6 +88,48 @@ public class TabelaController {
 
 		listaEAtletaTorneio.add(gio);
 		listaEAtletaTorneio.add(quinto);
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public FrameCadastros getFrameCadastros() {
+		return frameCadastros;
+	}
+	/**
+	 * 
+	 * @param frameCadastros
+	 */
+	public void setFrameCadastros(FrameCadastros frameCadastros) {
+		this.frameCadastros = frameCadastros;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public FrameTorneios getFrameTorneios() {
+		return frameTorneios;
+	}
+	/**
+	 * 
+	 * @param frameTorneios
+	 */
+	public void setFrameTorneios(FrameTorneios frameTorneios) {
+		this.frameTorneios = frameTorneios;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public FramePartidas getFramePartidas() {
+		return framePartidas;
+	}
+	/**
+	 * 
+	 * @param framePartidas
+	 */
+	public void setFramePartidas(FramePartidas framePartidas) {
+		this.framePartidas = framePartidas;
 	}
 
 	/**
@@ -183,7 +240,17 @@ public class TabelaController {
 	}
 
 	public void iniciar() {
-		new FrameCadastros();
+		frameTorneios = new FrameTorneios();
+		
+		
+		
+		
+		
+// habilitar janela de cadastros e partidas depois		
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setSize(800, 600);
+//		setVisible(true);
+		
 	}
 
 	/**

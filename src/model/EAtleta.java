@@ -15,6 +15,11 @@ public class EAtleta {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return nome;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

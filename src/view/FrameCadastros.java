@@ -5,23 +5,27 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Clube;
+import model.EAtleta;
 
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class FrameCadastros extends JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+
 	private JTextField txtClube;
 	private JTextField txtEatleta;
+	private DefaultListModel<Clube> modelClubes;
+	private JList<Clube> jlstClubes;
+
+	
 
 	public FrameCadastros() {
+
 		getContentPane().setLayout(null);
 
 		JLabel lblCadastros = new JLabel("CADASTROS");
@@ -48,14 +52,14 @@ public class FrameCadastros extends JFrame {
 		getContentPane().add(txtEatleta);
 		txtEatleta.setColumns(10);
 
-		DefaultListModel<Clube> modelClubes = new DefaultListModel<Clube>();
-		JList<Clube> jlstClubes = new JList<Clube>(modelClubes);
+		modelClubes = new DefaultListModel<Clube>();
+		jlstClubes = new JList<Clube>(modelClubes);
 
 		jlstClubes.setBounds(56, 176, 206, 263);
 		getContentPane().add(jlstClubes);
 
-		DefaultListModel modelEatletas = new DefaultListModel();
-		JList jlstEatleta = new JList(modelEatletas);
+		DefaultListModel<EAtleta> modelEatletas = new DefaultListModel<>();
+		JList<EAtleta> jlstEatleta = new JList<>(modelEatletas);
 		jlstEatleta.setBounds(515, 176, 243, 263);
 		getContentPane().add(jlstEatleta);
 
@@ -64,6 +68,7 @@ public class FrameCadastros extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				modelClubes.addElement(new Clube(txtClube.getText()));
 				txtClube.setText("");
+				//listaClubes();
 			}
 		});
 		btnAdicionarClube.setBounds(66, 97, 178, 25);
@@ -72,8 +77,9 @@ public class FrameCadastros extends JFrame {
 		JButton btnAdicionarEatleta = new JButton("Adicionar");
 		btnAdicionarEatleta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelEatletas.addElement(txtEatleta.getText());
+				modelEatletas.addElement(new EAtleta(txtEatleta.getText()));
 				txtEatleta.setText("");
+
 			}
 		});
 		btnAdicionarEatleta.setBounds(515, 89, 221, 25);
@@ -82,7 +88,8 @@ public class FrameCadastros extends JFrame {
 		JButton btnApagarClube = new JButton("Apagar");
 		btnApagarClube.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelClubes.remove(jlstClubes.getSelectedIndex());
+				int index = jlstClubes.getSelectedIndex();
+				modelClubes.remove(index);
 			}
 		});
 		btnApagarClube.setBounds(56, 134, 178, 25);
@@ -97,10 +104,14 @@ public class FrameCadastros extends JFrame {
 		btnApagarEatleta.setBounds(515, 126, 221, 25);
 		getContentPane().add(btnApagarEatleta);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
-		setVisible(true);
+		JButton btnTelaPrincipal = new JButton("Tela Principal");
+		btnTelaPrincipal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new FrameTorneios();
+			}
+		});
+		btnTelaPrincipal.setBounds(295, 465, 150, 25);
+		getContentPane().add(btnTelaPrincipal);
 
 	}
-
 }
