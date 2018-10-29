@@ -33,7 +33,7 @@ public class ListFrame extends JFrame
 
 		add(new JScrollPane(colorJList));
 		
-		JLabel label = new JLabel("Cor");
+		final JLabel label = new JLabel("Cor");
 		
 		add(label);
 

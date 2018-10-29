@@ -58,8 +58,8 @@ public class FrameCadastros extends JFrame {
 		jlstClubes.setBounds(56, 176, 206, 263);
 		getContentPane().add(jlstClubes);
 
-		DefaultListModel<EAtleta> modelEatletas = new DefaultListModel<>();
-		JList<EAtleta> jlstEatleta = new JList<>(modelEatletas);
+		final DefaultListModel<EAtleta> modelEatletas = new DefaultListModel<>();
+		final JList<EAtleta> jlstEatleta = new JList<>(modelEatletas);
 		jlstEatleta.setBounds(515, 176, 243, 263);
 		getContentPane().add(jlstEatleta);
 
