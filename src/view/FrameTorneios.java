@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 
 import model.Clube;
 import model.EAtleta;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrameTorneios extends JFrame {
 
@@ -18,31 +20,50 @@ public class FrameTorneios extends JFrame {
 	private JTextField txtData;
 	private JComboBox<Clube> txtClube;
 	private JComboBox<EAtleta> txtEatleta;
-
-		
+	private JButton btnEditarPartidas;
+	private JButton btnNovoTorneio;
+	
+	
+	
+	public JTextField getTxtNometorneio() {
+		return txtNometorneio;
+	}
+	public JTextField getTxtPorqueDoNome() {
+		return txtPorqueDoNome;
+	}
+	public JTextField getTxtData() {
+		return txtData;
+	}
+	public JButton getBtnEditarPartidas() {
+		return btnEditarPartidas;
+	}
+	public void setBtnEditarPartidas(JButton btnEditarPartidas) {
+		this.btnEditarPartidas = btnEditarPartidas;
+	}
 	public FrameTorneios() {
 		
 		super("Torneio Lombra da Madrugada");
 		getContentPane().setLayout(null);
 
 		JList jlstTorneios = new JList();		
-		jlstTorneios.setBounds(47, 73, 643, 114);
+		jlstTorneios.setBounds(47, 73, 758, 65);
 		getContentPane().add(jlstTorneios);
 
 		JLabel lblTorneios = new JLabel("TORNEIOS");
 		lblTorneios.setBounds(373, 35, 70, 15);
 		getContentPane().add(lblTorneios);
 
-		JButton btnNovoTorneio = new JButton("Novo Torneio");
-		btnNovoTorneio.setBounds(57, 208, 643, 25);
+		btnNovoTorneio = new JButton("Novo Torneio");
+
+		btnNovoTorneio.setBounds(57, 150, 127, 25);
 		getContentPane().add(btnNovoTorneio);
 
 		JLabel lblNomeDoTorneio = new JLabel("Nome do Torneio");
-		lblNomeDoTorneio.setBounds(69, 261, 145, 36);
+		lblNomeDoTorneio.setBounds(67, 242, 145, 36);
 		getContentPane().add(lblNomeDoTorneio);
 
 		JLabel lblPorqueEsseNome = new JLabel("Porque esse nome?");
-		lblPorqueEsseNome.setBounds(79, 290, 221, 36);
+		lblPorqueEsseNome.setBounds(77, 290, 221, 36);
 		getContentPane().add(lblPorqueEsseNome);
 
 		JLabel lblData = new JLabel("Data:");
@@ -76,29 +97,44 @@ public class FrameTorneios extends JFrame {
 		
 		
 		JLabel lblClube = new JLabel("Clube");
-		lblClube.setBounds(89, 369, 70, 15);
+		lblClube.setBounds(513, 242, 70, 15);
 		getContentPane().add(lblClube);
 
 		JLabel lblEatleta = new JLabel("EAtleta");
-		lblEatleta.setBounds(69, 396, 70, 15);
+		lblEatleta.setBounds(502, 273, 70, 15);
 		getContentPane().add(lblEatleta);
 
 		txtClube = new JComboBox<Clube>();		
-		txtClube.setBounds(232, 354, 114, 19);
+		txtClube.setBounds(581, 240, 114, 19);
 		getContentPane().add(txtClube);
 
 		txtEatleta = new JComboBox<EAtleta>();
-		txtEatleta.setBounds(232, 385, 114, 19);
+		txtEatleta.setBounds(581, 271, 114, 19);
 		getContentPane().add(txtEatleta);
 
 		JList jlstEatletaClube = new JList<>();
-		jlstEatletaClube.setBounds(418, 245, 241, 166);
+		jlstEatletaClube.setBounds(487, 343, 241, 128);
 		getContentPane().add(jlstEatletaClube);
 
 		JList jlstClassif = new JList();
-		jlstClassif.setBounds(63, 437, 627, 139);
+		jlstClassif.setBounds(68, 512, 627, 97);
 		getContentPane().add(jlstClassif);
+		
+		JButton btnAdicionarJogador = new JButton("Adicionar Jogador e Clube");
+		btnAdicionarJogador.setBounds(502, 301, 226, 25);
+		getContentPane().add(btnAdicionarJogador);
+		
+		btnEditarPartidas = new JButton("Editar Partidas");
+		
+		btnEditarPartidas.setBounds(67, 460, 145, 25);
+		getContentPane().add(btnEditarPartidas);
 
+	}
+	public JButton getBtnNovoTorneio() {
+		return btnNovoTorneio;
+	}
+	public void setBtnNovoTorneio(JButton btnNovoTorneio) {
+		this.btnNovoTorneio = btnNovoTorneio;
 	}
 	public JComboBox<Clube> getTxtClube() {
 		return txtClube;
