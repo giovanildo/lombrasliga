@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 
 import model.Clube;
 import model.EAtleta;
+import model.EAtletaTorneio;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -112,7 +114,7 @@ public class FrameTorneios extends JFrame {
 		txtEatleta.setBounds(581, 271, 114, 19);
 		getContentPane().add(txtEatleta);
 
-		JList jlstEatletaClube = new JList<>();
+		JList<EAtletaTorneio> jlstEatletaClube = new JList<>();
 		jlstEatletaClube.setBounds(487, 343, 241, 128);
 		getContentPane().add(jlstEatletaClube);
 
