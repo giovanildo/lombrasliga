@@ -8,14 +8,25 @@ public class Torneio {
 	/**
 	 * nome do torneio
 	 */
-	private String Nome;
-
+	private String nome;
+	/**
+	 * Explicação do nome
+	 */
+	private String porqueDoNome;
 	/**
 	 * 
 	 * @return id
 	 */
 	public int getId() {
 		return id;
+	}
+
+	public String getPorqueDoNome() {
+		return porqueDoNome;
+	}
+
+	public void setPorqueDoNome(String porqueDoNome) {
+		this.porqueDoNome = porqueDoNome;
 	}
 
 	/**
@@ -30,9 +41,15 @@ public class Torneio {
 	 * 
 	 * @param nome torneio
 	 */
-	public Torneio(String nome) {
+	public Torneio(String nome, String porqueDoNome) {
 		super();
-		Nome = nome;
+		this.nome = nome;
+		this.porqueDoNome = porqueDoNome;
+	}
+
+	@Override
+	public String toString() {
+		return nome;
 	}
 
 	/**
@@ -40,7 +57,7 @@ public class Torneio {
 	 * @return nome do torneio
 	 */
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	/**
@@ -48,6 +65,6 @@ public class Torneio {
 	 * @param nome
 	 */
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 }
