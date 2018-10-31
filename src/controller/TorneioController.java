@@ -89,9 +89,8 @@ public class TorneioController {
 
 		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getFrameTorneios().getTxtNometorneio().setText("");
-				getFrameTorneios().getTxtPorqueDoNome().setText("");
-				getFrameTorneios().getTxtData().setText("");
+//				getFrameTorneios().getTxtNometorneio().setText("");
+//				getFrameTorneios().getTxtPorqueDoNome().setText("");
 
 			}
 		});
