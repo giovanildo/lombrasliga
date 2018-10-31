@@ -71,15 +71,15 @@ public class TabelaController {
 		/**
 		 * criando os clubes e jogadores de videogame
 		 */
-		EAtletaTorneio gio = new EAtletaTorneio(new EAtleta("Giovanildo"), new Torneio("Meu torneio de bola"),
+		EAtletaTorneio gio = new EAtletaTorneio(new EAtleta("Giovanildo"), new Torneio("Meu torneio de bola", null),
 				new Clube("gio"));
-		EAtletaTorneio gen = new EAtletaTorneio(new EAtleta("gen"), new Torneio("Meu torneio de bola"),
+		EAtletaTorneio gen = new EAtletaTorneio(new EAtleta("gen"), new Torneio("Meu torneio de bola", null),
 				new Clube("gen"));
-		EAtletaTorneio fab = new EAtletaTorneio(new EAtleta("fab"), new Torneio("Meu torneio de bola"),
+		EAtletaTorneio fab = new EAtletaTorneio(new EAtleta("fab"), new Torneio("Meu torneio de bola", null),
 				new Clube("fab"));
-		EAtletaTorneio zal = new EAtletaTorneio(new EAtleta("zal"), new Torneio("Meu torneio de bola"),
+		EAtletaTorneio zal = new EAtletaTorneio(new EAtleta("zal"), new Torneio("Meu torneio de bola", null),
 				new Clube("zal"));
-		EAtletaTorneio quinto = new EAtletaTorneio(new EAtleta("quinto"), new Torneio("Meu torneio de bola"),
+		EAtletaTorneio quinto = new EAtletaTorneio(new EAtleta("quinto"), new Torneio("Meu torneio de bola", null),
 				new Clube("qui"));
 		// adicionando no array list
 		listaEAtletaTorneio.add(fab);
@@ -305,7 +305,7 @@ public class TabelaController {
 				return;
 			System.out.println(" Clube ");
 			String clube = entrada.nextLine();
-			listaEAtletaTorneio.add(new EAtletaTorneio(new EAtleta(eatleta), new Torneio(torneio), new Clube(clube)));
+			listaEAtletaTorneio.add(new EAtletaTorneio(new EAtleta(eatleta), new Torneio(torneio,null), new Clube(clube)));
 			// torneio, jogador, clube
 			//
 		}
