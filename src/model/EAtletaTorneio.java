@@ -2,10 +2,15 @@ package model;
 
 /**
  * 
- * @author giovanildo classe que guarda as informações do clube/jogador de vídeo
+ * @author giovanildo classe que guarda as informações do clube/jogador de vídeo game
  *         na partida
  */
 public class EAtletaTorneio {
+	@Override
+	public String toString() {
+		return eAtleta + "   " + clube + "   " + torneio;
+	}
+
 	private int id;
 	/**
 	 * Jogador de Video Game
@@ -91,7 +96,9 @@ public class EAtletaTorneio {
 	 * @param eAtleta
 	 * @param torneio
 	 * @param clube
+	 * 
 	 */
+	
 	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube) {
 		super();
 		this.eAtleta = eAtleta;
