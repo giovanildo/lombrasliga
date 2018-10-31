@@ -22,8 +22,6 @@ public class FrameCadastros extends JFrame {
 	private DefaultListModel<Clube> modelClubes;
 	private JList<Clube> jlstClubes;
 
-	
-
 	public FrameCadastros() {
 
 		getContentPane().setLayout(null);
