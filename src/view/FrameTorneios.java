@@ -41,6 +41,14 @@ public class FrameTorneios extends JFrame {
 	private ArrayList<Torneio> listaTorneios;
 	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
 	private ArrayList<Partida> listaPartidas;
+	
+	private JButton btnRemoverJogador;
+	private JButton btnAdicionarJogador;
+	private JButton btnSalvarTorneio;
+	
+	
+	private JList <EAtletaTorneio> jlstEatletaClube;
+	private JTextField textField;
 
 	public JTextField getTxtNometorneio() {
 		return txtNomeTorneio;
@@ -70,16 +78,14 @@ public class FrameTorneios extends JFrame {
 		panelTorneio.setBackground(Color.LIGHT_GRAY);
 		panelTorneio.setBounds(42, 214, 476, 186);
 		getContentPane().add(panelTorneio);
-			
+		
 		getContentPane().setLayout(null);
 		modelTorneios = new DefaultListModel<Torneio>();
 		final JList<Torneio> jlstTorneios = new JList<Torneio>(modelTorneios);
 		jlstTorneios.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-//				Torneio torneio = jlstTorneios.getModel().getElementAt(jlstTorneios.getSelectedIndex());
-//				txtNomeTorneio.setText(torneio.getNome());
-//				txtPorqueDoNome.setText(torneio.getPorqueDoNome());
-//
+
+
 //				for (int i = 0; i < modelEatletaTorneio.getSize(); i++) {
 //					EAtletaTorneio eat = modelEatletaTorneio.getElementAt(i);
 //					if (eat.getTorneio().getNome().equals(torneio.getNome())) {
@@ -90,16 +96,20 @@ public class FrameTorneios extends JFrame {
 
 			}
 		});
-		jlstTorneios.setBounds(38, 11, 353, 134);
+		jlstTorneios.setBounds(161, 11, 353, 134);
 		getContentPane().add(jlstTorneios);
 		panelTorneio.setLayout(null);
 
 		btnNovoTorneio = new JButton("Novo Torneio");
 		btnNovoTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				txtNomeTorneio.setEnabled(true);
 				txtPorqueDoNome.setEnabled(true);
 
+				habilitarPanelTorneio();
+				
 				modelEatletaTorneio.clear();
 				//evita que adicione torneios com o mesmo nome
 				for (int i = 0; i < jlstTorneios.getModel().getSize(); i++) {
@@ -114,7 +124,7 @@ public class FrameTorneios extends JFrame {
 			}
 		});
 
-		btnNovoTorneio.setBounds(428, 11, 127, 25);
+		btnNovoTorneio.setBounds(551, 23, 127, 25);
 		getContentPane().add(btnNovoTorneio);
 
 		JLabel lblNomeDoTorneio = new JLabel("Nome do Torneio");
@@ -170,11 +180,11 @@ public class FrameTorneios extends JFrame {
 		jlstClassif.setBounds(42, 458, 746, 97);
 		getContentPane().add(jlstClassif);
 		
-		JButton btnRemoverJogador = new JButton("Remover Jogador e Clube");
+		btnRemoverJogador = new JButton("Remover Jogador e Clube");
 		btnRemoverJogador.setBounds(32, 11, 157, 23);
 		panelTorneio.add(btnRemoverJogador);
 
-		final JList <EAtletaTorneio> jlstEatletaClube = new JList(modelEatletaTorneio);
+		jlstEatletaClube = new JList(modelEatletaTorneio);
 		jlstEatletaClube.setBounds(217, 11, 220, 155);
 		panelTorneio.add(jlstEatletaClube);
 		
@@ -184,7 +194,7 @@ public class FrameTorneios extends JFrame {
 		
 		
 		
-				JButton btnAdicionarJogador = new JButton("Adicionar Jogador e Clube");
+				btnAdicionarJogador = new JButton("Adicionar Jogador e Clube");
 				btnAdicionarJogador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						getTxtNometorneio().setEnabled(false);
@@ -218,8 +228,7 @@ public class FrameTorneios extends JFrame {
 
 		btnEditarPartidas.setBounds(42, 422, 145, 25);
 		getContentPane().add(btnEditarPartidas);
-		
-		JButton btnSalvarTorneio = new JButton("Salvar Torneio");
+		btnSalvarTorneio = new JButton("Salvar Torneio");
 		btnSalvarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//verifica se já tem um torneio com o mesmo nome
@@ -244,7 +253,7 @@ public class FrameTorneios extends JFrame {
 				System.out.println("registrou");
 			}
 		});
-		btnSalvarTorneio.setBounds(428, 47, 127, 23);
+		btnSalvarTorneio.setBounds(307, 180, 127, 23);
 		getContentPane().add(btnSalvarTorneio);
 		
 		JButton btnDeletarTorneio = new JButton("Deletar Torneio");
@@ -255,23 +264,65 @@ public class FrameTorneios extends JFrame {
 				modelTorneios.remove(index);
 			}
 		});
-		btnDeletarTorneio.setBounds(428, 81, 127, 23);
+		btnDeletarTorneio.setBounds(551, 62, 127, 23);
 		getContentPane().add(btnDeletarTorneio);
 		
 		JButton btnEditarTorneio = new JButton("Editar Torneio");
 		btnEditarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Torneio torneio = jlstTorneios.getModel().getElementAt(jlstTorneios.getSelectedIndex());
+				txtNomeTorneio.setText(torneio.getNome());
+				txtPorqueDoNome.setText(torneio.getPorqueDoNome());
+				habilitarPanelTorneio();
 			}
 		});
-		btnEditarTorneio.setBounds(428, 115, 127, 23);
+		btnEditarTorneio.setBounds(551, 96, 127, 23);
 		getContentPane().add(btnEditarTorneio);
 		
-
+		textField = new JTextField();
+		textField.setBounds(616, 163, 86, 20);
+		getContentPane().add(textField);
+		textField.setColumns(10);
 		
-
-
+		JButton btnTeste = new JButton("teste");
+		btnTeste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(textField.getText());
+			}
+		});
+		btnTeste.setBounds(727, 162, 89, 23);
+		getContentPane().add(btnTeste);
+		
+		//desabilitando o panelTorneio e seus elementos
+		
+		desabilitarPanelTorneio();
+	}
+	
+	public void desabilitarPanelTorneio() {
+		
+		btnSalvarTorneio.setEnabled(false);
+		txtNomeTorneio.setEnabled(false);
+		btnRemoverJogador.setEnabled(false);
+		
+		btnAdicionarJogador.setEnabled(false);
+		txtClube.setEnabled(false);
+		txtEatleta.setEnabled(false);
+		jlstEatletaClube.setEnabled(false);
 	}
 
+	public void habilitarPanelTorneio() {
+		btnSalvarTorneio.setEnabled(true);
+		txtNomeTorneio.setEnabled(true);
+		txtPorqueDoNome.setEnabled(false);
+		
+		btnRemoverJogador.setEnabled(true);
+		btnAdicionarJogador.setEnabled(true);
+		txtClube.setEnabled(true);
+		txtEatleta.setEnabled(true);
+		jlstEatletaClube.setEnabled(true);
+		
+	}
+	
 	public JButton getBtnNovoTorneio() {
 		return btnNovoTorneio;
 	}
