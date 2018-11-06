@@ -48,7 +48,6 @@ public class FrameTorneios extends JFrame {
 	
 	
 	private JList <EAtletaTorneio> jlstEatletaClube;
-	private JTextField textField;
 
 	public JTextField getTxtNometorneio() {
 		return txtNomeTorneio;
@@ -103,13 +102,7 @@ public class FrameTorneios extends JFrame {
 		btnNovoTorneio = new JButton("Novo Torneio");
 		btnNovoTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				txtNomeTorneio.setEnabled(true);
-				txtPorqueDoNome.setEnabled(true);
-
 				habilitarPanelTorneio();
-				
 				modelEatletaTorneio.clear();
 				//evita que adicione torneios com o mesmo nome
 				for (int i = 0; i < jlstTorneios.getModel().getSize(); i++) {
@@ -118,9 +111,8 @@ public class FrameTorneios extends JFrame {
 						System.out.println("repetido");
 						return;
 					}
-
 				}
-				modelTorneios.addElement(new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()));
+				//modelTorneios.addElement(new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()));
 			}
 		});
 
@@ -132,7 +124,6 @@ public class FrameTorneios extends JFrame {
 		lblNomeDoTorneio.setBounds(42, 185, 81, 14);
 		getContentPane().add(lblNomeDoTorneio);
 
-		modelTorneios.addElement(new Torneio("Escolha um dos torneios abaixo...", "Escolher"));
 
 		JLabel lblPorqueEsseNome = new JLabel("Porque esse nome?");
 		lblPorqueEsseNome.setBounds(558, 214, 93, 14);
@@ -231,18 +222,40 @@ public class FrameTorneios extends JFrame {
 		btnSalvarTorneio = new JButton("Salvar Torneio");
 		btnSalvarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//verifica se já tem um torneio com o mesmo nome
-				for (Torneio daVez : listaTorneios) {
-					if (daVez.getNome().equals(txtNomeTorneio.getText())) {
-						System.out.println("repetido");
-						return;
+				//evita que adicione torneios com o mesmo nome
+				//salva edições do torneio 
+				for (int i = 0; i < jlstTorneios.getModel().getSize(); i++) {
+					Torneio torneioDaVez = jlstTorneios.getModel().getElementAt(i);
+					//verifica se o já existe o registro no JList
+					if (torneioDaVez.getNome().equals(txtNomeTorneio.getText())) {
+						torneioDaVez.setPorqueDoNome(txtPorqueDoNome.getText());
+						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
+						
+						//registrar no arraylist para recuperar depois na parte de editar
+						System.out.println("Esse registro existe, salvando os dados do objeto EAtleta no listaEAtleta");
+						for(int t = 0; t < jlstTorneios.getModel().getSize();t++) {
+							
+							EAtletaTorneio eat = jlstEatletaClube.getModel().getElementAt(t);							
+							if (torneioDaVez.getNome().equals(eat.getTorneio().getNome())){
+								
+								
+								
+							}
+							System.out.println(eat.geteAtleta() + "  " + eat.getClube());
+						}
+
 					}
 				}
 
+
+				
+				
 				Torneio torneio = new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText());
 				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getTxtEatleta().getSelectedItem(),
 						new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()),
 						(Clube) getTxtClube().getSelectedItem());
+				
+				
 				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
 				listaTorneios.add(torneio);
 				modelTorneios.addElement(torneio);
@@ -270,28 +283,19 @@ public class FrameTorneios extends JFrame {
 		JButton btnEditarTorneio = new JButton("Editar Torneio");
 		btnEditarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				Torneio torneio = jlstTorneios.getModel().getElementAt(jlstTorneios.getSelectedIndex());
 				txtNomeTorneio.setText(torneio.getNome());
 				txtPorqueDoNome.setText(torneio.getPorqueDoNome());
 				habilitarPanelTorneio();
+				
+				//recuperar do arraylist e jogar no JList do EAtletaTorneio
+				
+				
 			}
 		});
 		btnEditarTorneio.setBounds(551, 96, 127, 23);
 		getContentPane().add(btnEditarTorneio);
-		
-		textField = new JTextField();
-		textField.setBounds(616, 163, 86, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JButton btnTeste = new JButton("teste");
-		btnTeste.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(textField.getText());
-			}
-		});
-		btnTeste.setBounds(727, 162, 89, 23);
-		getContentPane().add(btnTeste);
 		
 		//desabilitando o panelTorneio e seus elementos
 		
@@ -311,9 +315,12 @@ public class FrameTorneios extends JFrame {
 	}
 
 	public void habilitarPanelTorneio() {
+		txtNomeTorneio.setEnabled(true);
+		txtPorqueDoNome.setEnabled(true);
+		
 		btnSalvarTorneio.setEnabled(true);
 		txtNomeTorneio.setEnabled(true);
-		txtPorqueDoNome.setEnabled(false);
+		txtPorqueDoNome.setEnabled(true);
 		
 		btnRemoverJogador.setEnabled(true);
 		btnAdicionarJogador.setEnabled(true);
