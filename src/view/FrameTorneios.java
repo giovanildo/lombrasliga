@@ -224,7 +224,7 @@ public class FrameTorneios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//evita que adicione torneios com o mesmo nome
 				//salva edições do torneio 
-				for (int i = 0; i < jlstTorneios.getModel().getSize(); i++) {
+				for (int i = 0; i < jlstTorneios.getModel().getSize();i++) {
 					Torneio torneioDaVez = jlstTorneios.getModel().getElementAt(i);
 					//verifica se o já existe o registro no JList
 					if (torneioDaVez.getNome().equals(txtNomeTorneio.getText())) {
@@ -232,23 +232,29 @@ public class FrameTorneios extends JFrame {
 						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
 						
 						//registrar no arraylist para recuperar depois na parte de editar
-						System.out.println("Esse registro existe, salvando os dados do objeto EAtleta no listaEAtleta");
-						for(int t = 0; t < jlstTorneios.getModel().getSize();t++) {
+						System.out.println("Esse registro existe, salvando os dados do objeto EAtletaTorneio no listaEAtletaTorneio");
+						
+						for(Torneio torneioDaVezArray : listaTorneios) {
 							
-							EAtletaTorneio eat = jlstEatletaClube.getModel().getElementAt(t);							
-							if (torneioDaVez.getNome().equals(eat.getTorneio().getNome())){
-								
-								
-								
-							}
-							System.out.println(eat.geteAtleta() + "  " + eat.getClube());
 						}
+						
+//						for(int t = 0; t < jlstTorneios.getModel().getSize();t++) {
+//							EAtletaTorneio eat = jlstEatletaClube.getModel().getElementAt(t);							
+//							if (torneioDaVez.getNome().equals(eat.getTorneio().getNome())){
+//								eat.setClube((Clube)txtClube.getSelectedItem());
+//								eat.seteAtleta((EAtleta)txtEatleta.getSelectedItem());
+//								System.out.println(eat.geteAtleta() + "  " + eat.getClube());
+//							}
+//							
+//						}
 
 					}
+					return;
 				}
-
-
 				
+				System.out.println("novo torneio");
+				
+				//no caso de um novo torneio...
 				
 				Torneio torneio = new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText());
 				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getTxtEatleta().getSelectedItem(),
@@ -262,6 +268,8 @@ public class FrameTorneios extends JFrame {
 
 				listaEatletasTorneio.add(eat);
 				modelEatletaTorneio.addElement(eat);
+				
+				
 				
 				System.out.println("registrou");
 			}
