@@ -188,24 +188,24 @@ public class FrameTorneios extends JFrame {
 				btnAdicionarJogador = new JButton("Adicionar Jogador e Clube");
 				btnAdicionarJogador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						getTxtNometorneio().setEnabled(false);
-						getTxtPorqueDoNome().setEnabled(false);
-						getTxtClube().getSelectedItem();
-
-						// EAtletaTorneio[] clubes = new
-						// EAtletaTorneio[jlstEatletaClube.getModel().getSize()];
+						
+						desabilitarCamposTorneio();
+						//se for repetido EAtleta Torneio encerra o método
 						for (int i = 0; i < jlstEatletaClube.getModel().getSize(); i++) {
 							EAtletaTorneio eat = jlstEatletaClube.getModel().getElementAt(i);
 							if (eat.getClube().getNome().equals(txtClube.getSelectedItem().toString())
-									&& eat.geteAtleta().equals(txtEatleta.getSelectedItem())
+									&& eat.geteAtleta().getNome().equals(txtEatleta.getSelectedItem().toString())
 									&& eat.getTorneio().getNome().equals(txtNomeTorneio.getText())) {
 								System.out.println("repetido");
 								return;
 							}
 						}
-						modelEatletaTorneio.addElement(new EAtletaTorneio((EAtleta) getTxtEatleta().getSelectedItem(),
+						//se não for repetido adiciona tanto a JList como a lista EAtleta Torneio
+						EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getTxtEatleta().getSelectedItem(),
 								new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()),
-								(Clube) getTxtClube().getSelectedItem()));
+								(Clube) getTxtClube().getSelectedItem());
+						modelEatletaTorneio.addElement(eat);
+						listaEatletasTorneio.add(eat);
 					}
 				});
 				btnAdicionarJogador.setBounds(32, 45, 157, 23);
@@ -226,30 +226,19 @@ public class FrameTorneios extends JFrame {
 				//salva edições do torneio 
 				for (int i = 0; i < jlstTorneios.getModel().getSize();i++) {
 					Torneio torneioDaVez = jlstTorneios.getModel().getElementAt(i);
-					//verifica se o já existe o registro no JList
+					//verifica se o nome já existe o registro no JList
 					if (torneioDaVez.getNome().equals(txtNomeTorneio.getText())) {
+						//salva na JList dos torneios
 						torneioDaVez.setPorqueDoNome(txtPorqueDoNome.getText());
 						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
-						
-						//registrar no arraylist para recuperar depois na parte de editar
-						System.out.println("Esse registro existe, salvando os dados do objeto EAtletaTorneio no listaEAtletaTorneio");
-						
-						for(Torneio torneioDaVezArray : listaTorneios) {
-							
+						//salva no lista Torneios
+						for(Torneio torneioArray : listaTorneios) {
+							if(torneioArray.getNome().equals(txtNomeTorneio.getText())) {
+								torneioArray.setPorqueDoNome(txtPorqueDoNome.getText());
+							}
 						}
-						
-//						for(int t = 0; t < jlstTorneios.getModel().getSize();t++) {
-//							EAtletaTorneio eat = jlstEatletaClube.getModel().getElementAt(t);							
-//							if (torneioDaVez.getNome().equals(eat.getTorneio().getNome())){
-//								eat.setClube((Clube)txtClube.getSelectedItem());
-//								eat.seteAtleta((EAtleta)txtEatleta.getSelectedItem());
-//								System.out.println(eat.geteAtleta() + "  " + eat.getClube());
-//							}
-//							
-//						}
-
+						return;
 					}
-					return;
 				}
 				
 				System.out.println("novo torneio");
@@ -257,21 +246,15 @@ public class FrameTorneios extends JFrame {
 				//no caso de um novo torneio...
 				
 				Torneio torneio = new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText());
-				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getTxtEatleta().getSelectedItem(),
-						new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()),
-						(Clube) getTxtClube().getSelectedItem());
-				
-				
-				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
-				listaTorneios.add(torneio);
-				modelTorneios.addElement(torneio);
 
-				listaEatletasTorneio.add(eat);
-				modelEatletaTorneio.addElement(eat);
+				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
+				System.out.println("adicionando ao lista Torneios");
+				listaTorneios.add(torneio);				
+				
+				modelTorneios.addElement(torneio);
+				System.out.println("adicionando ao Jist Torneio");
 				
 				
-				
-				System.out.println("registrou");
 			}
 		});
 		btnSalvarTorneio.setBounds(307, 180, 127, 23);
@@ -280,9 +263,22 @@ public class FrameTorneios extends JFrame {
 		JButton btnDeletarTorneio = new JButton("Deletar Torneio");
 		btnDeletarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				int index = jlstTorneios.getSelectedIndex();
-				System.out.println("deletado com sucesso " + index);
+				Torneio torneio = jlstTorneios.getModel().getElementAt(index);
+				//apagar todas as referencias do torneio na lista EAtletaTorneio
+				for(EAtletaTorneio eat : listaEatletasTorneio) {
+					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
+						listaEatletasTorneio.remove(eat);
+					}
+				}
+				
+				modelEatletaTorneio.clear();
+				listaTorneios.remove(index);
 				modelTorneios.remove(index);
+				
+				System.out.println("deletado com sucesso " + index);
+				
 			}
 		});
 		btnDeletarTorneio.setBounds(551, 62, 127, 23);
@@ -291,13 +287,24 @@ public class FrameTorneios extends JFrame {
 		JButton btnEditarTorneio = new JButton("Editar Torneio");
 		btnEditarTorneio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+								 
 				Torneio torneio = jlstTorneios.getModel().getElementAt(jlstTorneios.getSelectedIndex());
 				txtNomeTorneio.setText(torneio.getNome());
-				txtPorqueDoNome.setText(torneio.getPorqueDoNome());
+				txtPorqueDoNome.setText(torneio.getPorqueDoNome());				
 				habilitarPanelTorneio();
+				//limpa JList EAtleta Torneio 
+				modelEatletaTorneio.clear();
 				
 				//recuperar do arraylist e jogar no JList do EAtletaTorneio
+				
+				for(EAtletaTorneio eat : listaEatletasTorneio) {
+					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
+						modelEatletaTorneio.addElement(eat);	
+					}
+					
+				}
+			
+				
 				
 				
 			}
@@ -310,6 +317,11 @@ public class FrameTorneios extends JFrame {
 		desabilitarPanelTorneio();
 	}
 	
+	protected void desabilitarCamposTorneio() {
+		getTxtNometorneio().setEnabled(false);
+		getTxtPorqueDoNome().setEnabled(false);		
+	}
+
 	public void desabilitarPanelTorneio() {
 		
 		btnSalvarTorneio.setEnabled(false);
