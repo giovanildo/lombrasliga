@@ -239,19 +239,6 @@ public class TabelaController {
 		mostrarPartidas();
 	}
 
-	public void iniciar() {
-		frameTorneios = new FrameTorneios();
-		
-		
-		
-		
-		
-// habilitar janela de cadastros e partidas depois		
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setSize(800, 600);
-//		setVisible(true);
-		
-	}
 
 	/**
 	 * Preenche partidas com os gols
