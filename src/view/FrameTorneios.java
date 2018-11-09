@@ -1,33 +1,27 @@
 package view;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
+import model.Torneio;
 import model.EAtletaTorneio;
 import model.Partida;
-import model.Torneio;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import java.awt.Panel;
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
 
 public class FrameTorneios extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNomeTorneio;
 	private JTextField txtPorqueDoNome;
@@ -37,17 +31,14 @@ public class FrameTorneios extends JFrame {
 	private JButton btnNovoTorneio;
 	private DefaultListModel<Torneio> modelTorneios;
 	private DefaultListModel<EAtletaTorneio> modelEatletaTorneio;
-
-	private ArrayList<Torneio> listaTorneios;
-	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
-	private ArrayList<Partida> listaPartidas;
-	
+	private JList<EAtletaTorneio> jlstEatletaClube;
 	private JButton btnRemoverJogador;
 	private JButton btnAdicionarJogador;
 	private JButton btnSalvarTorneio;
 	
-	
-	private JList <EAtletaTorneio> jlstEatletaClube;
+	private ArrayList<Torneio> listaTorneios;
+	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
+	private ArrayList<Partida> listaPartidas;
 
 	public JTextField getTxtNometorneio() {
 		return txtNomeTorneio;
@@ -69,9 +60,9 @@ public class FrameTorneios extends JFrame {
 
 		super("Torneio Lombra da Madrugada");
 
-		final ArrayList<Torneio> listaTorneios = new ArrayList<>();
-		final ArrayList<EAtletaTorneio> listaEatletasTorneio = new ArrayList<>();
-		final ArrayList<Partida> listaPartidas = new ArrayList<>();
+		listaTorneios = new ArrayList<Torneio>();
+		listaEatletasTorneio = new ArrayList<EAtletaTorneio>();
+		listaPartidas = new ArrayList<Partida>();
 
 		JPanel panelTorneio = new JPanel();
 		panelTorneio.setBackground(Color.LIGHT_GRAY);
@@ -81,20 +72,7 @@ public class FrameTorneios extends JFrame {
 		getContentPane().setLayout(null);
 		modelTorneios = new DefaultListModel<Torneio>();
 		final JList<Torneio> jlstTorneios = new JList<Torneio>(modelTorneios);
-		jlstTorneios.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
 
-
-//				for (int i = 0; i < modelEatletaTorneio.getSize(); i++) {
-//					EAtletaTorneio eat = modelEatletaTorneio.getElementAt(i);
-//					if (eat.getTorneio().getNome().equals(torneio.getNome())) {
-//						System.out.println(eat.getClube());
-//					}
-//				}
-				
-
-			}
-		});
 		jlstTorneios.setBounds(161, 11, 353, 134);
 		getContentPane().add(jlstTorneios);
 		panelTorneio.setLayout(null);
@@ -112,7 +90,6 @@ public class FrameTorneios extends JFrame {
 						return;
 					}
 				}
-				//modelTorneios.addElement(new Torneio(getTxtNometorneio().getText(), getTxtPorqueDoNome().getText()));
 			}
 		});
 
@@ -123,7 +100,6 @@ public class FrameTorneios extends JFrame {
 		lblNomeDoTorneio.setBackground(Color.WHITE);
 		lblNomeDoTorneio.setBounds(42, 185, 81, 14);
 		getContentPane().add(lblNomeDoTorneio);
-
 
 		JLabel lblPorqueEsseNome = new JLabel("Porque esse nome?");
 		lblPorqueEsseNome.setBounds(558, 214, 93, 14);
@@ -140,11 +116,6 @@ public class FrameTorneios extends JFrame {
 		txtPorqueDoNome.setBounds(555, 239, 243, 150);
 		getContentPane().add(txtPorqueDoNome);
 		txtPorqueDoNome.setColumns(10);
-
-		// Clube[] clubes = new Clube[jlstClubes.getModel().getSize()];
-		// for (int i = 0; i < jlstClubes.getModel().getSize(); i++) {
-		// clubes[i] = jlstClubes.getModel().getElementAt(i);
-		// }
 
 		JLabel lblClube = new JLabel("Clube");
 		lblClube.setBounds(32, 105, 27, 14);
@@ -175,7 +146,7 @@ public class FrameTorneios extends JFrame {
 		btnRemoverJogador.setBounds(32, 11, 157, 23);
 		panelTorneio.add(btnRemoverJogador);
 
-		jlstEatletaClube = new JList(modelEatletaTorneio);
+		jlstEatletaClube = new JList<EAtletaTorneio>(modelEatletaTorneio);
 		jlstEatletaClube.setBounds(217, 11, 220, 155);
 		panelTorneio.add(jlstEatletaClube);
 		
@@ -266,16 +237,21 @@ public class FrameTorneios extends JFrame {
 				
 				int index = jlstTorneios.getSelectedIndex();
 				Torneio torneio = jlstTorneios.getModel().getElementAt(index);
-				//apagar todas as referencias do torneio na lista EAtletaTorneio
-				for(EAtletaTorneio eat : listaEatletasTorneio) {
-					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
-						listaEatletasTorneio.remove(eat);
-					}
-				}
-				
+												
 				modelEatletaTorneio.clear();
 				listaTorneios.remove(index);
 				modelTorneios.remove(index);
+				
+				//apagar todas as referencias do torneio na lista EAtletaTorneio
+				
+				for(int i = 0; i<listaEatletasTorneio.size();i++ ) {
+					String torneioEAtleta = listaEatletasTorneio.get(i).getTorneio().getNome();
+					if(torneioEAtleta.equals(torneio.getNome())) {
+						System.out.println("apagando linha " + torneioEAtleta);
+						listaEatletasTorneio.remove(i);
+						
+					}
+				}
 				
 				System.out.println("deletado com sucesso " + index);
 				
@@ -303,16 +279,10 @@ public class FrameTorneios extends JFrame {
 					}
 					
 				}
-			
-				
-				
-				
 			}
 		});
 		btnEditarTorneio.setBounds(551, 96, 127, 23);
 		getContentPane().add(btnEditarTorneio);
-		
-		//desabilitando o panelTorneio e seus elementos
 		
 		desabilitarPanelTorneio();
 	}
