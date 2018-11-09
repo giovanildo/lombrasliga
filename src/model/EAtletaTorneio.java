@@ -6,6 +6,7 @@ package model;
  *         na partida
  */
 public class EAtletaTorneio {
+	
 	@Override
 	public String toString() {
 		return eAtleta + "   " + clube + "   " + torneio;

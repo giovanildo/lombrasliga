@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.swing.JFrame;
-
 import model.Anfitriao;
-import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.EAtletaTorneio;
@@ -22,7 +18,7 @@ import view.FrameTorneios;
 
 /**
  * 
- * @author Francisco Giovanildo Teixeira de Souza Classe n�cleo do sistema
+ * @author Francisco Giovanildo Teixeira de Souza 
  * 
  */
 public class TabelaController {
@@ -148,51 +144,7 @@ public class TabelaController {
 		return impar;
 	}
 
-	/**
-	 * gera array de partidas
-	 */
-	public void geraPartidas() {
-		// variaveis que serao base para gerar tabela
-		totalClubes = listaEAtletaTorneio.size();
-		metadeClubes = totalClubes / 2;
-
-		for (int turno = 0; turno <= 1; turno++) {
-			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
-				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
-					// Clube está de fora nessa rodada?
-					if (listaEAtletaTorneio.get(m) == null) {
-						continue;
-					}
-					// Teste para ajustar o mando de campo
-					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
-						if (turno == 0) {
-							listaPartidas
-									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneio.get(m), 0)));
-						} else {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
-						}
-					} else {
-						if (turno == 1) {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
-
-						} else {
-							listaPartidas
-									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneio.get(m), 0)));
-						}
-					}
-				}
-				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
-				EAtletaTorneio remove = listaEAtletaTorneio.remove(listaEAtletaTorneio.size() - 1);
-				listaEAtletaTorneio.add(1, remove);
-			}
-		}
-
-	}
-
+	
 	public void removeClubeVazio() {
 		// desfazando a adição de um clube vazio
 		if (impar) {

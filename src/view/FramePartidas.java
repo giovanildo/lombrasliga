@@ -4,6 +4,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+
+import model.Anfitriao;
+import model.Clube;
+import model.EAtleta;
+import model.EAtletaTorneio;
+import model.Partida;
+import model.Torneio;
+import model.Visitante;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 
 public class FramePartidas extends JFrame {
@@ -48,9 +58,13 @@ public class FramePartidas extends JFrame {
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setBounds(520, 569, 117, 25);
 		getContentPane().add(btnConfirmar);
-		
-		JList jlstPartidas = new JList();
-		jlstPartidas.setBounds(43, 49, 713, 486);
+
+		DefaultListModel<Partida> modelPartidas = new DefaultListModel<Partida>();
+		JList<Partida> jlstPartidas = new JList<>(modelPartidas);
+		modelPartidas.addElement(new Partida(
+				new Anfitriao(new EAtletaTorneio(new EAtleta("gio"), new Torneio("Thor","porque torneio"), new Clube("Ceara")), 2),
+				new Visitante(new EAtletaTorneio(new EAtleta("fabiano"), new Torneio("Thor","porque torneio"), new Clube("Ceara")), 0)));
+		jlstPartidas.setBounds(43, 49, 1187, 486);
 		getContentPane().add(jlstPartidas);
 	}
 }

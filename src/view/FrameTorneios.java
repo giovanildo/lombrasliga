@@ -14,7 +14,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.Classificacao;
+import controller.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.Torneio;
@@ -197,6 +197,14 @@ public class FrameTorneios extends JFrame {
 				panelTorneio.add(btnAdicionarJogador);
 
 		btnEditarPartidas = new JButton("Editar Partidas");
+		btnEditarPartidas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FramePartidas fp = new FramePartidas(); 
+				//selecionar tudo que tiver o nome do torneio na array list do atleta torneio
+				
+				
+			}
+		});
 
 		btnEditarPartidas.setBounds(42, 422, 145, 25);
 		getContentPane().add(btnEditarPartidas);

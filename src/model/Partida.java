@@ -2,9 +2,16 @@ package model;
 
 /**
  * 
- * @author giovanildo classe que configura as partidas
+ * @author giovanildo 
+ * classe que configura as partidas
  */
 public class Partida {
+
+	@Override
+	public String toString() {
+		return "anfitriao=" + anfitriao + ", visitante=" + visitante + ", encerrada="
+				+ encerrada;
+	}
 
 	private int id;
 	/**

@@ -15,8 +15,21 @@ public abstract class EquipeEmCampo {
 		this.golscontra = golscontra;
 	}
 
-	public int getResultado() {
-		return resultado;
+	@Override
+	public String toString() {
+		return eAtletaTorneio + "  " + gols + " Resultado " + resultadoString() + " Pontos " + pontos;
+	}
+
+	public String resultadoString() {
+		String resultadoString = "ERRO";
+		if(resultado==1) {
+			resultadoString="VITÓRIA";
+		} else if (resultado==2){
+			resultadoString="EMPATE";
+		} else if(resultado==3) {
+			resultadoString="DERROTA";
+		}
+		return resultadoString;
 	}
 
 	public int getPontos() {
@@ -28,6 +41,10 @@ public abstract class EquipeEmCampo {
 		resultado = VITORIA;
 	}
 
+	public int getResultado() {
+		return resultado;
+	}
+	
 	public void empatou() {
 		pontos++;
 		resultado = EMPATE;

@@ -2,11 +2,16 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import model.Anfitriao;
 import model.Clube;
 import model.EAtleta;
+import model.EAtletaTorneio;
+import model.Partida;
+import model.Visitante;
 import view.FrameCadastros;
 import view.FramePartidas;
 import view.FrameTorneios;
@@ -26,6 +31,58 @@ public class TorneioController {
 	 */
 	private FramePartidas framePartidas;
 
+	/**
+	 * gera array de partidas
+	 */
+	public ArrayList<Partida> geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneio) {
+		
+		int totalClubes;
+		int metadeClubes;
+		
+		// variaveis que serao base para gerar tabela
+		totalClubes = listaEAtletaTorneio.size();
+		metadeClubes = totalClubes / 2;
+		ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
+		for (int turno = 0; turno <= 1; turno++) {
+			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
+				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
+					// Clube está de fora nessa rodada?
+					if (listaEAtletaTorneio.get(m) == null) {
+						continue;
+					}
+					// Teste para ajustar o mando de campo
+					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
+						if (turno == 0) {
+							listaPartidas
+									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
+											new Visitante(listaEAtletaTorneio.get(m), 0)));
+						} else {
+							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
+									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
+						}
+					} else {
+						if (turno == 1) {
+							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
+									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
+
+						} else {
+							listaPartidas
+									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
+											new Visitante(listaEAtletaTorneio.get(m), 0)));
+						}
+					}
+				}
+				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
+				EAtletaTorneio remove = listaEAtletaTorneio.remove(listaEAtletaTorneio.size() - 1);
+				listaEAtletaTorneio.add(1, remove);				
+			}
+		}
+		return listaPartidas;
+
+	}
+
+	
+	
 	public TorneioController() {
 		super();
 		this.frameCadastros = new FrameCadastros();
