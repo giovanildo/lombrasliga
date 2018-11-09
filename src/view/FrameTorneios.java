@@ -143,6 +143,24 @@ public class FrameTorneios extends JFrame {
 		getContentPane().add(jlstClassif);
 		
 		btnRemoverJogador = new JButton("Remover Jogador e Clube");
+		btnRemoverJogador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				int index = jlstEatletaClube.getSelectedIndex();
+				EAtletaTorneio eatDoModel = modelEatletaTorneio.getElementAt(index);
+				
+				//removendo do array
+				
+				for(int i =0;i<listaEatletasTorneio.size();i++) {
+					EAtletaTorneio eatDoArray = listaEatletasTorneio.get(i);
+					if(eatDoModel.equals(eatDoArray)) {
+						listaEatletasTorneio.remove(i);
+					}
+				}				
+				
+				modelEatletaTorneio.remove(index);
+				
+			}
+		});
 		btnRemoverJogador.setBounds(32, 11, 157, 23);
 		panelTorneio.add(btnRemoverJogador);
 
@@ -152,10 +170,6 @@ public class FrameTorneios extends JFrame {
 		
 				
 		panelTorneio.add(jlstEatletaClube);
-		
-		
-		
-		
 				btnAdicionarJogador = new JButton("Adicionar Jogador e Clube");
 				btnAdicionarJogador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -181,10 +195,6 @@ public class FrameTorneios extends JFrame {
 				});
 				btnAdicionarJogador.setBounds(32, 45, 157, 23);
 				panelTorneio.add(btnAdicionarJogador);
-				
-				
-
-				
 
 		btnEditarPartidas = new JButton("Editar Partidas");
 
