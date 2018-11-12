@@ -20,6 +20,18 @@ import view.FrameTorneios;
 public class TorneioController {
 
 	/**
+	 * Saber se o número de equipe é par ou impar
+	 * se for impar o algoritmo irá adicionar um eatletatorneio nulo
+	 * para facilitar a geração de partidas
+	 */
+	
+	private boolean impar;
+	
+	private int totalClubes;
+	private int metadeClubes;
+	
+	
+	/**
 	 * view dos cadastros, clubes e jogadores
 	 */
 	private FrameCadastros frameCadastros;
@@ -31,65 +43,23 @@ public class TorneioController {
 	 * view das partidas
 	 */
 	private FramePartidas framePartidas;
-
+	/**
+	 * Lista de torneios
+	 */
 	private ArrayList<Torneio> listaTorneios;
+	/**
+	 * Lista Jogadores e Clubes no Torneio
+	 * 
+	 */	
 	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
+	/**
+	 * Lista de Partidas geradas a partir da lista EatletasTorneio
+	 */
 	private ArrayList<Partida> listaPartidas;
 	
-	
 	/**
-	 * gera array de partidas
+	 * Inicializador de objetos 
 	 */
-	public ArrayList<Partida> geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneio) {
-		
-		int totalClubes;
-		int metadeClubes;
-		
-		// variaveis que serao base para gerar tabela
-		totalClubes = listaEAtletaTorneio.size();
-		metadeClubes = totalClubes / 2;
-		ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
-		for (int turno = 0; turno <= 1; turno++) {
-			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
-				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
-					// Clube está de fora nessa rodada?
-					if (listaEAtletaTorneio.get(m) == null) {
-						continue;
-					}
-					// Teste para ajustar o mando de campo
-					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
-						if (turno == 0) {
-							listaPartidas
-									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneio.get(m), 0)));
-						} else {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
-						}
-					} else {
-						if (turno == 1) {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(m), 0),
-									new Visitante(listaEAtletaTorneio.get(totalClubes - m - 1), 0)));
-
-						} else {
-							listaPartidas
-									.add(new Partida(new Anfitriao(listaEAtletaTorneio.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneio.get(m), 0)));
-						}
-					}
-				}
-				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
-				EAtletaTorneio remove = listaEAtletaTorneio.remove(listaEAtletaTorneio.size() - 1);
-				listaEAtletaTorneio.add(1, remove);				
-			}
-		}
-		return listaPartidas;
-
-	}
-
-	
-	
-	
 	public TorneioController() {
 		super();
 		
@@ -98,53 +68,75 @@ public class TorneioController {
 		listaPartidas = new ArrayList<Partida>();
 		
 		this.frameCadastros = new FrameCadastros();
-		this.frameTorneios = new FrameTorneios();
-		this.framePartidas = new FramePartidas();
+		this.frameTorneios = new FrameTorneios();	
+		this.framePartidas = new FramePartidas();	
+		
 	}
+				
+	/**
+	 * gera array de partidas
+	 */
+	public ArrayList<Partida> geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual) {
+		
+		// em caso de partidas clubes impares
+		impar = false;
 
-	public FrameCadastros getFrameCadastros() {
-		return frameCadastros;
+		if (listaEAtletaTorneioAtual.size() % 2 == 1) {
+			listaEAtletaTorneioAtual.add(0, null);
+			impar = true;
+		}
+				
+		// variaveis que serao base para gerar tabela
+		totalClubes = listaEAtletaTorneioAtual.size();
+		metadeClubes = totalClubes / 2;
+		ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
+		for (int turno = 0; turno <= 1; turno++) {
+			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
+				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
+					// Clube está de fora nessa rodada?
+					if (listaEAtletaTorneioAtual.get(m) == null) {
+						continue;
+					}
+					// Teste para ajustar o mando de campo
+					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
+						if (turno == 0) {
+							listaPartidas
+									.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
+											new Visitante(listaEAtletaTorneioAtual.get(m), 0)));
+						} else {
+							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(m), 0),
+									new Visitante(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+						}
+					} else {
+						if (turno == 1) {
+							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(m), 0),
+									new Visitante(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+
+						} else {
+							listaPartidas
+									.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
+											new Visitante(listaEAtletaTorneioAtual.get(m), 0)));
+						}
+					}
+				}
+				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
+				EAtletaTorneio remove = listaEAtletaTorneioAtual.remove(listaEAtletaTorneioAtual.size() - 1);
+				listaEAtletaTorneioAtual.add(1, remove);				
+			}
+		}
+
+		//descartável porque a lista de eatleta torneio aqui é temporária
+		// desfazendo a adição de um clube vazio
+		if (impar) {
+			listaEatletasTorneio.remove(0);
+			this.totalClubes = listaEatletasTorneio.size();
+			this.metadeClubes = totalClubes / 2;
+		}
+		
+		return listaPartidas;
+
 	}
-
-	public void setFrameCadastros(FrameCadastros frameCadastros) {
-		this.frameCadastros = frameCadastros;
-	}
-
-	public FrameTorneios getFrameTorneios() {
-		return frameTorneios;
-	}
-
-	public void setFrameTorneios(FrameTorneios frameTorneios) {
-		this.frameTorneios = frameTorneios;
-	}
-
-	public FramePartidas getFramePartidas() {
-		return framePartidas;
-	}
-
-	public void setFramePartidas(FramePartidas framePartidas) {
-		this.framePartidas = framePartidas;
-	}
-
-	public void iniciarFrameTorneios() {
-		getFrameTorneios().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getFrameTorneios().setSize(800, 600);
-		getFrameTorneios().setVisible(true);
-	}
-
-	public void iniciarFramePartidas() {
-		getFramePartidas().setVisible(true);
-		getFramePartidas().setSize(800, 600);
-		getFramePartidas().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	public void preencherComboBox() {
-		getFrameTorneios().getTxtClube().addItem(new Clube("barcelona"));
-		getFrameTorneios().getTxtClube().addItem(new Clube("real"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("fabiano"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("giovanildo"));
-	}
-
+	
 	public void iniciar() {
 
 		iniciarFrameTorneios();
@@ -249,15 +241,34 @@ public class TorneioController {
 			public void actionPerformed(ActionEvent e) {				
 				
 				//pegar o arraylist o eatletaTorneio e jogar dentro da função gerar partidas
+
+				ArrayList <EAtletaTorneio> listaTorneioAtual = new ArrayList<>();
 				
+				for(EAtletaTorneio eat : listaEatletasTorneio ) {
+					if(eat.getTorneio().getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+						listaTorneioAtual.add(eat);
+					}
+				}
 				
+				listaPartidas = geraPartidas(listaTorneioAtual);
 				
+				int r = 0;
+				int p = 0;
+				
+				metadeClubes = listaTorneioAtual.size();
+				
+				for(Partida partida : listaPartidas) {
+					if ((p % metadeClubes) == 0) {						
+						r++;
+						//getFramePartidas().getModelPartidas().addElement( r + "a rodada " ));
+					}
+					getFramePartidas().getModelPartidas().addElement(partida);
+					p++;
+				}
 				
 				//pegar o arraylist de partidas geradas e jogar dentro JList de partidas
 				
 				iniciarFramePartidas();
-				
-				
 				
 			}
 		});
@@ -319,6 +330,46 @@ public class TorneioController {
 		});
 		
 	}
+
+	public FrameCadastros getFrameCadastros() {
+		return frameCadastros;
+	}
+
+	
+	public FrameTorneios getFrameTorneios() {
+		return frameTorneios;
+	}
+
+	public FramePartidas getFramePartidas() {
+		return framePartidas;
+	}
+
+	public void iniciarFrameTorneios() {
+		getFrameTorneios().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrameTorneios().setSize(800, 600);
+		getFrameTorneios().setVisible(true);
+	}
+
+	public void iniciarFramePartidas() {
+		getFramePartidas().setVisible(true);
+		getFramePartidas().setSize(800, 600);
+		getFramePartidas().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void preencherComboBox() {
+		getFrameTorneios().getTxtClube().addItem(new Clube("barcelona"));
+		getFrameTorneios().getTxtClube().addItem(new Clube("real"));
+		getFrameTorneios().getTxtClube().addItem(new Clube("atletico de madrid"));
+		getFrameTorneios().getTxtClube().addItem(new Clube("Chelsea"));
+		getFrameTorneios().getTxtClube().addItem(new Clube("Juventus"));		
+		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("giovanildo"));
+		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("fabiano"));
+		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("zaldir"));
+		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("genilson"));
+		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("Nen"));
+	}
+
+
 	protected void desabilitarCamposTorneio() {		                   
 		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
 		getFrameTorneios().getTxtPorqueDoNome().setEnabled(false);		
