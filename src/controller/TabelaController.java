@@ -184,7 +184,7 @@ public class TabelaController {
 		// adicionandoEquipes();
 		adicionandoEquipesScanner();
 		equipesImpar();
-		geraPartidas();
+//		geraPartidas();
 		removeClubeVazio();
 		preenchendoPartidas();
 		gerarClassificacao();
