@@ -9,8 +9,11 @@ public class Partida {
 
 	@Override
 	public String toString() {
-		return "anfitriao=" + anfitriao + ", visitante=" + visitante + ", encerrada="
-				+ encerrada;
+		String clubeMandante = anfitriao.geteAtletaTorneio().getClube().getNome();
+		String clubeVisitante = visitante.geteAtletaTorneio().getClube().getNome();
+		int golsMandante = anfitriao.getGols();
+		int golsVisitante = visitante.getGols();		
+		return  clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante;
 	}
 
 	private int id;
@@ -26,7 +29,7 @@ public class Partida {
 	 * saber se a partida foi encerrada ou não
 	 */
 	private boolean encerrada;
-
+	
 	/**
 	 * 
 	 * @param anfitriao
@@ -92,13 +95,6 @@ public class Partida {
 
 	}
 
-	/**
-	 * 
-	 * @param anfitriao
-	 */
-	public void setAnfitriao(Anfitriao anfitriao) {
-		this.anfitriao = anfitriao;
-	}
 
 	/**
 	 * 
@@ -106,14 +102,6 @@ public class Partida {
 	 */
 	public Visitante getVisitante() {
 		return visitante;
-	}
-
-	/**
-	 * 
-	 * @param visitante
-	 */
-	public void setVisitante(Visitante visitante) {
-		this.visitante = visitante;
 	}
 
 	/**
