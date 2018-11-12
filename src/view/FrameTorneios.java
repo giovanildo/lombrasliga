@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,7 +15,6 @@ import model.Clube;
 import model.EAtleta;
 import model.Torneio;
 import model.EAtletaTorneio;
-import model.Partida;
 
 public class FrameTorneios extends JFrame {
 
@@ -35,10 +32,6 @@ public class FrameTorneios extends JFrame {
 	private JButton btnSalvarTorneio;
 	private JButton btnDeletarTorneio;
 	private JButton btnEditarTorneio;
-
-	private ArrayList<Torneio> listaTorneios;
-	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
-	private ArrayList<Partida> listaPartidas;
 
 	private DefaultListModel<Torneio> modelTorneios;
 	private DefaultListModel<EAtletaTorneio> modelEatletaTorneio;
@@ -105,18 +98,6 @@ public class FrameTorneios extends JFrame {
 		return btnSalvarTorneio;
 	}
 
-	public ArrayList<Torneio> getListaTorneios() {
-		return listaTorneios;
-	}
-
-	public ArrayList<EAtletaTorneio> getListaEatletasTorneio() {
-		return listaEatletasTorneio;
-	}
-
-	public ArrayList<Partida> getListaPartidas() {
-		return listaPartidas;
-	}
-
 	public JButton getBtnEditarPartidas() {
 		return btnEditarPartidas;
 	}
@@ -125,9 +106,7 @@ public class FrameTorneios extends JFrame {
 
 		super("Torneio Lombra da Madrugada");
 
-		listaTorneios = new ArrayList<Torneio>();
-		listaEatletasTorneio = new ArrayList<EAtletaTorneio>();
-		listaPartidas = new ArrayList<Partida>();
+
 
 		JPanel panelTorneio = new JPanel();
 		panelTorneio.setBackground(Color.LIGHT_GRAY);

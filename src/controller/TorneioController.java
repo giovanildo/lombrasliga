@@ -32,6 +32,11 @@ public class TorneioController {
 	 */
 	private FramePartidas framePartidas;
 
+	private ArrayList<Torneio> listaTorneios;
+	private ArrayList<EAtletaTorneio> listaEatletasTorneio;
+	private ArrayList<Partida> listaPartidas;
+	
+	
 	/**
 	 * gera array de partidas
 	 */
@@ -84,8 +89,14 @@ public class TorneioController {
 
 	
 	
+	
 	public TorneioController() {
 		super();
+		
+		listaTorneios = new ArrayList<Torneio>();
+		listaEatletasTorneio = new ArrayList<EAtletaTorneio>();
+		listaPartidas = new ArrayList<Partida>();
+		
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
@@ -162,10 +173,10 @@ public class TorneioController {
 				
 				//removendo do array
 				
-				for(int i =0;i<getFrameTorneios().getListaEatletasTorneio().size();i++) {
-					EAtletaTorneio eatDoArray = getFrameTorneios().getListaEatletasTorneio().get(i);
+				for(int i =0;i<listaEatletasTorneio.size();i++) {
+					EAtletaTorneio eatDoArray = listaEatletasTorneio.get(i);
 					if(eatDoModel.equals(eatDoArray)) {
-						getFrameTorneios().getListaEatletasTorneio().remove(i);
+						listaEatletasTorneio.remove(i);
 					}
 				}				
 				
@@ -193,7 +204,7 @@ public class TorneioController {
 						new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText()),
 						(Clube) getFrameTorneios().getTxtClube().getSelectedItem());
 				getFrameTorneios().getModelEatletaTorneio().addElement(eat);
-				getFrameTorneios().getListaEatletasTorneio().add(eat);
+				listaEatletasTorneio.add(eat);
 			}
 		});
 		
@@ -209,7 +220,7 @@ public class TorneioController {
 						torneioDaVez.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
 						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
 						//salva no lista Torneios
-						for(Torneio torneioArray : getFrameTorneios().getListaTorneios()) {
+						for(Torneio torneioArray : listaTorneios) {
 							if(torneioArray.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
 								torneioArray.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
 							}
@@ -226,7 +237,7 @@ public class TorneioController {
 
 				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
 				System.out.println("adicionando ao lista Torneios");
-				getFrameTorneios().getListaTorneios().add(torneio);				
+				listaTorneios.add(torneio);				
 				
 				getFrameTorneios().getModelTorneios().addElement(torneio);
 				System.out.println("adicionando ao Jist Torneio");
@@ -235,8 +246,19 @@ public class TorneioController {
 		
 		
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
+				
+				//pegar o arraylist o eatletaTorneio e jogar dentro da função gerar partidas
+				
+				
+				
+				
+				//pegar o arraylist de partidas geradas e jogar dentro JList de partidas
+				
 				iniciarFramePartidas();
+				
+				
+				
 			}
 		});
 		
@@ -246,17 +268,18 @@ public class TorneioController {
 				int index = getFrameTorneios().getJlstTorneios().getSelectedIndex();
 				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
 												
-				getFrameTorneios().getModelEatletaTorneio().clear();
-				getFrameTorneios().getListaTorneios().remove(index);
+				getFrameTorneios().getModelEatletaTorneio().clear();				
 				getFrameTorneios().getModelTorneios().remove(index);
+				
+				listaTorneios.remove(index);
 				
 				//apagar todas as referencias do torneio na lista EAtletaTorneio
 				
-				for(int i = 0; i<getFrameTorneios().getListaEatletasTorneio().size();i++) {
-					String torneioEAtleta = getFrameTorneios().getListaEatletasTorneio().get(i).getTorneio().getNome();
+				for(int i = 0; i<listaEatletasTorneio.size();i++) {
+					String torneioEAtleta = listaEatletasTorneio.get(i).getTorneio().getNome();
 					if(torneioEAtleta.equals(torneio.getNome())) {
 						System.out.println("apagando linha " + torneioEAtleta);
-						getFrameTorneios().getListaEatletasTorneio().remove(i);
+						listaEatletasTorneio.remove(i);
 						
 					}
 				}
@@ -268,7 +291,6 @@ public class TorneioController {
 		
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FramePartidas fp = new FramePartidas(); 
 				//selecionar tudo que tiver o nome do torneio na array list do atleta torneio
 				
 				
@@ -287,7 +309,7 @@ public class TorneioController {
 				
 				//recuperar do arraylist e jogar no JList do EAtletaTorneio
 				
-				for(EAtletaTorneio eat : getFrameTorneios().getListaEatletasTorneio()) {
+				for(EAtletaTorneio eat : listaEatletasTorneio) {
 					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
 						getFrameTorneios().getModelEatletaTorneio().addElement(eat);	
 					}
@@ -296,8 +318,6 @@ public class TorneioController {
 			}
 		});
 		
-		
-
 	}
 	protected void desabilitarCamposTorneio() {		                   
 		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
@@ -305,7 +325,6 @@ public class TorneioController {
 	}
 
 	public void desabilitarPanelTorneio() {
-		
 		getFrameTorneios().getBtnSalvarTorneio().setEnabled(false);
 		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
 		getFrameTorneios().getBtnRemoverJogador().setEnabled(false);
