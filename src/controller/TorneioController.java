@@ -11,6 +11,7 @@ import model.Clube;
 import model.EAtleta;
 import model.EAtletaTorneio;
 import model.Partida;
+import model.Torneio;
 import model.Visitante;
 import view.FrameCadastros;
 import view.FramePartidas;
@@ -137,20 +138,197 @@ public class TorneioController {
 
 		iniciarFrameTorneios();
 		preencherComboBox();
+		desabilitarPanelTorneio();
+		
+		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				habilitarPanelTorneio();
+				getFrameTorneios().getModelEatletaTorneio().clear();
+				//evita que adicione torneios com o mesmo nome
+				for (int i = 0; i < getFrameTorneios().getJlstTorneios().getModel().getSize(); i++) {
+					Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(i);
+					if (torneio.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+						System.out.println("repetido");
+						return;
+					}
+				}
+			}
+		});
+		
+		getFrameTorneios().getBtnRemoverJogador().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				int index = getFrameTorneios().getJlstEatletaClube().getSelectedIndex();
+				EAtletaTorneio eatDoModel = getFrameTorneios().getModelEatletaTorneio().getElementAt(index);
+				
+				//removendo do array
+				
+				for(int i =0;i<getFrameTorneios().getListaEatletasTorneio().size();i++) {
+					EAtletaTorneio eatDoArray = getFrameTorneios().getListaEatletasTorneio().get(i);
+					if(eatDoModel.equals(eatDoArray)) {
+						getFrameTorneios().getListaEatletasTorneio().remove(i);
+					}
+				}				
+				
+				getFrameTorneios().getModelEatletaTorneio().remove(index);
+				
+			}
+		});
+		
+		getFrameTorneios().getBtnAdicionarJogador().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				desabilitarCamposTorneio();
+				//se for repetido EAtleta Torneio encerra o método
+				for (int i = 0; i < getFrameTorneios().getJlstEatletaClube().getModel().getSize(); i++) {
+					EAtletaTorneio eat = getFrameTorneios().getJlstEatletaClube().getModel().getElementAt(i);
+					if (eat.getClube().getNome().equals(getFrameTorneios().getTxtClube().getSelectedItem().toString())
+							&& eat.geteAtleta().getNome().equals(getFrameTorneios().getTxtEatleta().getSelectedItem().toString())
+							&& eat.getTorneio().getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+						System.out.println("repetido");
+						return;
+					}
+				}
+				//se não for repetido adiciona tanto a JList como a lista EAtleta Torneio
+				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem(),
+						new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText()),
+						(Clube) getFrameTorneios().getTxtClube().getSelectedItem());
+				getFrameTorneios().getModelEatletaTorneio().addElement(eat);
+				getFrameTorneios().getListaEatletasTorneio().add(eat);
+			}
+		});
+		
+		getFrameTorneios().getBtnSalvarTorneio().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//evita que adicione torneios com o mesmo nome
+				//salva edições do torneio 
+				for (int i = 0; i < getFrameTorneios().getJlstTorneios().getModel().getSize();i++) {
+					Torneio torneioDaVez = getFrameTorneios().getJlstTorneios().getModel().getElementAt(i);
+					//verifica se o nome já existe o registro no JList
+					if (torneioDaVez.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+						//salva na JList dos torneios
+						torneioDaVez.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
+						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
+						//salva no lista Torneios
+						for(Torneio torneioArray : getFrameTorneios().getListaTorneios()) {
+							if(torneioArray.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+								torneioArray.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
+							}
+						}
+						return;
+					}
+				}
+				
+				System.out.println("novo torneio");
+				
+				//no caso de um novo torneio...
+				
+				Torneio torneio = new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText());
 
+				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
+				System.out.println("adicionando ao lista Torneios");
+				getFrameTorneios().getListaTorneios().add(torneio);				
+				
+				getFrameTorneios().getModelTorneios().addElement(torneio);
+				System.out.println("adicionando ao Jist Torneio");
+			}
+		});
+		
+		
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				iniciarFramePartidas();
 			}
 		});
-
-		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
+		
+		getFrameTorneios().getBtnDeletarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				getFrameTorneios().getTxtNometorneio().setText("");
-//				getFrameTorneios().getTxtPorqueDoNome().setText("");
-
+				
+				int index = getFrameTorneios().getJlstTorneios().getSelectedIndex();
+				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
+												
+				getFrameTorneios().getModelEatletaTorneio().clear();
+				getFrameTorneios().getListaTorneios().remove(index);
+				getFrameTorneios().getModelTorneios().remove(index);
+				
+				//apagar todas as referencias do torneio na lista EAtletaTorneio
+				
+				for(int i = 0; i<getFrameTorneios().getListaEatletasTorneio().size();i++) {
+					String torneioEAtleta = getFrameTorneios().getListaEatletasTorneio().get(i).getTorneio().getNome();
+					if(torneioEAtleta.equals(torneio.getNome())) {
+						System.out.println("apagando linha " + torneioEAtleta);
+						getFrameTorneios().getListaEatletasTorneio().remove(i);
+						
+					}
+				}
+				
+				System.out.println("deletado com sucesso " + index);
+				
 			}
 		});
+		
+		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FramePartidas fp = new FramePartidas(); 
+				//selecionar tudo que tiver o nome do torneio na array list do atleta torneio
+				
+				
+			}
+		});
+		
+		getFrameTorneios().getBtnEditarTorneio().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+								 
+				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(getFrameTorneios().getJlstTorneios().getSelectedIndex());
+				getFrameTorneios().getTxtNomeTorneio().setText(torneio.getNome());
+				getFrameTorneios().getTxtPorqueDoNome().setText(torneio.getPorqueDoNome());				
+				habilitarPanelTorneio();
+				//limpa JList EAtleta Torneio 
+				getFrameTorneios().getModelEatletaTorneio().clear();
+				
+				//recuperar do arraylist e jogar no JList do EAtletaTorneio
+				
+				for(EAtletaTorneio eat : getFrameTorneios().getListaEatletasTorneio()) {
+					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
+						getFrameTorneios().getModelEatletaTorneio().addElement(eat);	
+					}
+					
+				}
+			}
+		});
+		
+		
 
 	}
+	protected void desabilitarCamposTorneio() {		                   
+		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
+		getFrameTorneios().getTxtPorqueDoNome().setEnabled(false);		
+	}
+
+	public void desabilitarPanelTorneio() {
+		
+		getFrameTorneios().getBtnSalvarTorneio().setEnabled(false);
+		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
+		getFrameTorneios().getBtnRemoverJogador().setEnabled(false);
+		
+		getFrameTorneios().getBtnAdicionarJogador().setEnabled(false);
+		getFrameTorneios().getTxtClube().setEnabled(false);
+		getFrameTorneios().getTxtEatleta().setEnabled(false);
+		getFrameTorneios().getJlstEatletaClube().setEnabled(false);
+	}
+
+	public void habilitarPanelTorneio() {
+		getFrameTorneios().getTxtNomeTorneio().setEnabled(true);
+		getFrameTorneios().getTxtPorqueDoNome().setEnabled(true);
+		
+		getFrameTorneios().getBtnSalvarTorneio().setEnabled(true);
+		getFrameTorneios().getTxtNomeTorneio().setEnabled(true);
+		getFrameTorneios().getTxtPorqueDoNome().setEnabled(true);
+		
+		getFrameTorneios().getBtnRemoverJogador().setEnabled(true);
+		getFrameTorneios().getBtnAdicionarJogador().setEnabled(true);
+		getFrameTorneios().getTxtClube().setEnabled(true);
+		getFrameTorneios().getTxtEatleta().setEnabled(true);
+		getFrameTorneios().getJlstEatletaClube().setEnabled(true);
+		
+	}	
 }
