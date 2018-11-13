@@ -2,9 +2,13 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import model.Anfitriao;
 import model.Clube;
@@ -72,12 +76,34 @@ public class TorneioController {
 		this.framePartidas = new FramePartidas();	
 		
 	}
+
+	
+	public void confirmarPlacar(){
+		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
+		
+		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
+		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());				
+		for(Partida partidaArray : listaPartidas) {
+			if(partidaArray.equals(partidaModel)) {
+				partidaArray.getAnfitriao().setGols(golsAnfitriao);
+				partidaArray.getVisitante().setGols(golsVisitante);										
 				
+				System.out.println(partidaArray);
+				
+				partidaModel.getAnfitriao().setGols(golsAnfitriao);
+				partidaModel.getVisitante().setGols(golsVisitante);
+				
+				System.out.println(partidaModel);
+			}
+		}
+		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
+	}
+	
 	/**
 	 * gera array de partidas
 	 */
-	public ArrayList<Partida> geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual) {
-		
+	public void geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual) {
 		// em caso de partidas clubes impares
 		impar = false;
 
@@ -85,11 +111,10 @@ public class TorneioController {
 			listaEAtletaTorneioAtual.add(0, null);
 			impar = true;
 		}
-				
 		// variaveis que serao base para gerar tabela
 		totalClubes = listaEAtletaTorneioAtual.size();
 		metadeClubes = totalClubes / 2;
-		ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
+		
 		for (int turno = 0; turno <= 1; turno++) {
 			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
 				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
@@ -124,7 +149,6 @@ public class TorneioController {
 				listaEAtletaTorneioAtual.add(1, remove);				
 			}
 		}
-
 		//descartável porque a lista de eatleta torneio aqui é temporária
 		// desfazendo a adição de um clube vazio
 		if (impar) {
@@ -133,16 +157,12 @@ public class TorneioController {
 			this.metadeClubes = totalClubes / 2;
 		}
 		
-		return listaPartidas;
-
 	}
 	
 	public void iniciar() {
-
 		iniciarFrameTorneios();
 		preencherComboBox();
 		desabilitarPanelTorneio();
-		
 		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				habilitarPanelTorneio();
@@ -157,29 +177,27 @@ public class TorneioController {
 				}
 			}
 		});
-		
+		//remove EAtelta Torneio
 		getFrameTorneios().getBtnRemoverJogador().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				int index = getFrameTorneios().getJlstEatletaClube().getSelectedIndex();
 				EAtletaTorneio eatDoModel = getFrameTorneios().getModelEatletaTorneio().getElementAt(index);
-				
 				//removendo do array
-				
 				for(int i =0;i<listaEatletasTorneio.size();i++) {
 					EAtletaTorneio eatDoArray = listaEatletasTorneio.get(i);
 					if(eatDoModel.equals(eatDoArray)) {
 						listaEatletasTorneio.remove(i);
 					}
 				}				
-				
 				getFrameTorneios().getModelEatletaTorneio().remove(index);
-				
 			}
 		});
 		
+		
+		
+		//adiciona EAtletaTorneio
 		getFrameTorneios().getBtnAdicionarJogador().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				desabilitarCamposTorneio();
 				//se for repetido EAtleta Torneio encerra o método
 				for (int i = 0; i < getFrameTorneios().getJlstEatletaClube().getModel().getSize(); i++) {
@@ -199,7 +217,7 @@ public class TorneioController {
 				listaEatletasTorneio.add(eat);
 			}
 		});
-		
+		//Salva Torneio
 		getFrameTorneios().getBtnSalvarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//evita que adicione torneios com o mesmo nome
@@ -220,51 +238,54 @@ public class TorneioController {
 						return;
 					}
 				}
-				
 				System.out.println("novo torneio");
-				
 				//no caso de um novo torneio...
-				
 				Torneio torneio = new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText());
-
 				//adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
 				System.out.println("adicionando ao lista Torneios");
 				listaTorneios.add(torneio);				
-				
 				getFrameTorneios().getModelTorneios().addElement(torneio);
 				System.out.println("adicionando ao Jist Torneio");
 			}
 		});
-		
+		//Gera Partidas e Edita Partidas
 		
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
+
+				getFramePartidas().getModelPartidas().clear();
 				
-				//pegar o arraylist o eatletaTorneio e jogar dentro da função gerar partidas
+				// saber se já existe o torneio já foi disputado ou não - comparar a lista das partidas com a lista dos eats
 
 				ArrayList <EAtletaTorneio> listaTorneioAtual = new ArrayList<>();
+				String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
 				
 				for(EAtletaTorneio eat : listaEatletasTorneio ) {
-					if(eat.getTorneio().getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
+					String torneioEat = eat.getTorneio().getNome();
+					if(torneioEat.equals(torneioTxtField)) {
 						listaTorneioAtual.add(eat);
 					}
 				}
-				
-				listaPartidas = geraPartidas(listaTorneioAtual);
-				
-				metadeClubes = listaTorneioAtual.size();
-				
-				for(Partida partida : listaPartidas) {
-					getFramePartidas().getModelPartidas().addElement(partida);
+				// caso não exista gera normalmente - código já montado
+				if(!seTorneioFoiDisputado()) {
+					geraPartidas(listaTorneioAtual);
 				}
-				
-				//pegar o arraylist de partidas geradas e jogar dentro JList de partidas
+
+				// caso exista seleciona as partidas existentes e joga para o model list - fazer um for selecionando
+		
+				metadeClubes = listaTorneioAtual.size();
+				for(Partida partida : listaPartidas) {
+					String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+					if(torneioPartida.equals(torneioTxtField)){
+						getFramePartidas().getModelPartidas().addElement(partida);
+					} 
+				}
+			
 				
 				iniciarFramePartidas();
-				
 			}
 		});
-		
+		//Deleta Torneio
 		getFrameTorneios().getBtnDeletarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -286,32 +307,40 @@ public class TorneioController {
 						
 					}
 				}
-				
 				System.out.println("deletado com sucesso " + index);
-				
 			}
 		});
 		
-		getFramePartidas().getBtnAlterarPlacar().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
-				Partida partida = getFramePartidas().getJlstPartidas().getModel().getElementAt(index);
-				getFramePartidas().getLblAnfitriao().setText(partida.getAnfitriao().geteAtletaTorneio().getClube().getNome());
-				getFramePartidas().getLblVisitante().setText(partida.getVisitante().geteAtletaTorneio().getClube().getNome());
+//		//Altera Placar
+//		getFramePartidas().getBtnAlterarPlacar().addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+//				Partida partida = getFramePartidas().getJlstPartidas().getModel().getElementAt(index);
+//				getFramePartidas().getLblAnfitriao().setText(partida.getAnfitriao().geteAtletaTorneio().getClube().getNome());
+//				getFramePartidas().getLblVisitante().setText(partida.getVisitante().geteAtletaTorneio().getClube().getNome());
+//			}
+//		});
+		
+		getFramePartidas().getJlstPartidas().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				getFramePartidas().getTxtGolsAnfitriao().requestFocus();
+				getFramePartidas().getTxtGolsAnfitriao().setText("0");
+				getFramePartidas().getTxtGolsVisitante().setText("0");
 			}
 		});
 		
+		getFramePartidas().getTxtGolsVisitante().addKeyListener(new KeyAdapter() {
+			public void keyPressed(java.awt.event.KeyEvent e) {
+				if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+					confirmarPlacar();				
+				}
+			}
+
+		});
+
 		getFramePartidas().getBtnConfirmar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String txtAnfitriao = getFramePartidas().getTxtAnfitriao().getText();
-				String txtVisitante = getFramePartidas().getTxtVisitante().getText();
-				for(Partida partida : listaPartidas) {
-					String clube = partida.getAnfitriao().geteAtletaTorneio().getClube().getNome();
-					if(clube.equals(txtAnfitriao)){
-						
-					}
-				}
+				confirmarPlacar();
 			}
 		});
 		
@@ -319,8 +348,10 @@ public class TorneioController {
 			public void actionPerformed(ActionEvent e) {
 								 
 				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(getFrameTorneios().getJlstTorneios().getSelectedIndex());
+				
 				getFrameTorneios().getTxtNomeTorneio().setText(torneio.getNome());
 				getFrameTorneios().getTxtPorqueDoNome().setText(torneio.getPorqueDoNome());				
+				
 				habilitarPanelTorneio();
 				//limpa JList EAtleta Torneio 
 				getFrameTorneios().getModelEatletaTorneio().clear();
@@ -331,12 +362,38 @@ public class TorneioController {
 					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
 						getFrameTorneios().getModelEatletaTorneio().addElement(eat);	
 					}
-					
 				}
 			}
 		});
 		
+		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getFrameCadastros().getModelClubes().addElement(new Clube(getFrameCadastros().getTxtClube().getText()));
+				getFrameCadastros().getTxtClube().setText("");
+			}
+		});
+		
+		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getFrameCadastros().getModelEatletas().addElement(new EAtleta(getFrameCadastros().getTxtEatleta().getText()));
+				getFrameCadastros().getTxtEatleta().setText("");
+
+			}
+		});
 	}
+
+	private boolean seTorneioFoiDisputado() {
+		boolean foiDisputado = false;
+		for(Partida partida : listaPartidas) {
+			String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
+			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+			if(torneioPartida.equals(torneioTxtField)){
+				foiDisputado = true;
+			} 
+		}
+		return foiDisputado;
+	}
+
 
 	public FrameCadastros getFrameCadastros() {
 		return frameCadastros;

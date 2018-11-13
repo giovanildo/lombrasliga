@@ -20,8 +20,12 @@ public class FrameCadastros extends JFrame {
 	private JTextField txtClube;
 	private JTextField txtEatleta;
 	private DefaultListModel<Clube> modelClubes;
+	private DefaultListModel<EAtleta> modelEatletas;
 	private JList<Clube> jlstClubes;
-
+	private JButton btnAdicionarClube;
+	private JButton btnAdicionarEatleta;
+	private JList<EAtleta> jlstEatleta;
+	
 	public FrameCadastros() {
 
 		getContentPane().setLayout(null);
@@ -56,23 +60,16 @@ public class FrameCadastros extends JFrame {
 		jlstClubes.setBounds(56, 176, 206, 263);
 		getContentPane().add(jlstClubes);
 
-		final DefaultListModel<EAtleta> modelEatletas = new DefaultListModel<>();
-		final JList<EAtleta> jlstEatleta = new JList<>(modelEatletas);
+		modelEatletas = new DefaultListModel<>();
+		jlstEatleta = new JList<>(modelEatletas);
 		jlstEatleta.setBounds(515, 176, 243, 263);
 		getContentPane().add(jlstEatleta);
 
-		JButton btnAdicionarClube = new JButton("Adicionar");
-		btnAdicionarClube.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modelClubes.addElement(new Clube(txtClube.getText()));
-				txtClube.setText("");
-				//listaClubes();
-			}
-		});
+		btnAdicionarClube = new JButton("Adicionar");
 		btnAdicionarClube.setBounds(66, 97, 178, 25);
 		getContentPane().add(btnAdicionarClube);
 
-		JButton btnAdicionarEatleta = new JButton("Adicionar");
+		btnAdicionarEatleta = new JButton("Adicionar");
 		btnAdicionarEatleta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelEatletas.addElement(new EAtleta(txtEatleta.getText()));
@@ -111,5 +108,44 @@ public class FrameCadastros extends JFrame {
 		btnTelaPrincipal.setBounds(295, 465, 150, 25);
 		getContentPane().add(btnTelaPrincipal);
 
+	}
+
+
+	public JTextField getTxtClube() {
+		return txtClube;
+	}
+
+
+	public JTextField getTxtEatleta() {
+		return txtEatleta;
+	}
+
+
+	public DefaultListModel<Clube> getModelClubes() {
+		return modelClubes;
+	}
+
+
+	public DefaultListModel<EAtleta> getModelEatletas() {
+		return modelEatletas;
+	}
+
+
+	public JList<Clube> getJlstClubes() {
+		return jlstClubes;
+	}
+
+
+	public JButton getBtnAdicionarClube() {
+		return btnAdicionarClube;
+	}
+
+
+	public JButton getBtnAdicionarEatleta() {
+		return btnAdicionarEatleta;
+	}
+	
+	public JList<EAtleta> getJlstEatleta() {
+		return jlstEatleta;
 	}
 }

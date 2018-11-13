@@ -7,14 +7,6 @@ package model;
  */
 public class Partida {
 
-	@Override
-	public String toString() {
-		String clubeMandante = anfitriao.geteAtletaTorneio().getClube().getNome();
-		String clubeVisitante = visitante.geteAtletaTorneio().getClube().getNome();
-		int golsMandante = anfitriao.getGols();
-		int golsVisitante = visitante.getGols();		
-		return  clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante;
-	}
 
 	private int id;
 	/**
@@ -30,6 +22,19 @@ public class Partida {
 	 */
 	private boolean encerrada;
 	
+	@Override
+	public String toString() {
+		String clubeMandante = anfitriao.geteAtletaTorneio().getClube().getNome();
+		String clubeVisitante = visitante.geteAtletaTorneio().getClube().getNome();
+		String eAtletaMandante = anfitriao.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
+		String eAtletaVisitante = visitante.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
+		
+		int golsMandante = anfitriao.getGols();
+		int golsVisitante = visitante.getGols();		
+		
+		return  eAtletaMandante + " - " + clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante + " - " + eAtletaVisitante;
+	}
+
 	/**
 	 * 
 	 * @param anfitriao
@@ -69,6 +74,32 @@ public class Partida {
 			this.getAnfitriao().perdeu();
 		}
 	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Partida other = (Partida) obj;
+		if (anfitriao == null) {
+			if (other.anfitriao != null)
+				return false;
+		} else if (!anfitriao.equals(other.anfitriao))
+			return false;
+		if (id != other.id)
+			return false;
+		if (visitante == null) {
+			if (other.visitante != null)
+				return false;
+		} else if (!visitante.equals(other.visitante))
+			return false;
+		return true;
+	}
+
 
 	/**
 	 * 

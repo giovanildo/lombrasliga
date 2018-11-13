@@ -11,45 +11,43 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.ListSelectionModel;
+
 
 public class FramePartidas extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txtAnfitriao;
-	private JTextField txtVisitante;
+	private JTextField txtGolsAnfitriao;
+	private JTextField txtGolsVisitante;
 	private JButton btnAlterarPlacar;
 	private JButton btnConfirmar;
+	private JList<Partida> jlstPartidas;
+	private JLabel lblAnfitriao;
+	private JLabel lblVisitante;
+	private DefaultListModel<Partida> modelPartidas;
 	
-	/**
-	 * @return the txtAnfitriao
-	 */
-	public JTextField getTxtAnfitriao() {
-		return txtAnfitriao;
+	public JTextField getTxtGolsAnfitriao() {
+		return txtGolsAnfitriao;
 	}
 
 
-	/**
-	 * @return the txtVisitante
-	 */
-	public JTextField getTxtVisitante() {
-		return txtVisitante;
+
+	public JTextField getTxtGolsVisitante() {
+		return txtGolsVisitante;
 	}
-
-
+	
 	/**
 	 * @return the btnConfirmar
 	 */
 	public JButton getBtnConfirmar() {
 		return btnConfirmar;
 	}
-
-	private JList<Partida> jlstPartidas;
-	
-	private JLabel lblAnfitriao;
-	
-	private JLabel lblVisitante;
 	
 	/**
 	 * @return the lblAnfitriao
@@ -58,14 +56,12 @@ public class FramePartidas extends JFrame {
 		return lblAnfitriao;
 	}
 
-
 	/**
 	 * @return the lblVisitante
 	 */
 	public JLabel getLblVisitante() {
 		return lblVisitante;
 	}
-
 
 	/**
 	 * @return the jlstPartidas
@@ -74,8 +70,6 @@ public class FramePartidas extends JFrame {
 		return jlstPartidas;
 	}
 
-	private DefaultListModel<Partida> modelPartidas;
-
 	/**
 	 * @return the btnAlterarPlacar
 	 */
@@ -83,7 +77,6 @@ public class FramePartidas extends JFrame {
 		return btnAlterarPlacar;
 	}
 
-	
 	public DefaultListModel<Partida> getModelPartidas() {
 		return modelPartidas;
 	}
@@ -107,31 +100,35 @@ public class FramePartidas extends JFrame {
 		lblVisitante.setBounds(398, 510, 70, 15);
 		getContentPane().add(lblVisitante);
 
-		txtAnfitriao = new JTextField();
-		txtAnfitriao.setText("gols");
-		txtAnfitriao.setBounds(121, 508, 114, 19);
-		getContentPane().add(txtAnfitriao);
-		txtAnfitriao.setColumns(10);
+		txtGolsAnfitriao = new JTextField();
+		txtGolsAnfitriao.setText("gols");
+		txtGolsAnfitriao.setBounds(121, 508, 114, 19);
+		getContentPane().add(txtGolsAnfitriao);
+		txtGolsAnfitriao.setColumns(10);
 
-		txtVisitante = new JTextField();
-		txtVisitante.setText("gols");
-		txtVisitante.setBounds(272, 508, 114, 19);
-		getContentPane().add(txtVisitante);
-		txtVisitante.setColumns(10);
+		txtGolsVisitante = new JTextField();
+		txtGolsVisitante.setText("gols");
+		txtGolsVisitante.setBounds(272, 508, 114, 19);
+		getContentPane().add(txtGolsVisitante);
+		txtGolsVisitante.setColumns(10);
 
-		 btnConfirmar = new JButton("Confirmar");
+		btnConfirmar = new JButton("Confirmar");
 
-		btnConfirmar.setBounds(469, 505, 117, 25);
+
+		btnConfirmar.setBounds(183, 549, 117, 25);
 		getContentPane().add(btnConfirmar);
 
 		modelPartidas = new DefaultListModel<Partida>();
-		jlstPartidas = new JList<>(modelPartidas);		
+		jlstPartidas = new JList<>();
+		jlstPartidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		jlstPartidas.setModel(modelPartidas);
 		jlstPartidas.setBounds(34, 53, 525, 444);
 		getContentPane().add(jlstPartidas);
 		
-		btnAlterarPlacar = new JButton("Alterar Placar");
-
-		btnAlterarPlacar.setBounds(610, 506, 102, 23);
-		getContentPane().add(btnAlterarPlacar);
+//		btnAlterarPlacar = new JButton("Alterar Placar");
+//
+//		btnAlterarPlacar.setBounds(228, 551, 122, 23);
+//		getContentPane().add(btnAlterarPlacar);
 	}
 }
