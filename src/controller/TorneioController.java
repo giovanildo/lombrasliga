@@ -252,18 +252,10 @@ public class TorneioController {
 				
 				listaPartidas = geraPartidas(listaTorneioAtual);
 				
-				int r = 0;
-				int p = 0;
-				
 				metadeClubes = listaTorneioAtual.size();
 				
 				for(Partida partida : listaPartidas) {
-					if ((p % metadeClubes) == 0) {						
-						r++;
-						//getFramePartidas().getModelPartidas().addElement( r + "a rodada " ));
-					}
 					getFramePartidas().getModelPartidas().addElement(partida);
-					p++;
 				}
 				
 				//pegar o arraylist de partidas geradas e jogar dentro JList de partidas
@@ -300,11 +292,26 @@ public class TorneioController {
 			}
 		});
 		
-		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//selecionar tudo que tiver o nome do torneio na array list do atleta torneio
+		getFramePartidas().getBtnAlterarPlacar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+				Partida partida = getFramePartidas().getJlstPartidas().getModel().getElementAt(index);
+				getFramePartidas().getLblAnfitriao().setText(partida.getAnfitriao().geteAtletaTorneio().getClube().getNome());
+				getFramePartidas().getLblVisitante().setText(partida.getVisitante().geteAtletaTorneio().getClube().getNome());
+			}
+		});
+		
+		getFramePartidas().getBtnConfirmar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
-				
+				String txtAnfitriao = getFramePartidas().getTxtAnfitriao().getText();
+				String txtVisitante = getFramePartidas().getTxtVisitante().getText();
+				for(Partida partida : listaPartidas) {
+					String clube = partida.getAnfitriao().geteAtletaTorneio().getClube().getNome();
+					if(clube.equals(txtAnfitriao)){
+						
+					}
+				}
 			}
 		});
 		
