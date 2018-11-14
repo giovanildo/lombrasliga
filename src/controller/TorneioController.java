@@ -24,22 +24,6 @@ import view.FrameTorneios;
 public class TorneioController {
 
 	/**
-	 * Saber se o número de equipe é par ou impar
-	 * se for impar o algoritmo irá adicionar um eatletatorneio nulo
-	 * para facilitar a geração de partidas
-	 */
-	
-	private boolean impar;
-	/**
-	 * numero total de clubes
-	 */
-	private int totalClubes;
-	/**
-	 * metade de clubes
-	 */
-	private int metadeClubes;
-	
-	/**
 	 * view dos cadastros, clubes e jogadores
 	 */
 	private FrameCadastros frameCadastros;
@@ -66,8 +50,20 @@ public class TorneioController {
 	private ArrayList<Partida> listaPartidas;
 	
 	/**
+	 * lista de Clubes
+	 */
+	private ArrayList<Clube> listaClubes;
+	
+	/**
+	 * lista de EAtleta
+	 */
+	
+	private ArrayList<EAtleta> listaEatleta;
+	
+	/**
 	 * Inicializador de objetos 
 	 */
+	
 	public TorneioController() {
 		super();
 		
@@ -108,16 +104,14 @@ public class TorneioController {
 	 * gera array de partidas
 	 */
 	public void geraPartidas(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual) {
-		// em caso de partidas clubes impares
-		impar = false;
-
+		// em caso de partidas clubes impares		
 		if (listaEAtletaTorneioAtual.size() % 2 == 1) {
 			listaEAtletaTorneioAtual.add(0, null);
-			impar = true;
 		}
-		// variaveis que serao base para gerar tabela
-		totalClubes = listaEAtletaTorneioAtual.size();
-		metadeClubes = totalClubes / 2;
+		
+		// variaveis que serao base para gerar partidas
+		int totalClubes = listaEAtletaTorneioAtual.size();
+		int metadeClubes = totalClubes / 2;
 		
 		for (int turno = 0; turno <= 1; turno++) {
 			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
@@ -152,13 +146,6 @@ public class TorneioController {
 				EAtletaTorneio remove = listaEAtletaTorneioAtual.remove(listaEAtletaTorneioAtual.size() - 1);
 				listaEAtletaTorneioAtual.add(1, remove);				
 			}
-		}
-		//descartável porque a lista de eatleta torneio aqui é temporária
-		// desfazendo a adição de um clube vazio
-		if (impar) {
-			listaEatletasTorneio.remove(0);
-			this.totalClubes = listaEatletasTorneio.size();
-			this.metadeClubes = totalClubes / 2;
 		}
 		
 	}
@@ -312,7 +299,7 @@ public class TorneioController {
 
 				// caso exista seleciona as partidas existentes e joga para o model list - fazer um for selecionando
 		
-				metadeClubes = listaTorneioAtual.size();
+				int metadeClubes = listaTorneioAtual.size();
 				for(Partida partida : listaPartidas) {
 					String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
 					if(torneioPartida.equals(torneioTxtField)){
@@ -408,31 +395,29 @@ public class TorneioController {
 		//frame Cadastros
 		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getFrameCadastros().getModelClubes().addElement(new Clube(getFrameCadastros().getTxtClube().getText()));
+				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
+				listaClubes.add(clube);
+				getFrameCadastros().getModelClubes().addElement(clube);
 				getFrameCadastros().getTxtClube().setText("");
 			}
 		});
 		
 		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getFrameCadastros().getModelEatletas().addElement(new EAtleta(getFrameCadastros().getTxtEatleta().getText()));
+				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
+				listaEatleta.add(eAtleta);
+				getFrameCadastros().getModelEatletas().addElement(eAtleta);
 				getFrameCadastros().getTxtEatleta().setText("");
 
 			}
 		});
 
 		
-		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getFrameCadastros().getModelEatletas().addElement(new EAtleta(getFrameCadastros().getTxtEatleta().getText()));
-				getFrameCadastros().getTxtEatleta().setText("");
-
-			}
-		});
 		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
 				getFrameCadastros().getModelClubes().remove(index);
+				
 			}
 		});
 		

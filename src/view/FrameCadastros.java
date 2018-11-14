@@ -10,11 +10,8 @@ import model.EAtleta;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
 
 public class FrameCadastros extends JFrame {
 	private static final long serialVersionUID = 1L;
