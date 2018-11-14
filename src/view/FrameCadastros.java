@@ -12,11 +12,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class FrameCadastros extends JFrame {
-
 	private static final long serialVersionUID = 1L;
-
+	
 	private JTextField txtClube;
 	private JTextField txtEatleta;
 	private DefaultListModel<Clube> modelClubes;
@@ -25,6 +27,11 @@ public class FrameCadastros extends JFrame {
 	private JButton btnAdicionarClube;
 	private JButton btnAdicionarEatleta;
 	private JList<EAtleta> jlstEatleta;
+	private JButton  btnTelaPrincipal;
+	private JButton btnApagarEatleta;
+	private JButton btnApagarClube;
+	private JButton btnEditarClube;
+	private JButton btnEditarEatleta;
 	
 	public FrameCadastros() {
 
@@ -57,62 +64,72 @@ public class FrameCadastros extends JFrame {
 		modelClubes = new DefaultListModel<Clube>();
 		jlstClubes = new JList<Clube>(modelClubes);
 
-		jlstClubes.setBounds(56, 176, 206, 263);
+		jlstClubes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		jlstClubes.setBounds(56, 212, 206, 263);
 		getContentPane().add(jlstClubes);
 
 		modelEatletas = new DefaultListModel<>();
 		jlstEatleta = new JList<>(modelEatletas);
-		jlstEatleta.setBounds(515, 176, 243, 263);
+		jlstEatleta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jlstEatleta.setBounds(515, 212, 243, 263);
 		getContentPane().add(jlstEatleta);
 
 		btnAdicionarClube = new JButton("Adicionar");
-		btnAdicionarClube.setBounds(66, 97, 178, 25);
+		btnAdicionarClube.setBounds(76, 97, 178, 25);
 		getContentPane().add(btnAdicionarClube);
 
 		btnAdicionarEatleta = new JButton("Adicionar");
-		btnAdicionarEatleta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modelEatletas.addElement(new EAtleta(txtEatleta.getText()));
-				txtEatleta.setText("");
-
-			}
-		});
+		btnApagarClube = new JButton("Apagar");
+		btnApagarClube.setBounds(76, 133, 178, 25);
+		getContentPane().add(btnApagarClube);
 		btnAdicionarEatleta.setBounds(515, 89, 221, 25);
 		getContentPane().add(btnAdicionarEatleta);
-
-		JButton btnApagarClube = new JButton("Apagar");
-		btnApagarClube.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = jlstClubes.getSelectedIndex();
-				modelClubes.remove(index);
-			}
-		});
-		btnApagarClube.setBounds(56, 134, 178, 25);
-		getContentPane().add(btnApagarClube);
-
-		JButton btnApagarEatleta = new JButton("Apagar");
-		btnApagarEatleta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modelEatletas.remove(jlstEatleta.getSelectedIndex());
-			}
-		});
+		
+		btnApagarEatleta = new JButton("Apagar");
 		btnApagarEatleta.setBounds(515, 126, 221, 25);
 		getContentPane().add(btnApagarEatleta);
-
-		JButton btnTelaPrincipal = new JButton("Tela Principal");
-		btnTelaPrincipal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new FrameTorneios();
-			}
-		});
-		btnTelaPrincipal.setBounds(295, 465, 150, 25);
+		
+		btnTelaPrincipal = new JButton("Tela Principal");
+		
+		btnTelaPrincipal.setBounds(295, 492, 150, 25);
 		getContentPane().add(btnTelaPrincipal);
+		
+		btnEditarClube = new JButton("Editar");
 
+		btnEditarClube.setBounds(76, 173, 178, 23);
+		getContentPane().add(btnEditarClube);
+		
+		btnEditarEatleta = new JButton("Editar");
+
+		
+		btnEditarEatleta.setBounds(515, 159, 221, 23);
+		getContentPane().add(btnEditarEatleta);
+	}
+
+
+	public JButton getBtnEditarClube() {
+		return btnEditarClube;
+	}
+
+
+	public JButton getBtnEditarEatleta() {
+		return btnEditarEatleta;
 	}
 
 
 	public JTextField getTxtClube() {
 		return txtClube;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+	public JButton getBtnApagarEatleta() {
+		return btnApagarEatleta;
 	}
 
 
@@ -123,6 +140,11 @@ public class FrameCadastros extends JFrame {
 
 	public DefaultListModel<Clube> getModelClubes() {
 		return modelClubes;
+	}
+
+
+	public JButton getBtnTelaPrincipal() {
+		return btnTelaPrincipal;
 	}
 
 
@@ -148,4 +170,9 @@ public class FrameCadastros extends JFrame {
 	public JList<EAtleta> getJlstEatleta() {
 		return jlstEatleta;
 	}
+	
+	public JButton getBtnApagarClube() {
+		return btnApagarClube;
+	}
+	
 }

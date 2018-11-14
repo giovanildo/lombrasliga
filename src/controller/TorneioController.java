@@ -30,10 +30,14 @@ public class TorneioController {
 	 */
 	
 	private boolean impar;
-	
+	/**
+	 * numero total de clubes
+	 */
 	private int totalClubes;
+	/**
+	 * metade de clubes
+	 */
 	private int metadeClubes;
-	
 	
 	/**
 	 * view dos cadastros, clubes e jogadores
@@ -163,6 +167,43 @@ public class TorneioController {
 		iniciarFrameTorneios();
 		preencherComboBox();
 		desabilitarPanelTorneio();
+		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iniciarFrameCadastros();
+			}
+		});
+		
+		//Editar EAtleta
+		getFrameCadastros().getBtnEditarEatleta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String eatleta = getFrameCadastros().getTxtEatleta().getText();
+				getFrameCadastros().getJlstEatleta().getSelectedValue().setNome(eatleta);
+				getFrameCadastros().getJlstEatleta().setModel(getFrameCadastros().getModelEatletas());
+			}
+		});
+		
+		getFrameCadastros().getJlstEatleta().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				getFrameCadastros().getTxtEatleta().requestFocus();
+			}
+		});
+
+		
+		//editar Clube
+		getFrameCadastros().getBtnEditarClube().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String clube = getFrameCadastros().getTxtClube().getText();
+				getFrameCadastros().getJlstClubes().getSelectedValue().setNome(clube);
+				getFrameCadastros().getJlstClubes().setModel(getFrameCadastros().getModelClubes());
+			}
+		});
+		
+		getFrameCadastros().getJlstClubes().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				getFrameCadastros().getTxtClube().requestFocus();	
+			}
+		});
+		
 		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				habilitarPanelTorneio();
@@ -192,8 +233,6 @@ public class TorneioController {
 				getFrameTorneios().getModelEatletaTorneio().remove(index);
 			}
 		});
-		
-		
 		
 		//adiciona EAtletaTorneio
 		getFrameTorneios().getBtnAdicionarJogador().addActionListener(new ActionListener() {
@@ -366,6 +405,7 @@ public class TorneioController {
 			}
 		});
 		
+		//frame Cadastros
 		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getFrameCadastros().getModelClubes().addElement(new Clube(getFrameCadastros().getTxtClube().getText()));
@@ -380,6 +420,40 @@ public class TorneioController {
 
 			}
 		});
+
+		
+		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getFrameCadastros().getModelEatletas().addElement(new EAtleta(getFrameCadastros().getTxtEatleta().getText()));
+				getFrameCadastros().getTxtEatleta().setText("");
+
+			}
+		});
+		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
+				getFrameCadastros().getModelClubes().remove(index);
+			}
+		});
+		
+
+		
+		getFrameCadastros().getBtnApagarEatleta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getFrameCadastros().getModelEatletas().remove(getFrameCadastros().getJlstEatleta().getSelectedIndex());
+			}
+		});
+		
+
+		
+		getFrameCadastros().getBtnTelaPrincipal().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iniciarFrameTorneios();
+			}
+		});
+
+		
+		
 	}
 
 	private boolean seTorneioFoiDisputado() {
@@ -389,6 +463,7 @@ public class TorneioController {
 			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
 			if(torneioPartida.equals(torneioTxtField)){
 				foiDisputado = true;
+				break;
 			} 
 		}
 		return foiDisputado;
@@ -413,6 +488,11 @@ public class TorneioController {
 		getFrameTorneios().setSize(800, 600);
 		getFrameTorneios().setVisible(true);
 	}
+	public void iniciarFrameCadastros() {
+		getFrameCadastros().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrameCadastros().setSize(800, 600);
+		getFrameCadastros().setVisible(true);
+	}
 
 	public void iniciarFramePartidas() {
 		getFramePartidas().setVisible(true);
@@ -434,7 +514,7 @@ public class TorneioController {
 	}
 
 
-	protected void desabilitarCamposTorneio() {		                   
+	public void desabilitarCamposTorneio() {		                   
 		getFrameTorneios().getTxtNomeTorneio().setEnabled(false);
 		getFrameTorneios().getTxtPorqueDoNome().setEnabled(false);		
 	}

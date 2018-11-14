@@ -37,76 +37,13 @@ public class FrameTorneios extends JFrame {
 	private DefaultListModel<EAtletaTorneio> modelEatletaTorneio;
 	private JList<EAtletaTorneio> jlstEatletaClube;
 	private JList<Torneio> jlstTorneios;
+	
+	private JButton btnNovoJogadorClube;
 
-	public JList<Torneio> getJlstTorneios() {
-		return jlstTorneios;
-	}
-
-	public JButton getBtnNovoTorneio() {
-		return btnNovoTorneio;
-	}
-
-	public void setBtnNovoTorneio(JButton btnNovoTorneio) {
-		this.btnNovoTorneio = btnNovoTorneio;
-	}
-
-	public JComboBox<Clube> getTxtClube() {
-		return txtClube;
-	}
-
-	public JComboBox<EAtleta> getTxtEatleta() {
-		return txtEatleta;
-	}
-
-	public JButton getBtnEditarTorneio() {
-		return btnEditarTorneio;
-	}
-
-	public JButton getBtnDeletarTorneio() {
-		return btnDeletarTorneio;
-	}
-
-	public JTextField getTxtPorqueDoNome() {
-		return txtPorqueDoNome;
-	}
-
-	public JTextField getTxtNomeTorneio() {
-		return txtNomeTorneio;
-	}
-
-	public DefaultListModel<Torneio> getModelTorneios() {
-		return modelTorneios;
-	}
-
-	public DefaultListModel<EAtletaTorneio> getModelEatletaTorneio() {
-		return modelEatletaTorneio;
-	}
-
-	public JList<EAtletaTorneio> getJlstEatletaClube() {
-		return jlstEatletaClube;
-	}
-
-	public JButton getBtnRemoverJogador() {
-		return btnRemoverJogador;
-	}
-
-	public JButton getBtnAdicionarJogador() {
-		return btnAdicionarJogador;
-	}
-
-	public JButton getBtnSalvarTorneio() {
-		return btnSalvarTorneio;
-	}
-
-	public JButton getBtnEditarPartidas() {
-		return btnEditarPartidas;
-	}
 
 	public FrameTorneios() {
 
 		super("Torneio Lombra da Madrugada");
-
-
 
 		JPanel panelTorneio = new JPanel();
 		panelTorneio.setBackground(Color.LIGHT_GRAY);
@@ -117,7 +54,7 @@ public class FrameTorneios extends JFrame {
 		modelTorneios = new DefaultListModel<Torneio>();
 		jlstTorneios = new JList<Torneio>(modelTorneios);
 
-		jlstTorneios.setBounds(161, 11, 353, 134);
+		jlstTorneios.setBounds(42, 11, 451, 134);
 		getContentPane().add(jlstTorneios);
 		panelTorneio.setLayout(null);
 
@@ -201,5 +138,79 @@ public class FrameTorneios extends JFrame {
 
 		btnEditarTorneio.setBounds(551, 96, 127, 23);
 		getContentPane().add(btnEditarTorneio);
+		
+		btnNovoJogadorClube = new JButton("Novo Jogador/Clube");
+		
+		btnNovoJogadorClube.setBounds(250, 423, 145, 23);
+		getContentPane().add(btnNovoJogadorClube);
 	}
+	
+	public JButton getBtnNovoJogadorClube() {
+		return btnNovoJogadorClube;
+	}
+
+	public JList<Torneio> getJlstTorneios() {
+		return jlstTorneios;
+	}
+
+	public JButton getBtnNovoTorneio() {
+		return btnNovoTorneio;
+	}
+
+	public void setBtnNovoTorneio(JButton btnNovoTorneio) {
+		this.btnNovoTorneio = btnNovoTorneio;
+	}
+
+	public JComboBox<Clube> getTxtClube() {
+		return txtClube;
+	}
+
+	public JComboBox<EAtleta> getTxtEatleta() {
+		return txtEatleta;
+	}
+
+	public JButton getBtnEditarTorneio() {
+		return btnEditarTorneio;
+	}
+
+	public JButton getBtnDeletarTorneio() {
+		return btnDeletarTorneio;
+	}
+
+	public JTextField getTxtPorqueDoNome() {
+		return txtPorqueDoNome;
+	}
+
+	public JTextField getTxtNomeTorneio() {
+		return txtNomeTorneio;
+	}
+
+	public DefaultListModel<Torneio> getModelTorneios() {
+		return modelTorneios;
+	}
+
+	public DefaultListModel<EAtletaTorneio> getModelEatletaTorneio() {
+		return modelEatletaTorneio;
+	}
+
+	public JList<EAtletaTorneio> getJlstEatletaClube() {
+		return jlstEatletaClube;
+	}
+
+	public JButton getBtnRemoverJogador() {
+		return btnRemoverJogador;
+	}
+
+	public JButton getBtnAdicionarJogador() {
+		return btnAdicionarJogador;
+	}
+
+	public JButton getBtnSalvarTorneio() {
+		return btnSalvarTorneio;
+	}
+
+	public JButton getBtnEditarPartidas() {
+		return btnEditarPartidas;
+	}
+
 }
