@@ -75,6 +75,7 @@ public class TorneioController {
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
+		
 	}
 
 	public void confirmarPlacar() {
@@ -151,7 +152,7 @@ public class TorneioController {
 
 	public void iniciar() {
 		iniciarFrameTorneios();
-		preencherComboBox();
+		//preencherComboBox();
 		desabilitarPanelTorneio();
 		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -302,7 +303,6 @@ public class TorneioController {
 				// caso exista seleciona as partidas existentes e joga para o model list - fazer
 				// um for selecionando
 
-				int metadeClubes = listaTorneioAtual.size();
 				for (Partida partida : listaPartidas) {
 					String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
 					if (torneioPartida.equals(torneioTxtField)) {
@@ -313,7 +313,7 @@ public class TorneioController {
 				iniciarFramePartidas();
 			}
 		});
-		// Deleta Torneio
+		// deleta Torneio
 		getFrameTorneios().getBtnDeletarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -390,8 +390,18 @@ public class TorneioController {
 		// cadastrar clube
 		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String clubeTextField = getFrameCadastros().getTxtClube().getText();
+				for(Clube clube : listaClubes) {
+					if(clube.getNome().equals(clubeTextField)) {
+						System.out.println("repetido");
+						return;
+					}
+				}
+				
 				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
+				//inclue na lista, no modelClubes e no combobox da frame torneios
 				listaClubes.add(clube);
+				getFrameTorneios().getTxtClube().addItem(clube);
 				getFrameCadastros().getModelClubes().addElement(clube);
 				getFrameCadastros().getTxtClube().setText("");
 			}
@@ -399,8 +409,18 @@ public class TorneioController {
 		// cadastrar EAtleta
 		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String eAtletaTextField = getFrameCadastros().getTxtEatleta().getText();
+				for(EAtleta ea : listaEatleta) {
+					if(ea.getNome().equals(eAtletaTextField)) {
+						System.out.println("repetido");
+						return;
+					}
+				}
+				
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
+				//adicionar na lista, no model e no combobox do frame torneios
 				listaEatleta.add(eAtleta);
+				getFrameTorneios().getTxtEatleta().addItem(eAtleta);
 				getFrameCadastros().getModelEatletas().addElement(eAtleta);
 				getFrameCadastros().getTxtEatleta().setText("");
 
@@ -411,7 +431,11 @@ public class TorneioController {
 			public void actionPerformed(ActionEvent e) {
 				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
 				String clubeNoJlist = getFrameCadastros().getModelClubes().get(index).getNome();
-				getFrameCadastros().getModelClubes().remove(index);				
+				
+				//remove da lista, jlist e combobox da frame torneios
+				
+				getFrameCadastros().getModelClubes().remove(index);
+				getFrameTorneios().getTxtClube().removeItemAt(index);
 				for(int i=0; i<listaClubes.size();i++) {
 					String clubeNaLista = listaClubes.get(i).getNome();
 					if(clubeNaLista.equals(clubeNoJlist)) {
@@ -427,6 +451,7 @@ public class TorneioController {
 				int index = getFrameCadastros().getJlstEatleta().getSelectedIndex();
 				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();		
 				getFrameCadastros().getModelEatletas().remove(index);
+				getFrameTorneios().getTxtEatleta().removeItemAt(index);
 				
 				for(int i=0; i<listaEatleta.size();i++) {
 					String eAtletaNaLista = listaEatleta.get(i).getNome();
