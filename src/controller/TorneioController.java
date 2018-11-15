@@ -318,7 +318,7 @@ public class TorneioController {
 			public void actionPerformed(ActionEvent e) {
 
 				int index = getFrameTorneios().getJlstTorneios().getSelectedIndex();
-				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
+				Torneio torneioNoModel = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
 
 				getFrameTorneios().getModelEatletaTorneio().clear();
 				getFrameTorneios().getModelTorneios().remove(index);
@@ -329,20 +329,20 @@ public class TorneioController {
 
 				for (int i = 0; i < listaEatletasTorneio.size(); i++) {
 					String torneioEAtleta = listaEatletasTorneio.get(i).getTorneio().getNome();
-					if (torneioEAtleta.equals(torneio.getNome())) {
+					if (torneioEAtleta.equals(torneioNoModel.getNome())) {
 						System.out.println("apagando linha " + torneioEAtleta);
 						listaEatletasTorneio.remove(i);
 					}
 				}
 				// apagar as referencias da lista de partidas
 				for (int i = 0; i < listaPartidas.size(); i++) {
-					String torneioPartida = listaPartidas.get(i).getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
-					if(torneioPartida.equals(torneio.getNome())) {
+					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+					if(torneioNaListaPartidas.equals(torneioNoModel.getNome())) {
 						listaPartidas.remove(i);
 					}
 					
 				}
-				System.out.println("deletado com sucesso " + torneio.getNome());
+				System.out.println("deletado com sucesso " + torneioNoModel.getNome());
 			}
 		});
 
@@ -360,7 +360,6 @@ public class TorneioController {
 					confirmarPlacar();
 				}
 			}
-
 		});
 
 		getFramePartidas().getBtnConfirmar().addActionListener(new ActionListener() {
@@ -371,19 +370,15 @@ public class TorneioController {
 
 		getFrameTorneios().getBtnEditarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel()
 						.getElementAt(getFrameTorneios().getJlstTorneios().getSelectedIndex());
 
 				getFrameTorneios().getTxtNomeTorneio().setText(torneio.getNome());
 				getFrameTorneios().getTxtPorqueDoNome().setText(torneio.getPorqueDoNome());
-
 				habilitarPanelTorneio();
 				// limpa JList EAtleta Torneio
 				getFrameTorneios().getModelEatletaTorneio().clear();
-
 				// recuperar do arraylist e jogar no JList do EAtletaTorneio
-
 				for (EAtletaTorneio eat : listaEatletasTorneio) {
 					if (eat.getTorneio().getNome().equals(torneio.getNome())) {
 						getFrameTorneios().getModelEatletaTorneio().addElement(eat);
@@ -392,7 +387,7 @@ public class TorneioController {
 			}
 		});
 
-		// frame Cadastros
+		// cadastrar clube
 		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
@@ -401,7 +396,7 @@ public class TorneioController {
 				getFrameCadastros().getTxtClube().setText("");
 			}
 		});
-
+		// cadastrar EAtleta
 		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
@@ -411,18 +406,34 @@ public class TorneioController {
 
 			}
 		});
-
+		//descadastrar clube
 		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
-				getFrameCadastros().getModelClubes().remove(index);
+				String clubeNoJlist = getFrameCadastros().getModelClubes().get(index).getNome();
+				getFrameCadastros().getModelClubes().remove(index);				
+				for(int i=0; i<listaClubes.size();i++) {
+					String clubeNaLista = listaClubes.get(i).getNome();
+					if(clubeNaLista.equals(clubeNoJlist)) {
+						listaClubes.remove(i);
+					}
+				}
 
 			}
 		});
-
+		//descadastrar EAtleta
 		getFrameCadastros().getBtnApagarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getFrameCadastros().getModelEatletas().remove(getFrameCadastros().getJlstEatleta().getSelectedIndex());
+				int index = getFrameCadastros().getJlstEatleta().getSelectedIndex();
+				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();		
+				getFrameCadastros().getModelEatletas().remove(index);
+				
+				for(int i=0; i<listaEatleta.size();i++) {
+					String eAtletaNaLista = listaEatleta.get(i).getNome();
+					if(eAtletaNoJlist.equals(eAtletaNaLista)) {
+						listaEatleta.remove(i);
+					}
+				}
 			}
 		});
 
