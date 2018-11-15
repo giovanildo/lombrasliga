@@ -12,8 +12,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 
-
 public class FrameCadastros extends JFrame {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField txtClube;
@@ -35,7 +35,7 @@ public class FrameCadastros extends JFrame {
 		getContentPane().setLayout(null);
 
 		JLabel lblCadastros = new JLabel("CADASTROS");
-		lblCadastros.setBounds(398, 12, 103, 15);
+		lblCadastros.setBounds(218, 24, 103, 15);
 		getContentPane().add(lblCadastros);
 
 		JLabel lblClube = new JLabel("Clube");
@@ -49,12 +49,12 @@ public class FrameCadastros extends JFrame {
 		txtClube.setColumns(10);
 
 		JLabel lblEatleta = new JLabel("EAtleta");
-		lblEatleta.setBounds(515, 70, 70, 15);
+		lblEatleta.setBounds(282, 70, 70, 15);
 		getContentPane().add(lblEatleta);
 
 		txtEatleta = new JTextField();
 		txtEatleta.setText("");
-		txtEatleta.setBounds(612, 68, 114, 19);
+		txtEatleta.setBounds(379, 68, 114, 19);
 		getContentPane().add(txtEatleta);
 		txtEatleta.setColumns(10);
 
@@ -63,47 +63,45 @@ public class FrameCadastros extends JFrame {
 
 		jlstClubes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		jlstClubes.setBounds(56, 212, 206, 263);
+		jlstClubes.setBounds(36, 211, 206, 263);
 		getContentPane().add(jlstClubes);
 
 		modelEatletas = new DefaultListModel<>();
 		jlstEatleta = new JList<>(modelEatletas);
 		jlstEatleta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jlstEatleta.setBounds(515, 212, 243, 263);
+		jlstEatleta.setBounds(282, 212, 243, 263);
 		getContentPane().add(jlstEatleta);
 
 		btnAdicionarClube = new JButton("Adicionar");
-		btnAdicionarClube.setBounds(76, 97, 178, 25);
+		btnAdicionarClube.setBounds(56, 96, 178, 25);
 		getContentPane().add(btnAdicionarClube);
 
 		btnAdicionarEatleta = new JButton("Adicionar");
 		btnApagarClube = new JButton("Apagar");
-		btnApagarClube.setBounds(76, 133, 178, 25);
+		btnApagarClube.setBounds(56, 132, 178, 25);
 		getContentPane().add(btnApagarClube);
-		btnAdicionarEatleta.setBounds(515, 89, 221, 25);
+		btnAdicionarEatleta.setBounds(292, 96, 221, 25);
 		getContentPane().add(btnAdicionarEatleta);
 		
 		btnApagarEatleta = new JButton("Apagar");
-		btnApagarEatleta.setBounds(515, 126, 221, 25);
+		btnApagarEatleta.setBounds(292, 133, 221, 25);
 		getContentPane().add(btnApagarEatleta);
 		
 		btnTelaPrincipal = new JButton("Tela Principal");
 		
-		btnTelaPrincipal.setBounds(295, 492, 150, 25);
+		btnTelaPrincipal.setBounds(186, 495, 150, 25);
 		getContentPane().add(btnTelaPrincipal);
 		
 		btnEditarClube = new JButton("Editar");
 
-		btnEditarClube.setBounds(76, 173, 178, 23);
+		btnEditarClube.setBounds(56, 172, 178, 23);
 		getContentPane().add(btnEditarClube);
 		
 		btnEditarEatleta = new JButton("Editar");
 
-		
-		btnEditarEatleta.setBounds(515, 159, 221, 23);
+		btnEditarEatleta.setBounds(292, 166, 221, 23);
 		getContentPane().add(btnEditarEatleta);
 	}
-
 
 	public JButton getBtnEditarClube() {
 		return btnEditarClube;
@@ -114,51 +112,41 @@ public class FrameCadastros extends JFrame {
 		return btnEditarEatleta;
 	}
 
-
 	public JTextField getTxtClube() {
 		return txtClube;
 	}
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
 	public JButton getBtnApagarEatleta() {
 		return btnApagarEatleta;
 	}
-
 
 	public JTextField getTxtEatleta() {
 		return txtEatleta;
 	}
 
-
 	public DefaultListModel<Clube> getModelClubes() {
 		return modelClubes;
 	}
-
 
 	public JButton getBtnTelaPrincipal() {
 		return btnTelaPrincipal;
 	}
 
-
 	public DefaultListModel<EAtleta> getModelEatletas() {
 		return modelEatletas;
 	}
-
 
 	public JList<Clube> getJlstClubes() {
 		return jlstClubes;
 	}
 
-
 	public JButton getBtnAdicionarClube() {
 		return btnAdicionarClube;
 	}
-
 
 	public JButton getBtnAdicionarEatleta() {
 		return btnAdicionarEatleta;
@@ -171,5 +159,4 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnApagarClube() {
 		return btnApagarClube;
 	}
-	
 }
