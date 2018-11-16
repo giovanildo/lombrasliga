@@ -5,15 +5,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Anfitriao;
+import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.EAtletaTorneio;
+import model.EquipeEmCampo;
 import model.Partida;
 import model.Torneio;
 import model.Visitante;
@@ -75,7 +79,7 @@ public class TorneioController {
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
-		
+
 	}
 
 	public void confirmarPlacar() {
@@ -98,6 +102,77 @@ public class TorneioController {
 			}
 		}
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
+	}
+	
+	/**
+	 * Gera a tabela de classificação
+	 * 
+	 */
+	public ArrayList<Classificacao> gerarClassificacao(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual, ArrayList<Partida> listaPartidasAtual) {
+		// encerrando a partida
+		for (Partida partida : listaPartidasAtual) {
+			fimDePartida(partida);
+		}
+
+		List<Classificacao> listaClassificacao = new ArrayList<>();
+
+		int pontospossiveis = (listaEAtletaTorneioAtual.size() - 1) * 3 * 2;
+
+		for (EAtletaTorneio eat : listaEAtletaTorneioAtual) {
+			int jogos = 0;
+			int vitorias = 0;
+			int empates = 0;
+			int derrotas = 0;
+			int golspro = 0;
+			int golscontra = 0;
+			int pontos = 0;
+			int saldo = 0;
+			int aproveitamento = 0;
+
+			for (Partida partida : listaPartidasAtual) {
+				if (!partida.isEncerrada()) {
+					System.out.println("Partida não acabou ainda");
+					//return;
+				}
+				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
+					pontos += partida.getAnfitriao().getPontos();
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.VITORIA)
+						vitorias++;
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.EMPATE)
+						empates++;
+					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.DERROTA)
+						derrotas++;
+					golspro += partida.getAnfitriao().getGols();
+					golscontra += partida.getAnfitriao().getGolscontra();
+					jogos++;
+				} else if (partida.getVisitante().geteAtletaTorneio().getClube().getNome()
+						.equals(eat.getClube().getNome())) {
+					pontos += partida.getVisitante().getPontos();
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.VITORIA)
+						vitorias++;
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.EMPATE)
+						empates++;
+					if (partida.getVisitante().getResultado() == EquipeEmCampo.DERROTA)
+						derrotas++;
+					golspro += partida.getVisitante().getGols();
+					golscontra += partida.getVisitante().getGolscontra();
+					jogos++;
+				}
+			}
+			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
+			saldo = golspro - golscontra;
+			listaClassificacao.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates,
+					derrotas, golspro, golscontra, saldo, aproveitamento));
+
+			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
+					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
+					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
+		}
+		Collections.sort(listaClassificacao);
+		for (Classificacao classificacao : listaClassificacao) {
+			System.out.println(classificacao.toString());
+		}
+		return (ArrayList<Classificacao>) listaClassificacao;
 	}
 
 	/**
@@ -150,9 +225,38 @@ public class TorneioController {
 
 	}
 
+	/**
+	 * encerra a partida e efetiva o placar da partida
+	 */
+	public void fimDePartida(Partida partida) {
+		partida.setEncerrada(true);
+
+		int golsfora = partida.getVisitante().getGols();
+		int golscasa = partida.getAnfitriao().getGols();
+
+		// preencher gols contra
+		partida.getAnfitriao().setGolscontra(golsfora);
+		partida.getVisitante().setGolscontra(golscasa);
+
+		// preenchendo resultado da partida
+		if (golscasa == golsfora) {
+			partida.getAnfitriao().empatou();
+			partida.getVisitante().empatou();
+			return;
+		}
+
+		if (golscasa > golsfora) {
+			partida.getVisitante().perdeu();
+			partida.getAnfitriao().ganhou();
+		} else {
+			partida.getVisitante().ganhou();
+			partida.getAnfitriao().perdeu();
+		}
+	}
+	
 	public void iniciar() {
 		iniciarFrameTorneios();
-		//preencherComboBox();
+		// preencherComboBox();
 		desabilitarPanelTorneio();
 		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -227,15 +331,16 @@ public class TorneioController {
 				// se for repetido EAtleta Torneio encerra o método
 				for (int i = 0; i < getFrameTorneios().getJlstEatletaClube().getModel().getSize(); i++) {
 					EAtletaTorneio eat = getFrameTorneios().getJlstEatletaClube().getModel().getElementAt(i);
-					if (eat.getClube().getNome().equals(getFrameTorneios().getTxtClube().getSelectedItem().toString())
-							&& eat.geteAtleta().getNome()
-									.equals(getFrameTorneios().getTxtEatleta().getSelectedItem().toString())
+					String itemClube = getFrameTorneios().getTxtClube().getSelectedItem().toString();
+					String itemEatleta = getFrameTorneios().getTxtEatleta().getSelectedItem().toString();
+					// se não for repetido adiciona tanto a JList como a lista EAtleta Torneio
+					if (eat.getClube().getNome().equals(itemClube) && eat.geteAtleta().getNome().equals(itemEatleta)
 							&& eat.getTorneio().getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
 						System.out.println("repetido");
 						return;
 					}
 				}
-				// se não for repetido adiciona tanto a JList como a lista EAtleta Torneio
+				
 				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem(),
 						new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
 								getFrameTorneios().getTxtPorqueDoNome().getText()),
@@ -336,11 +441,12 @@ public class TorneioController {
 				}
 				// apagar as referencias da lista de partidas
 				for (int i = 0; i < listaPartidas.size(); i++) {
-					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
-					if(torneioNaListaPartidas.equals(torneioNoModel.getNome())) {
+					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().geteAtletaTorneio().getTorneio()
+							.getNome();
+					if (torneioNaListaPartidas.equals(torneioNoModel.getNome())) {
 						listaPartidas.remove(i);
 					}
-					
+
 				}
 				System.out.println("deletado com sucesso " + torneioNoModel.getNome());
 			}
@@ -391,15 +497,15 @@ public class TorneioController {
 		getFrameCadastros().getBtnAdicionarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String clubeTextField = getFrameCadastros().getTxtClube().getText();
-				for(Clube clube : listaClubes) {
-					if(clube.getNome().equals(clubeTextField)) {
+				for (Clube clube : listaClubes) {
+					if (clube.getNome().equals(clubeTextField)) {
 						System.out.println("repetido");
 						return;
 					}
 				}
-				
+
 				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
-				//inclue na lista, no modelClubes e no combobox da frame torneios
+				// inclue na lista, no modelClubes e no combobox da frame torneios
 				listaClubes.add(clube);
 				getFrameTorneios().getTxtClube().addItem(clube);
 				getFrameCadastros().getModelClubes().addElement(clube);
@@ -410,15 +516,15 @@ public class TorneioController {
 		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String eAtletaTextField = getFrameCadastros().getTxtEatleta().getText();
-				for(EAtleta ea : listaEatleta) {
-					if(ea.getNome().equals(eAtletaTextField)) {
+				for (EAtleta ea : listaEatleta) {
+					if (ea.getNome().equals(eAtletaTextField)) {
 						System.out.println("repetido");
 						return;
 					}
 				}
-				
+
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
-				//adicionar na lista, no model e no combobox do frame torneios
+				// adicionar na lista, no model e no combobox do frame torneios
 				listaEatleta.add(eAtleta);
 				getFrameTorneios().getTxtEatleta().addItem(eAtleta);
 				getFrameCadastros().getModelEatletas().addElement(eAtleta);
@@ -426,36 +532,36 @@ public class TorneioController {
 
 			}
 		});
-		//descadastrar clube
+		// descadastrar clube
 		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
 				String clubeNoJlist = getFrameCadastros().getModelClubes().get(index).getNome();
-				
-				//remove da lista, jlist e combobox da frame torneios
-				
+
+				// remove da lista, jlist e combobox da frame torneios
+
 				getFrameCadastros().getModelClubes().remove(index);
 				getFrameTorneios().getTxtClube().removeItemAt(index);
-				for(int i=0; i<listaClubes.size();i++) {
+				for (int i = 0; i < listaClubes.size(); i++) {
 					String clubeNaLista = listaClubes.get(i).getNome();
-					if(clubeNaLista.equals(clubeNoJlist)) {
+					if (clubeNaLista.equals(clubeNoJlist)) {
 						listaClubes.remove(i);
 					}
 				}
 
 			}
 		});
-		//descadastrar EAtleta
+		// descadastrar EAtleta
 		getFrameCadastros().getBtnApagarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = getFrameCadastros().getJlstEatleta().getSelectedIndex();
-				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();		
+				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();
 				getFrameCadastros().getModelEatletas().remove(index);
 				getFrameTorneios().getTxtEatleta().removeItemAt(index);
-				
-				for(int i=0; i<listaEatleta.size();i++) {
+
+				for (int i = 0; i < listaEatleta.size(); i++) {
 					String eAtletaNaLista = listaEatleta.get(i).getNome();
-					if(eAtletaNoJlist.equals(eAtletaNaLista)) {
+					if (eAtletaNoJlist.equals(eAtletaNaLista)) {
 						listaEatleta.remove(i);
 					}
 				}
