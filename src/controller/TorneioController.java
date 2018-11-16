@@ -82,25 +82,25 @@ public class TorneioController {
 		this.framePartidas = new FramePartidas();
 
 	}
-
-	public void confirmarPlacar() {
+	
+	public void preencherJListClassificacao() {
 		getFramePartidas().getModelClassif().clear();
 		
-		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
-		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
+//		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+//		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
 
-		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
-		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
+//		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
+//		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
+//		
+//		partidaModel.getAnfitriao().setGols(golsAnfitriao);
+//		partidaModel.getVisitante().setGols(golsVisitante);
 		
-		partidaModel.getAnfitriao().setGols(golsAnfitriao);
-		partidaModel.getVisitante().setGols(golsVisitante);
-		
-		for (Partida partidaArray : listaPartidas) {
-			if (partidaArray.equals(partidaModel)) {
-				fimDePartida(partidaArray);
-				System.out.println(partidaArray);
-			}
-		}
+//		for (Partida partidaArray : listaPartidas) {
+//			if (partidaArray.equals(partidaModel)) {
+//				fimDePartida(partidaArray);
+//				System.out.println(partidaArray);
+//			}
+//		}
 		
 		
 		//gerar lista eatletaTorneio atual
@@ -125,8 +125,6 @@ public class TorneioController {
 		}
 
 		
-		
-		
 		//preencher a model classificação com os dados da lista de classificacao
 		
 		ArrayList<Classificacao> listaClassif = gerarClassificacao(listaTorneioAtual, listaPartidasAtual);
@@ -135,11 +133,32 @@ public class TorneioController {
 			getFramePartidas().getModelClassif().addElement(classif);
 		}
 		
-		
-		
-		System.out.println(partidaModel);
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
 		getFramePartidas().getJlstClassif().setModel(getFramePartidas().getModelClassif());
+	}
+	
+
+	public void confirmarPlacar() {
+		getFramePartidas().getModelClassif().clear();
+		
+		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
+
+		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
+		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
+		
+		partidaModel.getAnfitriao().setGols(golsAnfitriao);
+		partidaModel.getVisitante().setGols(golsVisitante);
+		
+		for (Partida partidaArray : listaPartidas) {
+			if (partidaArray.equals(partidaModel)) {
+				fimDePartida(partidaArray);
+				System.out.println(partidaArray);
+			}
+		}
+		
+		preencherJListClassificacao();
+		
 	}
 	
 	/**
@@ -441,6 +460,8 @@ public class TorneioController {
 						getFramePartidas().getModelPartidas().addElement(partida);
 					}
 				}
+				
+				preencherJListClassificacao();
 
 				iniciarFramePartidas();
 			}
