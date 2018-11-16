@@ -46,35 +46,6 @@ public class Partida {
 		this.visitante = visitante;
 	}
 
-	/**
-	 * encerra a partida e efetiva o placar da partida
-	 */
-	public void fimDePartida() {
-		this.setEncerrada(true);
-
-		int golsfora = this.getVisitante().getGols();
-		int golscasa = this.getAnfitriao().getGols();
-
-		// preencher gols contra
-		this.getAnfitriao().setGolscontra(golsfora);
-		this.getVisitante().setGolscontra(golscasa);
-
-		// preenchendo resultado da partida
-		if (golscasa == golsfora) {
-			this.getAnfitriao().empatou();
-			this.getVisitante().empatou();
-			return;
-		}
-
-		if (golscasa > golsfora) {
-			this.getVisitante().perdeu();
-			this.getAnfitriao().ganhou();
-		} else {
-			this.getVisitante().ganhou();
-			this.getAnfitriao().perdeu();
-		}
-	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -149,5 +120,7 @@ public class Partida {
 	public void setEncerrada(boolean encerrada) {
 		this.encerrada = encerrada;
 	}
+
+
 
 }
