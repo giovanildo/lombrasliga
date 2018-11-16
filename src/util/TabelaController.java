@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,10 +56,26 @@ public class TabelaController {
 	 * view das partidas
 	 */
 	private FramePartidas framePartidas;
+
+	public void partidas() {
+		listaPartidas = new ArrayList<>();
+		// adicionandoEquipes();
+		adicionandoEquipesScanner();
+		equipesImpar();
+//		geraPartidas();
+		removeClubeVazio();
+		preenchendoPartidas();
+//		gerarClassificacao();
+		mostrarPartidas();
+	}
+
+	
 	
 	/**
 	 * adiciona as equipes e seus jogadores de videogame
 	 */
+
+	
 	public void adicionandoEquipes() {
 		listaEAtletaTorneio = new ArrayList<>();
 		/**
@@ -177,17 +193,7 @@ public class TabelaController {
 		}
 	}
 
-	public void partidas() {
-		listaPartidas = new ArrayList<>();
-		// adicionandoEquipes();
-		adicionandoEquipesScanner();
-		equipesImpar();
-//		geraPartidas();
-		removeClubeVazio();
-		preenchendoPartidas();
-		gerarClassificacao();
-		mostrarPartidas();
-	}
+
 
 
 	/**
@@ -248,74 +254,5 @@ public class TabelaController {
 		}
 	}
 
-	/**
-	 * Gera a tabela de classificação
-	 * 
-	 */
-	public void gerarClassificacao() {
-		// encerrando a partida
-		for (Partida partida : listaPartidas) {
-			partida.fimDePartida();
-		}
 
-		List<Classificacao> listaClassificacao = new ArrayList<>();
-
-		int pontospossiveis = (listaEAtletaTorneio.size() - 1) * 3 * 2;
-
-		for (EAtletaTorneio eat : listaEAtletaTorneio) {
-			int jogos = 0;
-			int vitorias = 0;
-			int empates = 0;
-			int derrotas = 0;
-			int golspro = 0;
-			int golscontra = 0;
-			int pontos = 0;
-			int saldo = 0;
-			int aproveitamento = 0;
-
-			for (Partida partida : listaPartidas) {
-				if (!partida.isEncerrada()) {
-					System.out.println("Partida não acabou ainda");
-					return;
-				}
-				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
-					pontos += partida.getAnfitriao().getPontos();
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.VITORIA)
-						vitorias++;
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.EMPATE)
-						empates++;
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.DERROTA)
-						derrotas++;
-					golspro += partida.getAnfitriao().getGols();
-					golscontra += partida.getAnfitriao().getGolscontra();
-					jogos++;
-				} else if (partida.getVisitante().geteAtletaTorneio().getClube().getNome()
-						.equals(eat.getClube().getNome())) {
-					pontos += partida.getVisitante().getPontos();
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.VITORIA)
-						vitorias++;
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.EMPATE)
-						empates++;
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.DERROTA)
-						derrotas++;
-					golspro += partida.getVisitante().getGols();
-					golscontra += partida.getVisitante().getGolscontra();
-					jogos++;
-				}
-			}
-			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
-			saldo = golspro - golscontra;
-			listaClassificacao.add(new Classificacao(eat.getClube().getNome(), pontos, jogos, vitorias, empates,
-					derrotas, golspro, golscontra, saldo, aproveitamento));
-
-			System.out.println(eat.getClube().getNome() + "     " + pontos + "      " + jogos + "      " + vitorias
-					+ "         " + empates + "        " + derrotas + "          " + golspro + "           "
-					+ golscontra + "        " + saldo + "      " + aproveitamento + "%");
-		}
-		Collections.sort(listaClassificacao);
-		for (Classificacao classificacao : listaClassificacao) {
-			System.out.println(classificacao.toString());
-		}
-
-	}
 }
