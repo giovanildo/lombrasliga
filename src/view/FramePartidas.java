@@ -15,23 +15,47 @@ import javax.swing.ListSelectionModel;
 
 
 public class FramePartidas extends JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * txt dos gols do anfitrião
+	 */
 	private JTextField txtGolsAnfitriao;
+	/**
+	 * txt gols do visitante
+	 */
 	private JTextField txtGolsVisitante;
-	private JButton btnAlterarPlacar;
+	
+	/**
+	 * Botão de confirmar placar da partida
+	 */
 	private JButton btnConfirmar;
+	/**
+	 * JList de partidas
+	 */
 	private JList<Partida> jlstPartidas;
+	/**
+	 * Label de Anfitrião
+	 */
 	private JLabel lblAnfitriao;
+	/**
+	 * Label de Visitante
+	 */
 	private JLabel lblVisitante;
+	/**
+	 * List Model de Partidas
+	 */
 	private DefaultListModel<Partida> modelPartidas;
+	/**
+	 * JList de Classificação 
+	 */
 	private JList<Classificacao> jlstClassif;
+	/**
+	 * Model List de Classificação
+	 */
 	private DefaultListModel<Classificacao> modelClassif;
 	
-
-
 	public FramePartidas() {
 		getContentPane().setLayout(null);
 
@@ -82,10 +106,6 @@ public class FramePartidas extends JFrame {
 		jlstClassif.setBounds(419, 53, 477, 444);
 		getContentPane().add(jlstClassif);
 		
-//		btnAlterarPlacar = new JButton("Alterar Placar");
-//
-//		btnAlterarPlacar.setBounds(228, 551, 122, 23);
-//		getContentPane().add(btnAlterarPlacar);
 	}
 	
 	/**
@@ -95,8 +115,6 @@ public class FramePartidas extends JFrame {
 		return modelClassif;
 	}
 
-
-
 	/**
 	 * @return the jlstClassif
 	 */
@@ -104,14 +122,18 @@ public class FramePartidas extends JFrame {
 		return jlstClassif;
 	}
 
-
-
+	/**
+	 * 
+	 * @return txt de Gols Casa
+	 */
 	public JTextField getTxtGolsAnfitriao() {
 		return txtGolsAnfitriao;
 	}
 
-
-
+/**
+ * 
+ * @return txt gols fora
+ */
 	public JTextField getTxtGolsVisitante() {
 		return txtGolsVisitante;
 	}
@@ -142,13 +164,6 @@ public class FramePartidas extends JFrame {
 	 */
 	public JList<Partida> getJlstPartidas() {
 		return jlstPartidas;
-	}
-
-	/**
-	 * @return the btnAlterarPlacar
-	 */
-	public JButton getBtnAlterarPlacar() {
-		return btnAlterarPlacar;
 	}
 
 	public DefaultListModel<Partida> getModelPartidas() {

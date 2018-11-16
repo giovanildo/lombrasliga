@@ -18,28 +18,75 @@ import model.EAtletaTorneio;
 public class FrameTorneios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * txt Nome do Torneio 
+	 * 
+	 */
 	private JTextField txtNomeTorneio;
+	/**
+	 * txt porque do nome
+	 */
 	private JTextField txtPorqueDoNome;
+	/**
+	 * combo box do clube
+	 */
 	private JComboBox<Clube> txtClube;
+	/**
+	 * combo box do eatleta
+	 */
 	private JComboBox<EAtleta> txtEatleta;
-
+	/**
+	 * botão para editar partidas
+	 */
 	private JButton btnEditarPartidas;
+	/**
+	 * botão para criar novo torneio
+	 */
 	private JButton btnNovoTorneio;
+	/**
+	 * botão para remover jogador
+	 */
 	private JButton btnRemoverJogador;
+	/**
+	 * botão para adicionar Jogador
+	 */
 	private JButton btnAdicionarJogador;
+	/**
+	 * botão para salvar Torneio
+	 */
 	private JButton btnSalvarTorneio;
+	/**
+	 * botão para deletar torneio
+	 */
 	private JButton btnDeletarTorneio;
+	/**
+	 * botão para editar torneio
+	 */
 	private JButton btnEditarTorneio;
-
+	/**
+	 * List Model dos torneios
+	 */
 	private DefaultListModel<Torneio> modelTorneios;
+	/**
+	 * Model List do eatleta torneio
+	 */
 	private DefaultListModel<EAtletaTorneio> modelEatletaTorneio;
+	/**
+	 * JList do Eatleta torneio
+	 */
 	private JList<EAtletaTorneio> jlstEatletaClube;
+	/**
+	 * Jlist dos torneios
+	 */
 	private JList<Torneio> jlstTorneios;
-	
+	/**
+	 * botão para cadastrar novo jogador e clube
+	 */
 	private JButton btnNovoJogadorClube;
 
-
+	/**
+	 * Monta a tela
+	 */
 	public FrameTorneios() {
 
 		super("Torneio Lombra da Madrugada");
@@ -139,71 +186,122 @@ public class FrameTorneios extends JFrame {
 		btnNovoJogadorClube.setBounds(250, 423, 145, 23);
 		getContentPane().add(btnNovoJogadorClube);
 	}
-	
+	/**
+	 * 
+	 * @return botão para cadastrar novo jogador e clube
+	 */
 	public JButton getBtnNovoJogadorClube() {
 		return btnNovoJogadorClube;
 	}
-
+	/**
+	 * 
+	 * @return JList Torneio
+	 */
 	public JList<Torneio> getJlstTorneios() {
 		return jlstTorneios;
 	}
-
+	/**
+	 * 
+	 * @return botão novo torneio
+	 */
 	public JButton getBtnNovoTorneio() {
 		return btnNovoTorneio;
 	}
-
+	/**
+	 * 
+	 * @param btnNovoTorneio
+	 */
 	public void setBtnNovoTorneio(JButton btnNovoTorneio) {
 		this.btnNovoTorneio = btnNovoTorneio;
 	}
-
+	/**
+	 * 
+	 * @return combo box de clubes
+	 */
 	public JComboBox<Clube> getTxtClube() {
 		return txtClube;
 	}
-
+	/**
+	 * 
+	 * @return combobox de eatletas
+	 */
 	public JComboBox<EAtleta> getTxtEatleta() {
 		return txtEatleta;
 	}
-
+	/**
+	 * 
+	 * @return botão editar torneio
+	 */
 	public JButton getBtnEditarTorneio() {
 		return btnEditarTorneio;
 	}
-
+	/**
+	 * 
+	 * @return botão deletar torneio
+	 */
 	public JButton getBtnDeletarTorneio() {
 		return btnDeletarTorneio;
 	}
-
+	/**
+	 * 
+	 * @return txt de Porque do nome
+	 */
 	public JTextField getTxtPorqueDoNome() {
 		return txtPorqueDoNome;
 	}
-
+	/**
+	 * 
+	 * @return txt do nome do torneio
+	 */
 	public JTextField getTxtNomeTorneio() {
 		return txtNomeTorneio;
 	}
-
+	/**
+	 * 
+	 * @return List Model de Torneios
+	 */
 	public DefaultListModel<Torneio> getModelTorneios() {
 		return modelTorneios;
 	}
-
+	/**
+	 * 
+	 * @return list Model de eatletaTorneio
+	 */
 	public DefaultListModel<EAtletaTorneio> getModelEatletaTorneio() {
 		return modelEatletaTorneio;
 	}
-
+	/**
+	 * 
+	 * @return JList de eatleta torneio
+	 */
 	public JList<EAtletaTorneio> getJlstEatletaClube() {
 		return jlstEatletaClube;
 	}
-
+	/**
+	 * 
+	 * @return botão remover jogador
+	 */
 	public JButton getBtnRemoverJogador() {
 		return btnRemoverJogador;
 	}
-
+	/**
+	 * 
+	 * @return botão de adicionar jogador
+	 */
 	public JButton getBtnAdicionarJogador() {
 		return btnAdicionarJogador;
 	}
-
+	/**
+	 * 
+	 * @return botão salvar torneio
+	 */
 	public JButton getBtnSalvarTorneio() {
 		return btnSalvarTorneio;
 	}
-
+	/**
+	 * 
+	 * @return botão de editar partidas
+	 */
 	public JButton getBtnEditarPartidas() {
 		return btnEditarPartidas;
 	}

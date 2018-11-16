@@ -7,7 +7,9 @@ package model;
  */
 public class Partida {
 
-
+	/**
+	 * id único
+	 */
 	private int id;
 	/**
 	 * clube que joga em casa
@@ -21,19 +23,6 @@ public class Partida {
 	 * saber se a partida foi encerrada ou não
 	 */
 	private boolean encerrada;
-	
-	@Override
-	public String toString() {
-		String clubeMandante = anfitriao.geteAtletaTorneio().getClube().getNome();
-		String clubeVisitante = visitante.geteAtletaTorneio().getClube().getNome();
-		String eAtletaMandante = anfitriao.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
-		String eAtletaVisitante = visitante.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
-		
-		int golsMandante = anfitriao.getGols();
-		int golsVisitante = visitante.getGols();		
-		
-		return  eAtletaMandante + " - " + clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante + " - " + eAtletaVisitante;
-	}
 
 	/**
 	 * 
@@ -119,6 +108,18 @@ public class Partida {
 	 */
 	public void setEncerrada(boolean encerrada) {
 		this.encerrada = encerrada;
+	}
+	@Override
+	public String toString() {
+		String clubeMandante = anfitriao.geteAtletaTorneio().getClube().getNome();
+		String clubeVisitante = visitante.geteAtletaTorneio().getClube().getNome();
+		String eAtletaMandante = anfitriao.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
+		String eAtletaVisitante = visitante.geteAtletaTorneio().geteAtleta().getNome().toUpperCase();
+		
+		int golsMandante = anfitriao.getGols();
+		int golsVisitante = visitante.getGols();		
+		
+		return  eAtletaMandante + " - " + clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante + " - " + eAtletaVisitante;
 	}
 
 

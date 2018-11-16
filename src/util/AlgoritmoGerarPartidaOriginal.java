@@ -3,7 +3,12 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * 
+ * @author giovanildo
+ * Algoritmo Base para Gerar as partidas de futebol no modo todos contra todos
+ *
+ */
 public class AlgoritmoGerarPartidaOriginal {
 
 	private Scanner in;

@@ -6,43 +6,11 @@ package model;
  *         na partida
  */
 public class EAtletaTorneio {
-	
-	@Override
-	public String toString() {
-		return eAtleta + "   " + clube + "   " + torneio;
-	}
-
+	/**
+	 * id único do eatleta no torneio
+	 */
 	private int id;
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EAtletaTorneio other = (EAtletaTorneio) obj;
-		if (clube == null) {
-			if (other.clube != null)
-				return false;
-		} else if (!clube.equals(other.clube))
-			return false;
-		if (eAtleta == null) {
-			if (other.eAtleta != null)
-				return false;
-		} else if (!eAtleta.equals(other.eAtleta))
-			return false;
-		if (id != other.id)
-			return false;
-		if (torneio == null) {
-			if (other.torneio != null)
-				return false;
-		} else if (!torneio.equals(other.torneio))
-			return false;
-		return true;
-	}
-
+	
 	/**
 	 * Jogador de Video Game
 	 */
@@ -137,4 +105,39 @@ public class EAtletaTorneio {
 		this.clube = clube;
 	}
 
+	@Override
+	public String toString() {
+		return eAtleta + "   " + clube + "   " + torneio;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EAtletaTorneio other = (EAtletaTorneio) obj;
+		if (clube == null) {
+			if (other.clube != null)
+				return false;
+		} else if (!clube.equals(other.clube))
+			return false;
+		if (eAtleta == null) {
+			if (other.eAtleta != null)
+				return false;
+		} else if (!eAtleta.equals(other.eAtleta))
+			return false;
+		if (id != other.id)
+			return false;
+		if (torneio == null) {
+			if (other.torneio != null)
+				return false;
+		} else if (!torneio.equals(other.torneio))
+			return false;
+		return true;
+	}
+
+	
 }

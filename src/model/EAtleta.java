@@ -5,6 +5,59 @@ package model;
  * @author giovanildo classe grava informações do jogador de videogame
  */
 public class EAtleta {
+
+	/**
+	 * id único do EAtleta
+	 */
+	private int id;
+	/**
+	 * Nome do Jogador de Vídeo Game
+	 */
+	private String nome;
+	/**
+	 * 
+	 * @return id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * 
+	 * @return nome do tipo String
+	 */
+	public String getNome() {
+		return nome;
+	}
+	/**
+	 * 
+	 * @param nome do eatleta
+	 */
+	public EAtleta(String nome) {
+		super();
+		this.nome = nome;
+	}
+
+	/**
+	 * 
+	 * @param nome do eatleta
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -22,46 +75,6 @@ public class EAtleta {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-
-	private int id;
-	/**
-	 * Nome do Jogador de Vídeo Game
-	 */
-	private String nome;
-
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String toString() {
-		return nome;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
-	 * 
-	 * @return nome do tipo String
-	 */
-	public String getNome() {
-		return nome;
-	}
-
-	public EAtleta(String nome) {
-		super();
-		this.nome = nome;
-	}
-
-	/**
-	 * 
-	 * @param nome
-	 */
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 }

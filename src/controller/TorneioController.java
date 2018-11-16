@@ -79,28 +79,12 @@ public class TorneioController {
 		this.framePartidas = new FramePartidas();
 
 	}
-
+	
+	/**
+	 * Preenche a JList Classificação na Frame Partidas
+	 */
 	public void preencherJListClassificacao() {
 		getFramePartidas().getModelClassif().clear();
-
-		// int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
-		// Partida partidaModel =
-		// getFramePartidas().getModelPartidas().getElementAt(index);
-
-		// int golsAnfitriao =
-		// Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
-		// int golsVisitante =
-		// Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
-		//
-		// partidaModel.getAnfitriao().setGols(golsAnfitriao);
-		// partidaModel.getVisitante().setGols(golsVisitante);
-
-		// for (Partida partidaArray : listaPartidas) {
-		// if (partidaArray.equals(partidaModel)) {
-		// fimDePartida(partidaArray);
-		// System.out.println(partidaArray);
-		// }
-		// }
 
 		// gerar lista eatletaTorneio atual
 		ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<>();
@@ -133,7 +117,10 @@ public class TorneioController {
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
 		getFramePartidas().getJlstClassif().setModel(getFramePartidas().getModelClassif());
 	}
-
+	/**
+	 * Encerra as partidas contabilizar o placar
+	 * Atualiza a tabela de classificação
+	 */
 	public void confirmarPlacar() {
 		getFramePartidas().getModelClassif().clear();
 
