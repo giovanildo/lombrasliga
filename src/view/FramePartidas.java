@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
+import model.Classificacao;
 import model.Partida;
 
 import javax.swing.DefaultListModel;
@@ -26,7 +27,17 @@ public class FramePartidas extends JFrame {
 	private JLabel lblAnfitriao;
 	private JLabel lblVisitante;
 	private DefaultListModel<Partida> modelPartidas;
+	private JList<Classificacao> jlstClassif;
 	
+	/**
+	 * @return the jlstClassif
+	 */
+	public JList<Classificacao> getJlstClassif() {
+		return jlstClassif;
+	}
+
+
+
 	public JTextField getTxtGolsAnfitriao() {
 		return txtGolsAnfitriao;
 	}
@@ -120,6 +131,11 @@ public class FramePartidas extends JFrame {
 		jlstPartidas.setModel(modelPartidas);
 		jlstPartidas.setBounds(34, 53, 525, 444);
 		getContentPane().add(jlstPartidas);
+		
+		DefaultListModel<Classificacao> modelClassif = new DefaultListModel<Classificacao>();
+		jlstClassif = new JList<Classificacao>(modelClassif);
+		jlstClassif.setBounds(42, 458, 746, 97);
+		getContentPane().add(jlstClassif);
 		
 //		btnAlterarPlacar = new JButton("Alterar Placar");
 //
