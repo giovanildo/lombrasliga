@@ -10,7 +10,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.Torneio;
@@ -101,10 +100,6 @@ public class FrameTorneios extends JFrame {
 		panelTorneio.add(txtEatleta);
 
 		modelEatletaTorneio = new DefaultListModel<EAtletaTorneio>();
-
-		JList<Classificacao> jlstClassif = new JList<>();
-		jlstClassif.setBounds(42, 458, 746, 97);
-		getContentPane().add(jlstClassif);
 
 		btnRemoverJogador = new JButton("Remover Jogador e Clube");
 
