@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 public class Classificacao implements Comparable<Classificacao> {
 	private String clube;
