@@ -62,9 +62,6 @@ public class TorneioController {
 
 	private ArrayList<EAtleta> listaEatleta;
 
-	
-	
-	
 	/**
 	 * Inicializador de objetos
 	 */
@@ -82,28 +79,30 @@ public class TorneioController {
 		this.framePartidas = new FramePartidas();
 
 	}
-	
+
 	public void preencherJListClassificacao() {
 		getFramePartidas().getModelClassif().clear();
-		
-//		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
-//		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
 
-//		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
-//		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
-//		
-//		partidaModel.getAnfitriao().setGols(golsAnfitriao);
-//		partidaModel.getVisitante().setGols(golsVisitante);
-		
-//		for (Partida partidaArray : listaPartidas) {
-//			if (partidaArray.equals(partidaModel)) {
-//				fimDePartida(partidaArray);
-//				System.out.println(partidaArray);
-//			}
-//		}
-		
-		
-		//gerar lista eatletaTorneio atual
+		// int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
+		// Partida partidaModel =
+		// getFramePartidas().getModelPartidas().getElementAt(index);
+
+		// int golsAnfitriao =
+		// Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
+		// int golsVisitante =
+		// Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
+		//
+		// partidaModel.getAnfitriao().setGols(golsAnfitriao);
+		// partidaModel.getVisitante().setGols(golsVisitante);
+
+		// for (Partida partidaArray : listaPartidas) {
+		// if (partidaArray.equals(partidaModel)) {
+		// fimDePartida(partidaArray);
+		// System.out.println(partidaArray);
+		// }
+		// }
+
+		// gerar lista eatletaTorneio atual
 		ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<>();
 		String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
 
@@ -113,9 +112,8 @@ public class TorneioController {
 				listaTorneioAtual.add(eat);
 			}
 		}
-		
-		
-		//gerar lista partidas atual
+
+		// gerar lista partidas atual
 		ArrayList<Partida> listaPartidasAtual = new ArrayList<Partida>();
 		for (Partida partida : listaPartidas) {
 			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
@@ -124,49 +122,48 @@ public class TorneioController {
 			}
 		}
 
-		
-		//preencher a model classificação com os dados da lista de classificacao
-		
+		// preencher a model classificação com os dados da lista de classificacao
+
 		ArrayList<Classificacao> listaClassif = gerarClassificacao(listaTorneioAtual, listaPartidasAtual);
-		
-		for(Classificacao classif : listaClassif) {
+
+		for (Classificacao classif : listaClassif) {
 			getFramePartidas().getModelClassif().addElement(classif);
 		}
-		
+
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
 		getFramePartidas().getJlstClassif().setModel(getFramePartidas().getModelClassif());
 	}
-	
 
 	public void confirmarPlacar() {
 		getFramePartidas().getModelClassif().clear();
-		
+
 		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
 		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
 
 		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
 		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
-		
+
 		partidaModel.getAnfitriao().setGols(golsAnfitriao);
 		partidaModel.getVisitante().setGols(golsVisitante);
-		
+
 		for (Partida partidaArray : listaPartidas) {
 			if (partidaArray.equals(partidaModel)) {
 				fimDePartida(partidaArray);
 				System.out.println(partidaArray);
 			}
 		}
-		
+
 		preencherJListClassificacao();
-		
+
 	}
-	
+
 	/**
 	 * Gera a tabela de classificação
 	 * 
 	 */
-	public ArrayList<Classificacao> gerarClassificacao(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual, ArrayList<Partida> listaPartidasAtual) {
-	
+	public ArrayList<Classificacao> gerarClassificacao(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual,
+			ArrayList<Partida> listaPartidasAtual) {
+
 		ArrayList<Classificacao> listaClassificacao = new ArrayList<Classificacao>();
 
 		int pontospossiveis = (listaEAtletaTorneioAtual.size() - 1) * 3 * 2;
@@ -299,7 +296,7 @@ public class TorneioController {
 			partida.getAnfitriao().perdeu();
 		}
 	}
-	
+
 	public void iniciar() {
 		iniciarFrameTorneios();
 		// preencherComboBox();
@@ -386,7 +383,7 @@ public class TorneioController {
 						return;
 					}
 				}
-				
+
 				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem(),
 						new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
 								getFrameTorneios().getTxtPorqueDoNome().getText()),
@@ -460,7 +457,7 @@ public class TorneioController {
 						getFramePartidas().getModelPartidas().addElement(partida);
 					}
 				}
-				
+
 				preencherJListClassificacao();
 
 				iniciarFramePartidas();
