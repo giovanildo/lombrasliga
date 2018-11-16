@@ -10,7 +10,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.Classificacao;
+import model.Classificacao;
 import model.Clube;
 import model.EAtleta;
 import model.Torneio;
