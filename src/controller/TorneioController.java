@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
@@ -63,6 +62,9 @@ public class TorneioController {
 
 	private ArrayList<EAtleta> listaEatleta;
 
+	
+	
+	
 	/**
 	 * Inicializador de objetos
 	 */
@@ -82,6 +84,8 @@ public class TorneioController {
 	}
 
 	public void confirmarPlacar() {
+		getFramePartidas().getModelClassif().clear();
+		
 		int index = getFramePartidas().getJlstPartidas().getSelectedIndex();
 		Partida partidaModel = getFramePartidas().getModelPartidas().getElementAt(index);
 
@@ -97,9 +101,45 @@ public class TorneioController {
 				System.out.println(partidaArray);
 			}
 		}
+		
+		
+		//gerar lista eatletaTorneio atual
+		ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<>();
+		String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
 
+		for (EAtletaTorneio eat : listaEatletasTorneio) {
+			String torneioEat = eat.getTorneio().getNome();
+			if (torneioEat.equals(torneioTxtField)) {
+				listaTorneioAtual.add(eat);
+			}
+		}
+		
+		
+		//gerar lista partidas atual
+		ArrayList<Partida> listaPartidasAtual = new ArrayList<Partida>();
+		for (Partida partida : listaPartidas) {
+			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+			if (torneioPartida.equals(torneioTxtField)) {
+				listaPartidasAtual.add(partida);
+			}
+		}
+
+		
+		
+		
+		//preencher a model classificação com os dados da lista de classificacao
+		
+		ArrayList<Classificacao> listaClassif = gerarClassificacao(listaTorneioAtual, listaPartidasAtual);
+		
+		for(Classificacao classif : listaClassif) {
+			getFramePartidas().getModelClassif().addElement(classif);
+		}
+		
+		
+		
 		System.out.println(partidaModel);
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
+		getFramePartidas().getJlstClassif().setModel(getFramePartidas().getModelClassif());
 	}
 	
 	/**
@@ -108,7 +148,7 @@ public class TorneioController {
 	 */
 	public ArrayList<Classificacao> gerarClassificacao(ArrayList<EAtletaTorneio> listaEAtletaTorneioAtual, ArrayList<Partida> listaPartidasAtual) {
 	
-		ArrayList<Classificacao> listaClassificacao = new ArrayList<>();
+		ArrayList<Classificacao> listaClassificacao = new ArrayList<Classificacao>();
 
 		int pontospossiveis = (listaEAtletaTorneioAtual.size() - 1) * 3 * 2;
 

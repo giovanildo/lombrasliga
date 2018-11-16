@@ -94,9 +94,9 @@ public class Classificacao implements Comparable<Classificacao> {
 
 	@Override
 	public String toString() {
-		return "Tabela [clube=" + clube + ", pontos=" + pontos + ", jogos=" + jogos + ", vitorias=" + vitorias
-				+ ", empates=" + empates + ", derrotas=" + derrotas + ", golspro=" + golspro + ", golscontra="
-				+ golscontra + ", saldo=" + saldo + ", aproveitamento=" + aproveitamento + "]";
+		return "Clube" + clube + ", Pt" + pontos + ", jg=" + jogos + ", vit=" + vitorias
+				+ ", emp=" + empates + ", der=" + derrotas + ", gp=" + golspro + ", gc="
+				+ golscontra + ", sg=" + saldo + ", aprov=" + aproveitamento;
 	}
 
 	public Classificacao(String clube, int pontos, int jogos, int vitorias, int empates, int derrotas, int golspro,

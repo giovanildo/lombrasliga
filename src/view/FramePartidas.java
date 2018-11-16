@@ -28,7 +28,75 @@ public class FramePartidas extends JFrame {
 	private JLabel lblVisitante;
 	private DefaultListModel<Partida> modelPartidas;
 	private JList<Classificacao> jlstClassif;
+	private DefaultListModel<Classificacao> modelClassif;
 	
+
+
+	public FramePartidas() {
+		getContentPane().setLayout(null);
+
+		JLabel lblPartidas = new JLabel("PARTIDAS");
+		lblPartidas.setBounds(369, 27, 70, 15);
+		getContentPane().add(lblPartidas);
+
+		lblAnfitriao = new JLabel("Anfitrião");
+		lblAnfitriao.setBounds(34, 510, 70, 15);
+		getContentPane().add(lblAnfitriao);
+
+		JLabel lblX = new JLabel("X");
+		lblX.setBounds(249, 510, 70, 15);
+		getContentPane().add(lblX);
+
+		lblVisitante = new JLabel("Visitante");
+		lblVisitante.setBounds(398, 510, 70, 15);
+		getContentPane().add(lblVisitante);
+
+		txtGolsAnfitriao = new JTextField();
+		txtGolsAnfitriao.setText("gols");
+		txtGolsAnfitriao.setBounds(121, 508, 114, 19);
+		getContentPane().add(txtGolsAnfitriao);
+		txtGolsAnfitriao.setColumns(10);
+
+		txtGolsVisitante = new JTextField();
+		txtGolsVisitante.setText("gols");
+		txtGolsVisitante.setBounds(272, 508, 114, 19);
+		getContentPane().add(txtGolsVisitante);
+		txtGolsVisitante.setColumns(10);
+
+		btnConfirmar = new JButton("Confirmar");
+
+
+		btnConfirmar.setBounds(183, 549, 117, 25);
+		getContentPane().add(btnConfirmar);
+
+		modelPartidas = new DefaultListModel<Partida>();
+		jlstPartidas = new JList<>();
+		jlstPartidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		jlstPartidas.setModel(modelPartidas);
+		jlstPartidas.setBounds(34, 53, 359, 444);
+		getContentPane().add(jlstPartidas);
+		
+		modelClassif = new DefaultListModel<Classificacao>();
+		jlstClassif = new JList<Classificacao>(modelClassif);
+		jlstClassif.setBounds(419, 53, 477, 444);
+		getContentPane().add(jlstClassif);
+		
+//		btnAlterarPlacar = new JButton("Alterar Placar");
+//
+//		btnAlterarPlacar.setBounds(228, 551, 122, 23);
+//		getContentPane().add(btnAlterarPlacar);
+	}
+	
+	/**
+	 * @return the modelClassif
+	 */
+	public DefaultListModel<Classificacao> getModelClassif() {
+		return modelClassif;
+	}
+
+
+
 	/**
 	 * @return the jlstClassif
 	 */
@@ -85,61 +153,5 @@ public class FramePartidas extends JFrame {
 
 	public DefaultListModel<Partida> getModelPartidas() {
 		return modelPartidas;
-	}
-
-	public FramePartidas() {
-		getContentPane().setLayout(null);
-
-		JLabel lblPartidas = new JLabel("PARTIDAS");
-		lblPartidas.setBounds(369, 27, 70, 15);
-		getContentPane().add(lblPartidas);
-
-		lblAnfitriao = new JLabel("Anfitrião");
-		lblAnfitriao.setBounds(34, 510, 70, 15);
-		getContentPane().add(lblAnfitriao);
-
-		JLabel lblX = new JLabel("X");
-		lblX.setBounds(249, 510, 70, 15);
-		getContentPane().add(lblX);
-
-		lblVisitante = new JLabel("Visitante");
-		lblVisitante.setBounds(398, 510, 70, 15);
-		getContentPane().add(lblVisitante);
-
-		txtGolsAnfitriao = new JTextField();
-		txtGolsAnfitriao.setText("gols");
-		txtGolsAnfitriao.setBounds(121, 508, 114, 19);
-		getContentPane().add(txtGolsAnfitriao);
-		txtGolsAnfitriao.setColumns(10);
-
-		txtGolsVisitante = new JTextField();
-		txtGolsVisitante.setText("gols");
-		txtGolsVisitante.setBounds(272, 508, 114, 19);
-		getContentPane().add(txtGolsVisitante);
-		txtGolsVisitante.setColumns(10);
-
-		btnConfirmar = new JButton("Confirmar");
-
-
-		btnConfirmar.setBounds(183, 549, 117, 25);
-		getContentPane().add(btnConfirmar);
-
-		modelPartidas = new DefaultListModel<Partida>();
-		jlstPartidas = new JList<>();
-		jlstPartidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		jlstPartidas.setModel(modelPartidas);
-		jlstPartidas.setBounds(34, 53, 525, 444);
-		getContentPane().add(jlstPartidas);
-		
-		DefaultListModel<Classificacao> modelClassif = new DefaultListModel<Classificacao>();
-		jlstClassif = new JList<Classificacao>(modelClassif);
-		jlstClassif.setBounds(42, 458, 746, 97);
-		getContentPane().add(jlstClassif);
-		
-//		btnAlterarPlacar = new JButton("Alterar Placar");
-//
-//		btnAlterarPlacar.setBounds(228, 551, 122, 23);
-//		getContentPane().add(btnAlterarPlacar);
 	}
 }
