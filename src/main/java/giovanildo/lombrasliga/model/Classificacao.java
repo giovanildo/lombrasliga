@@ -222,7 +222,6 @@ public class Classificacao implements Comparable<Classificacao> {
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	@Override
 	public int compareTo(Classificacao outro) {
 		Integer p = this.pontos;
 		Integer o = outro.getPontos();

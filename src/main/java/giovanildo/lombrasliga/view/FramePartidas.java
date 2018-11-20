@@ -93,7 +93,7 @@ public class FramePartidas extends JFrame {
 		getContentPane().add(btnConfirmar);
 
 		modelPartidas = new DefaultListModel<Partida>();
-		jlstPartidas = new JList<>();
+		jlstPartidas = new JList<Partida>();
 		jlstPartidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		jlstPartidas.setModel(modelPartidas);

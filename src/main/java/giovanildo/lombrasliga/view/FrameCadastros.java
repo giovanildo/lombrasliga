@@ -101,8 +101,8 @@ public class FrameCadastros extends JFrame {
 		jlstClubes.setBounds(36, 211, 206, 263);
 		getContentPane().add(jlstClubes);
 
-		modelEatletas = new DefaultListModel<>();
-		jlstEatleta = new JList<>(modelEatletas);
+		modelEatletas = new DefaultListModel<EAtleta>();
+		jlstEatleta = new JList<EAtleta>(modelEatletas);
 		jlstEatleta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jlstEatleta.setBounds(282, 212, 243, 263);
 		getContentPane().add(jlstEatleta);
