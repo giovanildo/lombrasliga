@@ -1,4 +1,4 @@
-package giovanildo.lombrasliga.dao;
+package giovanildo.lombrasliga;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

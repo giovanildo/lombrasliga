@@ -28,22 +28,13 @@ public class EquipeEmCampo {
 	private int pontos;
 	/**
 	 * 
-	 * @return gols contra
+	 * @param eAtletaTorneio
+	 * @param gols
 	 */
-	public int getGolscontra() {
-		return golscontra;
-	}
-	/**
-	 * 
-	 * @param golscontra
-	 */
-	public void setGolscontra(int golscontra) {
-		this.golscontra = golscontra;
-	}
-
-	@Override
-	public String toString() {
-		return eAtletaTorneio + "  " + gols + " Resultado " + resultadoString() + " Pontos " + pontos;
+	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio, int gols) {
+		super();
+		this.eAtletaTorneio = eAtletaTorneio;
+		this.gols = gols;
 	}
 	/**
 	 * 
@@ -51,21 +42,14 @@ public class EquipeEmCampo {
 	 */
 	public String resultadoString() {
 		String resultadoString = "ERRO";
-		if(resultado==1) {
+		if(resultado==VITORIA) {
 			resultadoString="VITÓRIA";
-		} else if (resultado==2){
+		} else if (resultado==EMPATE){
 			resultadoString="EMPATE";
-		} else if(resultado==3) {
+		} else if(resultado==DERROTA) {
 			resultadoString="DERROTA";
 		}
 		return resultadoString;
-	}
-	/**
-	 * 
-	 * @return qtd pontos
-	 */
-	public int getPontos() {
-		return pontos;
 	}
 	/**
 	 * em caso da equipe ganhar
@@ -73,13 +57,6 @@ public class EquipeEmCampo {
 	public void ganhou() {
 		pontos += 3;
 		resultado = VITORIA;
-	}
-	/**
-	 * 
-	 * @return int resultado da equipe na partida
-	 */
-	public int getResultado() {
-		return resultado;
 	}
 	/**
 	 * Em caso de empate
@@ -93,6 +70,35 @@ public class EquipeEmCampo {
 	 */
 	public void perdeu() {
 		resultado = DERROTA;
+	}
+	/**
+	 * 
+	 * @return gols contra
+	 */
+	public int getGolscontra() {
+		return golscontra;
+	}
+	/**
+	 * 
+	 * @param golscontra
+	 */
+	public void setGolscontra(int golscontra) {
+		this.golscontra = golscontra;
+	}
+
+	/**
+	 * 
+	 * @return qtd pontos
+	 */
+	public int getPontos() {
+		return pontos;
+	}
+	/**
+	 * 
+	 * @return int resultado da equipe na partida
+	 */
+	public int getResultado() {
+		return resultado;
 	}
 	/**
 	 * 
@@ -110,16 +116,6 @@ public class EquipeEmCampo {
 	}
 	/**
 	 * 
-	 * @param eAtletaTorneio
-	 * @param gols
-	 */
-	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio, int gols) {
-		super();
-		this.eAtletaTorneio = eAtletaTorneio;
-		this.gols = gols;
-	}
-	/**
-	 * 
 	 * @return gols a favor
 	 */
 	public int getGols() {
@@ -131,6 +127,10 @@ public class EquipeEmCampo {
 	 */
 	public void setGols(int gols) {
 		this.gols = gols;
+	}
+	@Override
+	public String toString() {
+		return eAtletaTorneio + "  " + gols + " Resultado " + resultadoString() + " Pontos " + pontos;
 	}
 	/**
 	 * Constante em caso de vitória
