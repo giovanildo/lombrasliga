@@ -1,5 +1,6 @@
 package giovanildo.lombrasliga.model;
 
+import giovanildo.lombrasliga.model.EquipeEmCampo;;
 /**
  * 
  * @author giovanildo 
@@ -14,11 +15,11 @@ public class Partida {
 	/**
 	 * clube que joga em casa
 	 */
-	private Anfitriao anfitriao;
+	private EquipeEmCampo anfitriao;
 	/**
 	 * clube que joga fora
 	 */
-	private Visitante visitante;
+	private EquipeEmCampo visitante;
 	/**
 	 * saber se a partida foi encerrada ou não
 	 */
@@ -29,8 +30,7 @@ public class Partida {
 	 * @param anfitriao
 	 * @param visitante
 	 */
-	public Partida(Anfitriao anfitriao, Visitante visitante) {
-		super();
+	public Partida(EquipeEmCampo anfitriao, EquipeEmCampo visitante) {
 		this.anfitriao = anfitriao;
 		this.visitante = visitante;
 	}
@@ -81,7 +81,7 @@ public class Partida {
 	 * @return o anfitrião da partida
 	 */
 
-	public Anfitriao getAnfitriao() {
+	public EquipeEmCampo getAnfitriao() {
 		return anfitriao;
 
 	}
@@ -91,7 +91,7 @@ public class Partida {
 	 * 
 	 * @return a equipe que joga fora de casa
 	 */
-	public Visitante getVisitante() {
+	public EquipeEmCampo getVisitante() {
 		return visitante;
 	}
 

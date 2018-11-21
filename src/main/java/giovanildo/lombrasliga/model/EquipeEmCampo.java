@@ -5,7 +5,7 @@ package giovanildo.lombrasliga.model;
  * Super Classe de Anfitrião e Visitante
  */
 
-public abstract class EquipeEmCampo {
+public class EquipeEmCampo {
 	/**
 	 * EAtleta da Equipe em Campo
 	 */
@@ -111,10 +111,12 @@ public abstract class EquipeEmCampo {
 	/**
 	 * 
 	 * @param eAtletaTorneio
+	 * @param gols
 	 */
-	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio) {
+	public EquipeEmCampo(EAtletaTorneio eAtletaTorneio, int gols) {
 		super();
 		this.eAtletaTorneio = eAtletaTorneio;
+		this.gols = gols;
 	}
 	/**
 	 * 

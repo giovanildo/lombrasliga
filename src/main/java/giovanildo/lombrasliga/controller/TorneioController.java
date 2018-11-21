@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import giovanildo.lombrasliga.model.Anfitriao;
 import giovanildo.lombrasliga.model.Classificacao;
 import giovanildo.lombrasliga.model.Clube;
 import giovanildo.lombrasliga.model.EAtleta;
@@ -18,7 +17,6 @@ import giovanildo.lombrasliga.model.EAtletaTorneio;
 import giovanildo.lombrasliga.model.EquipeEmCampo;
 import giovanildo.lombrasliga.model.Partida;
 import giovanildo.lombrasliga.model.Torneio;
-import giovanildo.lombrasliga.model.Visitante;
 import giovanildo.lombrasliga.view.FrameCadastros;
 import giovanildo.lombrasliga.view.FramePartidas;
 import giovanildo.lombrasliga.view.FrameTorneios;
@@ -231,21 +229,21 @@ public class TorneioController {
 					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
 						if (turno == 0) {
 							listaPartidas.add(
-									new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneioAtual.get(m), 0)));
+									new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
+											new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0)));
 						} else {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(m), 0),
-									new Visitante(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+							listaPartidas.add(new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0),
+									new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
 						}
 					} else {
 						if (turno == 1) {
-							listaPartidas.add(new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(m), 0),
-									new Visitante(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+							listaPartidas.add(new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0),
+									new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
 
 						} else {
 							listaPartidas.add(
-									new Partida(new Anfitriao(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
-											new Visitante(listaEAtletaTorneioAtual.get(m), 0)));
+									new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
+											new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0)));
 						}
 					}
 				}
