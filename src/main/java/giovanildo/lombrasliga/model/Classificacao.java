@@ -217,11 +217,7 @@ public class Classificacao implements Comparable<Classificacao> {
 		this.aproveitamento = aproveitamento;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
+	
 	public int compareTo(Classificacao outro) {
 		Integer p = this.pontos;
 		Integer o = outro.getPontos();

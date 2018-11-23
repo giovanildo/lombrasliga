@@ -14,14 +14,11 @@ import giovanildo.lombrasliga.model.Classificacao;
 import giovanildo.lombrasliga.model.Clube;
 import giovanildo.lombrasliga.model.EAtleta;
 import giovanildo.lombrasliga.model.EAtletaTorneio;
-import giovanildo.lombrasliga.model.EquipeEmCampo;
 import giovanildo.lombrasliga.model.Partida;
 import giovanildo.lombrasliga.model.Torneio;
 import giovanildo.lombrasliga.view.FrameCadastros;
 import giovanildo.lombrasliga.view.FramePartidas;
 import giovanildo.lombrasliga.view.FrameTorneios;
-
-
 
 public class TorneioController {
 
@@ -79,7 +76,7 @@ public class TorneioController {
 		this.framePartidas = new FramePartidas();
 
 	}
-	
+
 	/**
 	 * Preenche a JList Classificação na Frame Partidas
 	 */
@@ -100,7 +97,7 @@ public class TorneioController {
 		// gerar lista partidas atual
 		ArrayList<Partida> listaPartidasAtual = new ArrayList<Partida>();
 		for (Partida partida : listaPartidas) {
-			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+			String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
 			if (torneioPartida.equals(torneioTxtField)) {
 				listaPartidasAtual.add(partida);
 			}
@@ -117,9 +114,9 @@ public class TorneioController {
 		getFramePartidas().getJlstPartidas().setModel(getFramePartidas().getModelPartidas());
 		getFramePartidas().getJlstClassif().setModel(getFramePartidas().getModelClassif());
 	}
+
 	/**
-	 * Encerra as partidas contabilizar o placar
-	 * Atualiza a tabela de classificação
+	 * Encerra as partidas contabilizar o placar Atualiza a tabela de classificação
 	 */
 	public void confirmarPlacar() {
 		getFramePartidas().getModelClassif().clear();
@@ -130,13 +127,12 @@ public class TorneioController {
 		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
 		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
 
-		partidaModel.getAnfitriao().setGols(golsAnfitriao);
-		partidaModel.getVisitante().setGols(golsVisitante);
+		partidaModel.setGolsAnfitriao(golsAnfitriao);
+		partidaModel.setGolsVisitante(golsVisitante);
 
 		for (Partida partidaArray : listaPartidas) {
 			if (partidaArray.equals(partidaModel)) {
-				fimDePartida(partidaArray);
-				System.out.println(partidaArray);
+				partidaArray.setEncerrada(true);
 			}
 		}
 
@@ -171,29 +167,41 @@ public class TorneioController {
 					System.out.println("Partida não acabou ainda");
 					continue;
 				}
-				if (partida.getAnfitriao().geteAtletaTorneio().getClube().getNome().equals(eat.getClube().getNome())) {
-					pontos += partida.getAnfitriao().getPontos();
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.VITORIA)
+
+				if (partida.getAnfitriao().getClube().getNome().equals(eat.getClube().getNome())) {
+					if (partida.getGolsAnfitriao() > partida.getGolsVisitante()) {
 						vitorias++;
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.EMPATE)
+						pontos += 3;
+					}
+						
+					if (partida.getGolsAnfitriao() == partida.getGolsVisitante()) {
 						empates++;
-					if (partida.getAnfitriao().getResultado() == EquipeEmCampo.DERROTA)
+						pontos++;
+					}
+					if (partida.getGolsAnfitriao() < partida.getGolsVisitante()) {
 						derrotas++;
-					golspro += partida.getAnfitriao().getGols();
-					golscontra += partida.getAnfitriao().getGolscontra();
+					}
+
+					golspro += partida.getGolsAnfitriao();
+					golscontra += partida.getGolsVisitante();
 					jogos++;
-				} else if (partida.getVisitante().geteAtletaTorneio().getClube().getNome()
-						.equals(eat.getClube().getNome())) {
-					pontos += partida.getVisitante().getPontos();
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.VITORIA)
+				} else if (partida.getVisitante().getClube().getNome().equals(eat.getClube().getNome())) {
+					if (partida.getGolsVisitante() > partida.getGolsAnfitriao()) {
 						vitorias++;
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.EMPATE)
+						pontos += 3;
+					}
+					if (partida.getGolsVisitante() == partida.getGolsAnfitriao()) {
 						empates++;
-					if (partida.getVisitante().getResultado() == EquipeEmCampo.DERROTA)
+						pontos++;
+					}
+					if (partida.getGolsVisitante() < partida.getGolsAnfitriao()) {
 						derrotas++;
-					golspro += partida.getVisitante().getGols();
-					golscontra += partida.getVisitante().getGolscontra();
+					}
+
+					golspro += partida.getGolsAnfitriao();
+					golscontra += partida.getGolsVisitante();
 					jogos++;
+
 				}
 			}
 			aproveitamento = (int) (((float) pontos / pontospossiveis) * 100);
@@ -217,7 +225,7 @@ public class TorneioController {
 		// variaveis que serao base para gerar partidas
 		int totalClubes = listaEAtletaTorneioAtual.size();
 		int metadeClubes = totalClubes / 2;
-
+		Partida partida = null;
 		for (int turno = 0; turno <= 1; turno++) {
 			for (int t = 0; t < (totalClubes - 1); t++) {// for das rodadas
 				for (int m = 0; m < metadeClubes; m++) {// for dos jogos
@@ -228,60 +236,30 @@ public class TorneioController {
 					// Teste para ajustar o mando de campo
 					if (m % 2 == 1 || t % 2 == 1 && m == 0) {
 						if (turno == 0) {
-							listaPartidas.add(
-									new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
-											new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0)));
+							partida = new Partida(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0,
+									listaEAtletaTorneioAtual.get(m), 0);
 						} else {
-							listaPartidas.add(new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0),
-									new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+							partida = new Partida(listaEAtletaTorneioAtual.get(m), 0,
+									listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0);
 						}
 					} else {
 						if (turno == 1) {
-							listaPartidas.add(new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0),
-									new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0)));
+							partida = new Partida(listaEAtletaTorneioAtual.get(m), 0,
+									listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0);
 
 						} else {
-							listaPartidas.add(
-									new Partida(new EquipeEmCampo(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0),
-											new EquipeEmCampo(listaEAtletaTorneioAtual.get(m), 0)));
+							partida = new Partida(listaEAtletaTorneioAtual.get(totalClubes - m - 1), 0,
+									listaEAtletaTorneioAtual.get(m), 0);
 						}
 					}
 				}
+				listaPartidas.add(partida);
 				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
 				EAtletaTorneio remove = listaEAtletaTorneioAtual.remove(listaEAtletaTorneioAtual.size() - 1);
 				listaEAtletaTorneioAtual.add(1, remove);
 			}
 		}
 
-	}
-
-	/**
-	 * encerra a partida e efetiva o placar da partida
-	 */
-	public void fimDePartida(Partida partida) {
-		partida.setEncerrada(true);
-
-		int golsfora = partida.getVisitante().getGols();
-		int golscasa = partida.getAnfitriao().getGols();
-
-		// preencher gols contra
-		partida.getAnfitriao().setGolscontra(golsfora);
-		partida.getVisitante().setGolscontra(golscasa);
-
-		// preenchendo resultado da partida
-		if (golscasa == golsfora) {
-			partida.getAnfitriao().empatou();
-			partida.getVisitante().empatou();
-			return;
-		}
-
-		if (golscasa > golsfora) {
-			partida.getVisitante().perdeu();
-			partida.getAnfitriao().ganhou();
-		} else {
-			partida.getVisitante().ganhou();
-			partida.getAnfitriao().perdeu();
-		}
 	}
 
 	public void iniciar() {
@@ -439,7 +417,7 @@ public class TorneioController {
 				// um for selecionando
 
 				for (Partida partida : listaPartidas) {
-					String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+					String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
 					if (torneioPartida.equals(torneioTxtField)) {
 						getFramePartidas().getModelPartidas().addElement(partida);
 					}
@@ -473,7 +451,7 @@ public class TorneioController {
 				}
 				// apagar as referencias da lista de partidas
 				for (int i = 0; i < listaPartidas.size(); i++) {
-					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().geteAtletaTorneio().getTorneio()
+					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().getTorneio()
 							.getNome();
 					if (torneioNaListaPartidas.equals(torneioNoModel.getNome())) {
 						listaPartidas.remove(i);
@@ -612,7 +590,7 @@ public class TorneioController {
 		boolean foiDisputado = false;
 		for (Partida partida : listaPartidas) {
 			String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
-			String torneioPartida = partida.getAnfitriao().geteAtletaTorneio().getTorneio().getNome();
+			String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
 			if (torneioPartida.equals(torneioTxtField)) {
 				foiDisputado = true;
 				break;
