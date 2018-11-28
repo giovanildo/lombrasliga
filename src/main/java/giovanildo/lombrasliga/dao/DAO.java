@@ -2,71 +2,142 @@ package giovanildo.lombrasliga.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * 
- * @author giovanildo
- * classe que faz a comunicação com o banco de dados
+ * @author giovanildo classe que faz a comunicação com o banco de dados
  *
  */
 
-	//método para conectar
-	//método para adicionar registro
-	//método para apagar registro
-	//método para carregar todo o banco de dados dentro das arrayslistes
+// método para conectar
+// método para adicionar registro
+// método para apagar registro
+// método para carregar todo o banco de dados dentro das arrayslistes
 
 public class DAO {
+
+	private String usuario;
+	private String senha; 
+	private String url; 
 	
-	public void conectar() 
-	{
+	public DAO() {
+		super();
+		this.usuario = "postgres";;
+		this.senha = "labti@unilab2012";
+		this.url = "jdbc:postgresql://127.0.0.1/lombras";
+	}
+
+	public boolean criarBaseDeDados(String database ) {
+		
 		String url = "jdbc:postgresql://127.0.0.1/";
-		//String clube = "CREATE TABLE clube (id_clube integer CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) NOT NULL, );";
-		//String sql = "select * from eatleta";
-		String usuario = "postgres";
-		String senha = "labti@unilab2012";
-	
+		String criaDatabase = "CREATE DATABASE " + database + " OWNER postgres ENCODING 'UTF-8';";		
+		
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			System.out.println("Tentando conexão");
+			Statement stm = con.createStatement();
+			System.out.println("Criando statement");
+			stm.executeUpdate(criaDatabase); 
+			System.out.println("Base de dados criada com sucesso");
+			con.close();
+			stm.close();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("deu merda");
+			
+			return false;
+		}
+		
+
 	}
 	
-	public void criarBanco() {
-//		criar banco de dados lombras
-//		String sql = "CREATE DATABASE lombras OWNER postgres ENCODING 'UTF-8';";
-//		tabela eatleta
-//		id e nome		
-		String eatleta = "CREATE TABLE eatleta (id_eatleta integer CONSTRAINT pk_id_eatleta PRIMARY KEY,  nome_eatleta varchar(30) NOT NULL);";
-//		tabela clube
-//		id e nome
-		String clube = "CREATE TABLE clube (id_clube integer CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) NOT NULL, );";
-//		tabela torneio
-//		id e nome e porquedoNome
-		String torneio = "CREATE TABLE torneio (id_torneio integer CONSTRAINT pk_id_torneio PRIMARY KEY, "
-				+ " nome_torneio varchar(30) NOT NULL, );";
+	public boolean apagarBaseDeDados(String database ) {
+		
+		String url = "jdbc:postgresql://127.0.0.1/";
+		String criaDatabase = "DROP DATABASE " + database + ";";
+		
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			System.out.println("Tentando conexão");
+			Statement stm = con.createStatement();
+			System.out.println("Criando statement");
+			stm.executeUpdate(criaDatabase); 
+			System.out.println("Base de dados apagada com sucesso");
+			con.close();
+			stm.close();
+			return true;
 
-//		tabela EatletaTorneio
-//		id, id eatleta, id clube, id torneio
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("deu merda");
+			
+			return false;
+		}
+
+	}
+
+	public void criarBanco() {
+
+		String eatleta = "CREATE TABLE eatleta (id_eatleta SERIAL CONSTRAINT pk_id_eatleta PRIMARY KEY,  nome_eatleta varchar(30) UNIQUE NOT NULL);";
+		String clube = "CREATE TABLE clube (id_clube SERIAL CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) UNIQUE NOT NULL);";
+		String torneio = "CREATE TABLE torneio (id_torneio SERIAL CONSTRAINT pk_id_torneio PRIMARY KEY, "
+				+ " nome_torneio varchar(30) UNIQUE NOT NULL);";
 
 		String eatletatorneio = "CREATE TABLE eatletatorneio( "
-				+ "id_eatletatorneio integer CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
+				+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
 				+ "id_eatleta integer NOT NULL, " + "id_clube integer NOT NULL, " + "id_torneio integer NOT NULL, "
 				+ "FOREIGN KEY (id_eatleta) REFERENCES eatleta (id_eatleta) ON DELETE CASCADE, "
 				+ "FOREIGN KEY (id_clube) REFERENCES clube (id_clube) ON DELETE CASCADE, "
 				+ "FOREIGN KEY (id_torneio) REFERENCES torneio (id_torneio) ON DELETE CASCADE);";
 
-//		tabela partida
-//		id
-//		visitante
-//		anfitriao
-//		golsVisitante
-//		golsAnfitriao
-//		encerrada?
-
-		String partida = "CREATE TABLE partida(" + "id_partida integer CONSTRAINT pk_id_partida PRIMARY KEY, "
-				+ "visitante integer not null, " + "anfitriao integer not null, " + "golsvisitante integer not null"
-				+ "golsanfitriao integer not null" + "encerrada boolean"
+		String partida = "CREATE TABLE partida(" + "id_partida SERIAL CONSTRAINT pk_id_partida PRIMARY KEY, "
+				+ "visitante integer not null, " + "anfitriao integer not null, " + "golsvisitante integer not null, "
+				+ "golsanfitriao integer not null, " + "encerrada boolean, "
 				+ "FOREIGN KEY(visitante) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE,"
 				+ "FOREIGN KEY(anfitriao) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE);";
 
+		String baseDeDados = "lombras";		
+		
+		criarBaseDeDados(baseDeDados);
+		
+		
+		String url = "jdbc:postgresql://127.0.0.1/" + baseDeDados;
+				
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			System.out.println("Tentando conexão");
+			Statement stm = con.createStatement();
+			System.out.println("Criando statement");
+			stm.executeUpdate(eatleta);
+			stm.executeUpdate(clube);
+			stm.executeUpdate(torneio);
+			stm.executeUpdate(eatletatorneio);
+			stm.executeUpdate(partida);
+			System.out.println("tabelas criadas com sucesso");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("deu merda");
+		}
+		
+		
+		
 	}
+	
+	public boolean inserir(String eatleta) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			String sql = "INSERT INTO eatleta (nome_eatleta) values ('"+ eatleta +"')";
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 
 }

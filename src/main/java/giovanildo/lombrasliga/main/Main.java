@@ -11,6 +11,10 @@ public class Main
 //		TorneioController torneio = new TorneioController();
 //		torneio.iniciar();
     	DAO dao = new DAO();
-    	dao.conectar();
+//    	dao.apagarBaseDeDados("lombras");
+//    	dao.criarBanco();
+    	dao.inserir("giovanildo");
+    	
+    	
     }
 }
