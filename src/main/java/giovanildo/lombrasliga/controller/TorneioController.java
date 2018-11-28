@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import giovanildo.lombrasliga.dao.DAO;
 import giovanildo.lombrasliga.model.Classificacao;
 import giovanildo.lombrasliga.model.Clube;
 import giovanildo.lombrasliga.model.EAtleta;
@@ -58,6 +59,10 @@ public class TorneioController {
 	 */
 
 	private ArrayList<EAtleta> listaEatleta;
+	/**
+	 * conexão com o banco de dados
+	 */
+	private DAO dao;
 
 	/**
 	 * Inicializador de objetos
@@ -65,16 +70,25 @@ public class TorneioController {
 
 	public TorneioController() {
 		super();
+		//preencher as arrays com os dados que estão no banco de dados
+		
+		this.dao = new DAO();
+		
 		this.listaTorneios = new ArrayList<Torneio>();
 		this.listaEatletasTorneio = new ArrayList<EAtletaTorneio>();
 		this.listaPartidas = new ArrayList<Partida>();
 		this.listaClubes = new ArrayList<Clube>();
-		this.listaEatleta = new ArrayList<EAtleta>();
+		this.listaEatleta = dao.preencherArrays();
 
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
-
+		for(EAtleta ea : listaEatleta) {
+			System.out.println(ea.getNome() + ea.getId());
+			getFrameCadastros().getModelEatletas().addElement(ea);
+		}
+		
+		
 	}
 
 	/**
@@ -534,8 +548,9 @@ public class TorneioController {
 				}
 
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
-				// adicionar na lista, no model e no combobox do frame torneios
+				// adicionar na lista, no model e no combobox do frame torneios e banco de dados
 				listaEatleta.add(eAtleta);
+				dao.inserir("eatleta", "nome_eatleta", eAtleta.getNome());
 				getFrameTorneios().getTxtEatleta().addItem(eAtleta);
 				getFrameCadastros().getModelEatletas().addElement(eAtleta);
 				getFrameCadastros().getTxtEatleta().setText("");
@@ -568,13 +583,18 @@ public class TorneioController {
 				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();
 				getFrameCadastros().getModelEatletas().remove(index);
 				getFrameTorneios().getTxtEatleta().removeItemAt(index);
-
+				
+				
+				
 				for (int i = 0; i < listaEatleta.size(); i++) {
 					String eAtletaNaLista = listaEatleta.get(i).getNome();
 					if (eAtletaNoJlist.equals(eAtletaNaLista)) {
 						listaEatleta.remove(i);
+						dao.excluir("eatleta", "id_eatleta", listaEatleta.get(i).getId());
+						
 					}
 				}
+				
 			}
 		});
 

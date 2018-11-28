@@ -2,8 +2,13 @@ package giovanildo.lombrasliga.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import giovanildo.lombrasliga.model.EAtleta;
 
 /**
  * 
@@ -19,26 +24,27 @@ import java.sql.Statement;
 public class DAO {
 
 	private String usuario;
-	private String senha; 
-	private String url; 
-	
+	private String senha;
+	private String url;
+
 	public DAO() {
 		super();
-		this.usuario = "postgres";;
+		this.usuario = "postgres";
+		;
 		this.senha = "labti@unilab2012";
 		this.url = "jdbc:postgresql://127.0.0.1/lombras";
 	}
 
-	public boolean criarBaseDeDados(String database ) {
-		
+	public boolean criarBaseDeDados(String database) {
+
 		String url = "jdbc:postgresql://127.0.0.1/";
-		String criaDatabase = "CREATE DATABASE " + database + " OWNER postgres ENCODING 'UTF-8';";		
-		
+		String criaDatabase = "CREATE DATABASE " + database + " OWNER postgres ENCODING 'UTF-8';";
+
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			System.out.println("Tentando conexão");
 			Statement stm = con.createStatement();
 			System.out.println("Criando statement");
-			stm.executeUpdate(criaDatabase); 
+			stm.executeUpdate(criaDatabase);
 			System.out.println("Base de dados criada com sucesso");
 			con.close();
 			stm.close();
@@ -47,23 +53,22 @@ public class DAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("deu merda");
-			
+
 			return false;
 		}
-		
 
 	}
-	
-	public boolean apagarBaseDeDados(String database ) {
-		
+
+	public boolean apagarBaseDeDados(String database) {
+
 		String url = "jdbc:postgresql://127.0.0.1/";
 		String criaDatabase = "DROP DATABASE " + database + ";";
-		
+
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			System.out.println("Tentando conexão");
 			Statement stm = con.createStatement();
 			System.out.println("Criando statement");
-			stm.executeUpdate(criaDatabase); 
+			stm.executeUpdate(criaDatabase);
 			System.out.println("Base de dados apagada com sucesso");
 			con.close();
 			stm.close();
@@ -72,7 +77,7 @@ public class DAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("deu merda");
-			
+
 			return false;
 		}
 
@@ -98,13 +103,12 @@ public class DAO {
 				+ "FOREIGN KEY(visitante) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE,"
 				+ "FOREIGN KEY(anfitriao) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE);";
 
-		String baseDeDados = "lombras";		
-		
+		String baseDeDados = "lombras";
+
 		criarBaseDeDados(baseDeDados);
-		
-		
+
 		String url = "jdbc:postgresql://127.0.0.1/" + baseDeDados;
-				
+
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			System.out.println("Tentando conexão");
 			Statement stm = con.createStatement();
@@ -120,15 +124,20 @@ public class DAO {
 			e.printStackTrace();
 			System.out.println("deu merda");
 		}
-		
-		
-		
+
 	}
-	
-	public boolean inserir(String eatleta) {
+
+	/**
+	 * 
+	 * @param tabela
+	 * @param campo
+	 * @param valor
+	 * @return sucesso ou fracasso
+	 */
+	public boolean inserir(String tabela, String campo, String valor) {
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
-			String sql = "INSERT INTO eatleta (nome_eatleta) values ('"+ eatleta +"')";
+			String sql = "INSERT INTO " + tabela + "(" + campo + ")" + "values ('" + valor + "')";
 			System.out.println(sql);
 			stm.executeUpdate(sql);
 			System.out.println("deu certo");
@@ -138,6 +147,45 @@ public class DAO {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @param tabela
+	 * @param campo
+	 * @param valor
+	 * @return
+	 */
+	public boolean excluir(String tabela, String campoId, int id) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			String sql = "DELETE FROM " + tabela + "WHERE " + campoId + "=" + id;
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public ArrayList<EAtleta> preencherArrays() {
+		ArrayList<EAtleta> lista = new ArrayList<EAtleta>();
+		String sql = "select * from eatleta";
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while (rs.next()) {
+				EAtleta eatleta = new EAtleta(rs.getString("nome_eatleta"));
+				eatleta.setId(Integer.parseInt(rs.getString("id_eatleta")));
+				lista.add(eatleta);								
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lista;
+	}
 
 }
