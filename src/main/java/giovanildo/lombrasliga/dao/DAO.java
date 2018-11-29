@@ -1,6 +1,5 @@
 package giovanildo.lombrasliga.dao;
 
-import java.io.LineNumberInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -163,7 +162,7 @@ public class DAO {
 	public boolean excluir(String tabela, String campoId, int id) {
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
-			String sql = "DELETE FROM " + tabela + "WHERE " + campoId + "=" + id;
+			String sql = "DELETE FROM " + tabela + " WHERE " + campoId + "=" + id;
 			System.out.println(sql);
 			stm.executeUpdate(sql);
 			System.out.println("deu certo");
@@ -174,6 +173,43 @@ public class DAO {
 		}
 	}
 
+	public boolean alterar(String tabela, String campoApesquisar, String valorApesquisar, String campoAmodificar, String valorAmodificar) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			String sql = "UPDATE " + tabela + " SET " + campoAmodificar + " = '" + valorAmodificar + "' WHERE " + campoApesquisar + " = " + valorApesquisar; 
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public int ultimoID(String tabela, String campoId) {
+		
+		//ler de tabela
+		//pegar o campo que quero
+		
+		String sql = "select * from " + tabela;
+		int id = 0;
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while(rs.next()) {			
+				if(rs.isLast()) {
+					System.out.println(rs.getInt(campoId));
+					id = rs.getInt(campoId);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+	
 	public ArrayList<EAtleta> preencherArrayEAtleta() {
 		ArrayList<EAtleta> lista = new ArrayList<EAtleta>();
 		String sql = "select * from eatleta";
@@ -274,13 +310,43 @@ public class DAO {
 		
 	}
 
-	public ArrayList<Partida> preencherArrayPartidas() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Partida> preencherArrayPartidas(ArrayList<EAtletaTorneio> listaEatletaTorneio) {
+		ArrayList<Partida> lista = new ArrayList<Partida>();
+		
+		String sql = "select id_partida, visitante, anfitriao, golsvisitante, golsanfitriao, encerrada from partida";
+		
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while (rs.next()) {
+				EAtletaTorneio anfitriao = null;
+				EAtletaTorneio visitante = null;
+				
+				//busca visitante e anfitriao na listaetleta torneio
+				for(EAtletaTorneio eat : listaEatletaTorneio) {
+					if(eat.getId()==rs.getInt("anfitriao")){
+						anfitriao = eat;
+					} else {
+						System.out.println("erro, não tem esse id na lista de eatletaTorneio");
+					}
+				}
+				
+				for(EAtletaTorneio eat : listaEatletaTorneio) {
+					if(eat.getId()==rs.getInt("visitante")){
+						visitante = eat;
+					} else {
+						System.out.println("erro, não tem esse id na lista de eatletaTorneio");
+					}
+				}
+				
+				Partida partida1 = new Partida(anfitriao, rs.getInt("golsanfitriao"), visitante, rs.getInt("golsvisitante"));
+				partida1.setId(rs.getInt("id_partida"));
+				lista.add(partida1);								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
-
-
-
-
-
+	
 }

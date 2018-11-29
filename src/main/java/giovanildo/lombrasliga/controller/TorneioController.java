@@ -76,17 +76,13 @@ public class TorneioController {
 		this.listaClubes = dao.preencherArrayClubes();
 		this.listaEatleta = dao.preencherArrayEAtleta();
 		this.listaTorneios = dao.preencherArrayTorneios();
-		//EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube)
+
 		this.listaEatletasTorneio = dao.preencherArrayEAtletasTorneio(listaEatleta, listaTorneios, listaClubes);
-		this.listaPartidas = dao.preencherArrayPartidas();
+		this.listaPartidas = dao.preencherArrayPartidas(listaEatletasTorneio);
 		
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
-			
-		
-		
-		
 	}
 
 	private void preencherJLists() {
@@ -317,8 +313,21 @@ public class TorneioController {
 		getFrameCadastros().getBtnEditarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String eatleta = getFrameCadastros().getTxtEatleta().getText();
+				//altera no JList
+				EAtleta eaJlist = getFrameCadastros().getJlstEatleta().getSelectedValue(); 
 				getFrameCadastros().getJlstEatleta().getSelectedValue().setNome(eatleta);
 				getFrameCadastros().getJlstEatleta().setModel(getFrameCadastros().getModelEatletas());
+				
+				//alterar no array
+				
+				for(EAtleta eaArray : listaEatleta) {
+					if(eaJlist.getId()==eaArray.getId()) {
+						eaArray.setNome(eatleta);
+					}
+				}
+				
+				//alterar no banco de dados
+				dao.alterar("eatleta", "id_eatleta", Integer.toString(eaJlist.getId()), "nome_eatleta", eatleta);
 			}
 		});
 
@@ -331,9 +340,23 @@ public class TorneioController {
 		// editar Clube
 		getFrameCadastros().getBtnEditarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String clube = getFrameCadastros().getTxtClube().getText();
-				getFrameCadastros().getJlstClubes().getSelectedValue().setNome(clube);
+				
+				String clubeTxt = getFrameCadastros().getTxtClube().getText();
+				Clube clubeJlist = getFrameCadastros().getJlstClubes().getSelectedValue();
+
+				//alterar no jlist
+				getFrameCadastros().getJlstClubes().getSelectedValue().setNome(clubeTxt);				
 				getFrameCadastros().getJlstClubes().setModel(getFrameCadastros().getModelClubes());
+				//alterar no array
+				for(Clube clubeArray : listaClubes) {
+					if(clubeArray.getId()==clubeJlist.getId()) {
+						clubeArray.setNome(clubeTxt);
+					}
+				}
+				//alterar banco de dados
+				dao.alterar("clube", "id_clube", Integer.toString(clubeJlist.getId()), "nome_clube", clubeTxt);
+				
+				
 			}
 		});
 
@@ -554,12 +577,17 @@ public class TorneioController {
 						return;
 					}
 				}
-
+				//incluindo id para não termos inconsistencia de dados entre
+				// jlist, model, combobox
+				dao.inserir("clube", "nome_clube", getFrameCadastros().getTxtClube().getText());
 				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
+				int id = dao.ultimoID("clube", "id_clube");
+				clube.setId(id);
 				// inclue na lista, no modelClubes e no combobox da frame torneios
 				listaClubes.add(clube);
 				getFrameTorneios().getTxtClube().addItem(clube);
 				getFrameCadastros().getModelClubes().addElement(clube);
+				//incluindo na tabela
 				getFrameCadastros().getTxtClube().setText("");
 			}
 		});
@@ -573,8 +601,12 @@ public class TorneioController {
 						return;
 					}
 				}
+				EAtleta eaUltimo = listaEatleta.get(listaEatleta.size()-1);
+				System.out.println(eaUltimo.getId()+1);
 
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
+				//adicionando id para evitar inconsistencias de dados
+				eAtleta.setId(eaUltimo.getId()+1);
 				// adicionar na lista, no model e no combobox do frame torneios e banco de dados
 				listaEatleta.add(eAtleta);
 				dao.inserir("eatleta", "nome_eatleta", eAtleta.getNome());
@@ -587,19 +619,23 @@ public class TorneioController {
 		// descadastrar clube
 		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index = getFrameCadastros().getJlstClubes().getSelectedIndex();
-				String clubeNoJlist = getFrameCadastros().getModelClubes().get(index).getNome();
+				
+				Clube clube = getFrameCadastros().getJlstClubes().getSelectedValue();
+				int id = clube.getId();
+				String clubeNoJlist = clube.getNome();
 
 				// remove da lista, jlist e combobox da frame torneios
 
-				getFrameCadastros().getModelClubes().remove(index);
-				getFrameTorneios().getTxtClube().removeItemAt(index);
+				getFrameCadastros().getModelClubes().removeElement(clube);
+				getFrameTorneios().getTxtClube().removeItem(clube);
 				for (int i = 0; i < listaClubes.size(); i++) {
 					String clubeNaLista = listaClubes.get(i).getNome();
 					if (clubeNaLista.equals(clubeNoJlist)) {
 						listaClubes.remove(i);
 					}
 				}
+				//remove do banco de dados
+				dao.excluir("clube", "id_clube", id);
 
 			}
 		});
@@ -611,13 +647,11 @@ public class TorneioController {
 				getFrameCadastros().getModelEatletas().remove(index);
 				getFrameTorneios().getTxtEatleta().removeItemAt(index);
 				
-				
-				
 				for (int i = 0; i < listaEatleta.size(); i++) {
 					String eAtletaNaLista = listaEatleta.get(i).getNome();
 					if (eAtletaNoJlist.equals(eAtletaNaLista)) {
-						listaEatleta.remove(i);
 						dao.excluir("eatleta", "id_eatleta", listaEatleta.get(i).getId());
+						listaEatleta.remove(i);
 						
 					}
 				}
