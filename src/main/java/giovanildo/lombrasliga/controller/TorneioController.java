@@ -73,23 +73,49 @@ public class TorneioController {
 		//preencher as arrays com os dados que estão no banco de dados
 		
 		this.dao = new DAO();
+		this.listaClubes = dao.preencherArrayClubes();
+		this.listaEatleta = dao.preencherArrayEAtleta();
+		this.listaTorneios = dao.preencherArrayTorneios();
+		//EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube)
+		this.listaEatletasTorneio = dao.preencherArrayEAtletasTorneio(listaEatleta, listaTorneios, listaClubes);
+		this.listaPartidas = dao.preencherArrayPartidas();
 		
-		this.listaTorneios = new ArrayList<Torneio>();
-		this.listaEatletasTorneio = new ArrayList<EAtletaTorneio>();
-		this.listaPartidas = new ArrayList<Partida>();
-		this.listaClubes = new ArrayList<Clube>();
-		this.listaEatleta = dao.preencherArrays();
-
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
-		for(EAtleta ea : listaEatleta) {
-			System.out.println(ea.getNome() + ea.getId());
-			getFrameCadastros().getModelEatletas().addElement(ea);
-		}
+			
+		
 		
 		
 	}
+
+	private void preencherJLists() {
+
+		//preechendo JList com a lista de torneios
+		for(Torneio t : listaTorneios) {
+			System.out.println(t);
+			getFrameTorneios().getModelTorneios().addElement(t);
+		}
+		
+		//preechendo JList com a lista de eatletaTorneio
+		for(EAtletaTorneio eat : listaEatletasTorneio) {
+			System.out.println(eat);
+			getFrameTorneios().getModelEatletaTorneio().addElement(eat);
+		}
+			
+		//preechendo JList com a lista de clubes
+		for(Clube c : listaClubes) {
+			System.out.println(c);
+			getFrameCadastros().getModelClubes().addElement(c);
+		}
+		
+		//preechendo JList com a lista de atletas
+		for(EAtleta ea : listaEatleta) {
+			System.out.println(ea.getNome() + ea.getId());
+			getFrameCadastros().getModelEatletas().addElement(ea);
+		}		
+	}
+	
 
 	/**
 	 * Preenche a JList Classificação na Frame Partidas
@@ -276,9 +302,10 @@ public class TorneioController {
 
 	}
 
-	public void iniciar() {
+	public void iniciar() {				
 		iniciarFrameTorneios();
-		// preencherComboBox();
+		preencherComboBox();
+		preencherJLists();
 		desabilitarPanelTorneio();
 		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -650,16 +677,15 @@ public class TorneioController {
 	}
 
 	public void preencherComboBox() {
-		getFrameTorneios().getTxtClube().addItem(new Clube("barcelona"));
-		getFrameTorneios().getTxtClube().addItem(new Clube("real"));
-		getFrameTorneios().getTxtClube().addItem(new Clube("atletico de madrid"));
-		getFrameTorneios().getTxtClube().addItem(new Clube("Chelsea"));
-		getFrameTorneios().getTxtClube().addItem(new Clube("Juventus"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("giovanildo"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("fabiano"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("zaldir"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("genilson"));
-		getFrameTorneios().getTxtEatleta().addItem(new EAtleta("Nen"));
+		
+		for(Clube c: listaClubes) {
+			getFrameTorneios().getTxtClube().addItem(c);
+		}
+		
+		for(EAtleta eat : listaEatleta) {
+			getFrameTorneios().getTxtEatleta().addItem(eat);
+		}
+		
 	}
 
 	public void desabilitarCamposTorneio() {

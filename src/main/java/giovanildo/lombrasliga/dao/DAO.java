@@ -1,5 +1,6 @@
 package giovanildo.lombrasliga.dao;
 
+import java.io.LineNumberInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import giovanildo.lombrasliga.model.Clube;
 import giovanildo.lombrasliga.model.EAtleta;
+import giovanildo.lombrasliga.model.EAtletaTorneio;
+import giovanildo.lombrasliga.model.Partida;
+import giovanildo.lombrasliga.model.Torneio;
 
 /**
  * 
@@ -88,7 +93,7 @@ public class DAO {
 		String eatleta = "CREATE TABLE eatleta (id_eatleta SERIAL CONSTRAINT pk_id_eatleta PRIMARY KEY,  nome_eatleta varchar(30) UNIQUE NOT NULL);";
 		String clube = "CREATE TABLE clube (id_clube SERIAL CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) UNIQUE NOT NULL);";
 		String torneio = "CREATE TABLE torneio (id_torneio SERIAL CONSTRAINT pk_id_torneio PRIMARY KEY, "
-				+ " nome_torneio varchar(30) UNIQUE NOT NULL);";
+				+ " nome_torneio varchar(30), porque_nome_torneio varchar(600) UNIQUE NOT NULL);";
 
 		String eatletatorneio = "CREATE TABLE eatletatorneio( "
 				+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
@@ -169,7 +174,7 @@ public class DAO {
 		}
 	}
 
-	public ArrayList<EAtleta> preencherArrays() {
+	public ArrayList<EAtleta> preencherArrayEAtleta() {
 		ArrayList<EAtleta> lista = new ArrayList<EAtleta>();
 		String sql = "select * from eatleta";
 		try (Connection con = DriverManager.getConnection(url, usuario, senha);
@@ -180,12 +185,102 @@ public class DAO {
 				eatleta.setId(Integer.parseInt(rs.getString("id_eatleta")));
 				lista.add(eatleta);								
 			}
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lista;
 	}
+	
+	public ArrayList<Clube> preencherArrayClubes() {
+		ArrayList<Clube> lista = new ArrayList<Clube>();
+		String sql = "select id_clube, nome_clube from clube";
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while (rs.next()) {
+				Clube clube = new Clube(rs.getString("nome_clube"));
+				clube.setId(Integer.parseInt(rs.getString("id_clube")));
+				lista.add(clube);								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+
+	public ArrayList<Torneio> preencherArrayTorneios() {
+		ArrayList<Torneio> lista = new ArrayList<Torneio>();
+		String sql = "select id_torneio, nome_torneio, porque_nome_torneio from torneio";
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while (rs.next()) {
+				Torneio torneio = new Torneio(rs.getString("nome_torneio"), rs.getString("porque_nome_torneio"));
+				torneio.setId(rs.getInt("id_torneio"));				
+				lista.add(torneio);								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;		
+	}
+
+	
+	public ArrayList<EAtletaTorneio> preencherArrayEAtletasTorneio(ArrayList<EAtleta> listaEatleta, ArrayList<Torneio> listaTorneios, ArrayList<Clube> listaClubes) {
+		
+		ArrayList<EAtletaTorneio> lista = new ArrayList<EAtletaTorneio>();
+		
+		String sql = "select id_eatletatorneio, id_eatleta, id_clube, id_torneio from eatletatorneio";
+		
+		try (Connection con = DriverManager.getConnection(url, usuario, senha);
+				PreparedStatement stm = con.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery()) {
+			while (rs.next()) {
+				EAtleta eatletaDaLista = null;
+				Torneio torneioDaLista = null;
+				Clube clubeDaLista = null;
+				
+				//busca clube, torneio e eatleta baseado no id e colocando na lista de eatletatorneio
+				for(EAtleta ea : listaEatleta) {
+					if(ea.getId()==rs.getInt("id_eatleta")){
+						eatletaDaLista = ea;
+					} else {
+						System.out.println("erro, não tem esse id na lista de eatletas");
+					}
+				}
+				for(Torneio t : listaTorneios) {
+					if(t.getId()==rs.getInt("id_torneio")) {
+						torneioDaLista=t;
+					} else {
+						System.out.println("erro, não tem esse id na lista de torneios");
+					}
+				}
+				for(Clube c : listaClubes) {
+					if(c.getId()==rs.getInt("id_clube")) {
+						clubeDaLista = c;
+					} else {
+						System.out.println("erro, não tem esse id na lista de clubes");
+					}
+				}
+				
+				EAtletaTorneio eat = new EAtletaTorneio(eatletaDaLista, torneioDaLista, clubeDaLista);
+				eat.setId(rs.getInt("id_eatletatorneio"));
+				lista.add(eat);								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+		
+	}
+
+	public ArrayList<Partida> preencherArrayPartidas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 
 }
