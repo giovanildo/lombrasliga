@@ -92,7 +92,7 @@ public class DAO {
 		String eatleta = "CREATE TABLE eatleta (id_eatleta SERIAL CONSTRAINT pk_id_eatleta PRIMARY KEY,  nome_eatleta varchar(30) UNIQUE NOT NULL);";
 		String clube = "CREATE TABLE clube (id_clube SERIAL CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) UNIQUE NOT NULL);";
 		String torneio = "CREATE TABLE torneio (id_torneio SERIAL CONSTRAINT pk_id_torneio PRIMARY KEY, "
-				+ " nome_torneio varchar(30), porque_nome_torneio varchar(600) UNIQUE NOT NULL);";
+				+ " nome_torneio varchar(30), porque_nome_torneio varchar(600) NOT NULL);";
 
 		String eatletatorneio = "CREATE TABLE eatletatorneio( "
 				+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
@@ -151,7 +151,31 @@ public class DAO {
 			return false;
 		}
 	}
+	/**
+	 * 
+	 * @param tabela
+	 * @param campo
+	 * @param campo2
+	 * @param valor
+	 * @param valor2
+	 * @return
+	 */
+	public boolean inserir(String tabela, String campo, String campo2, String valor,  String valor2) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			String sql = "INSERT INTO " + tabela + "(" + campo +" , " + campo2 + ")" + "values ('" + valor + "' , '" + valor2 + "')";
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
+	
+	
 	/**
 	 * 
 	 * @param tabela

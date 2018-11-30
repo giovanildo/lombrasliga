@@ -51,10 +51,10 @@ public class FrameTorneios extends JFrame {
 	 * botão para adicionar Jogador
 	 */
 	private JButton btnAdicionarJogador;
-	/**
-	 * botão para salvar Torneio
-	 */
-	private JButton btnSalvarTorneio;
+//	/**
+//	 * botão para salvar Torneio
+//	 */
+//	private JButton btnSalvarTorneio;
 	/**
 	 * botão para deletar torneio
 	 */
@@ -93,40 +93,38 @@ public class FrameTorneios extends JFrame {
 
 		JPanel panelTorneio = new JPanel();
 		panelTorneio.setBackground(Color.LIGHT_GRAY);
-		panelTorneio.setBounds(42, 214, 476, 186);
+		panelTorneio.setBounds(52, 266, 476, 186);
 		getContentPane().add(panelTorneio);
 
 		getContentPane().setLayout(null);
 		modelTorneios = new DefaultListModel<Torneio>();
 		jlstTorneios = new JList<Torneio>(modelTorneios);
 
-		jlstTorneios.setBounds(42, 11, 451, 134);
+		jlstTorneios.setBounds(52, 78, 476, 173);
 		getContentPane().add(jlstTorneios);
 		panelTorneio.setLayout(null);
 
 		btnNovoTorneio = new JButton("Novo Torneio");
 
-		btnNovoTorneio.setBounds(551, 23, 127, 25);
+		btnNovoTorneio.setBounds(52, 44, 127, 25);
 		getContentPane().add(btnNovoTorneio);
 
 		JLabel lblNomeDoTorneio = new JLabel("Nome do Torneio");
 		lblNomeDoTorneio.setBackground(Color.WHITE);
-		lblNomeDoTorneio.setBounds(42, 185, 81, 14);
+		lblNomeDoTorneio.setBounds(62, 23, 253, 14);
 		getContentPane().add(lblNomeDoTorneio);
 
 		JLabel lblPorqueEsseNome = new JLabel("Porque esse nome?");
-		lblPorqueEsseNome.setBounds(558, 214, 93, 14);
+		lblPorqueEsseNome.setBounds(565, 49, 237, 14);
 		getContentPane().add(lblPorqueEsseNome);
 
 		txtNomeTorneio = new JTextField();
-		txtNomeTorneio.setText("NomeTorneio");
-		txtNomeTorneio.setBounds(145, 179, 152, 20);
+		txtNomeTorneio.setBounds(191, 21, 307, 20);
 		getContentPane().add(txtNomeTorneio);
 		txtNomeTorneio.setColumns(10);
 
 		txtPorqueDoNome = new JTextField();
-		txtPorqueDoNome.setText("Porque do nome");
-		txtPorqueDoNome.setBounds(555, 239, 243, 150);
+		txtPorqueDoNome.setBounds(565, 64, 307, 398);
 		getContentPane().add(txtPorqueDoNome);
 		txtPorqueDoNome.setColumns(10);
 
@@ -162,28 +160,28 @@ public class FrameTorneios extends JFrame {
 		btnAdicionarJogador.setBounds(32, 45, 157, 23);
 		panelTorneio.add(btnAdicionarJogador);
 
-		btnEditarPartidas = new JButton("Editar Partidas");
+		btnEditarPartidas = new JButton("Gerar/Editar Partidas");
 
-		btnEditarPartidas.setBounds(42, 422, 145, 25);
+		btnEditarPartidas.setBounds(52, 464, 213, 25);
 		getContentPane().add(btnEditarPartidas);
-		btnSalvarTorneio = new JButton("Salvar Torneio");
+//		btnSalvarTorneio = new JButton("Salvar Torneio");
 
-		btnSalvarTorneio.setBounds(307, 180, 127, 23);
-		getContentPane().add(btnSalvarTorneio);
+//		btnSalvarTorneio.setBounds(307, 180, 127, 23);
+//		getContentPane().add(btnSalvarTorneio);
 
 		btnDeletarTorneio = new JButton("Deletar Torneio");
 
-		btnDeletarTorneio.setBounds(551, 62, 127, 23);
+		btnDeletarTorneio.setBounds(191, 43, 158, 23);
 		getContentPane().add(btnDeletarTorneio);
 
 		btnEditarTorneio = new JButton("Editar Torneio");
 
-		btnEditarTorneio.setBounds(551, 96, 127, 23);
+		btnEditarTorneio.setBounds(361, 43, 152, 23);
 		getContentPane().add(btnEditarTorneio);
 		
 		btnNovoJogadorClube = new JButton("Novo Jogador/Clube");
 		
-		btnNovoJogadorClube.setBounds(250, 423, 145, 23);
+		btnNovoJogadorClube.setBounds(383, 465, 145, 23);
 		getContentPane().add(btnNovoJogadorClube);
 	}
 	/**
@@ -291,13 +289,13 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnAdicionarJogador() {
 		return btnAdicionarJogador;
 	}
-	/**
-	 * 
-	 * @return botão salvar torneio
-	 */
-	public JButton getBtnSalvarTorneio() {
-		return btnSalvarTorneio;
-	}
+//	/**
+//	 * 
+//	 * @return botão salvar torneio
+//	 */
+//	public JButton getBtnSalvarTorneio() {
+//		return btnSalvarTorneio;
+//	}
 	/**
 	 * 
 	 * @return botão de editar partidas
