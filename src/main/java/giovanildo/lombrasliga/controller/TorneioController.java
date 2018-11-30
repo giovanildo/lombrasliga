@@ -478,8 +478,7 @@ public class TorneioController {
 				// partidas com a lista dos eats
 
 				ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<EAtletaTorneio>();
-				String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
-
+				String torneioTxtField = getFrameTorneios().getJlstTorneios().getSelectedValue().getNome();
 				for (EAtletaTorneio eat : listaEatletasTorneio) {
 					String torneioEat = eat.getTorneio().getNome();
 					if (torneioEat.equals(torneioTxtField)) {
