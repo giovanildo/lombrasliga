@@ -1,10 +1,8 @@
 package giovanildo.lombrasliga.model;
 
-
 /**
  * 
- * @author giovanildo 
- * classe que configura as partidas
+ * @author giovanildo classe que configura as partidas
  */
 public class Partida {
 
@@ -23,7 +21,7 @@ public class Partida {
 	/**
 	 * saber se a partida foi encerrada ou não
 	 */
-	
+
 	private boolean encerrada;
 	/**
 	 * Gols do Visitante
@@ -33,7 +31,7 @@ public class Partida {
 	 * Gols do Anfitriao
 	 */
 	private int golsAnfitriao;
-	
+
 	/**
 	 * 
 	 * @param anfitriao
@@ -45,7 +43,6 @@ public class Partida {
 		this.golsAnfitriao = golsAnfitriao;
 		this.golsVisitante = golsVisitante;
 	}
-	
 
 	/**
 	 * 
@@ -79,6 +76,7 @@ public class Partida {
 	public EAtletaTorneio getVisitante() {
 		return visitante;
 	}
+
 	/**
 	 * 
 	 * @param anfitriao
@@ -86,6 +84,7 @@ public class Partida {
 	public void setAnfitriao(EAtletaTorneio anfitriao) {
 		this.anfitriao = anfitriao;
 	}
+
 	/**
 	 * 
 	 * @param visitante
@@ -102,6 +101,7 @@ public class Partida {
 	public void setGolsVisitante(int golsVisitante) {
 		this.golsVisitante = golsVisitante;
 	}
+
 	/**
 	 * 
 	 * @param golsAnfitriao
@@ -110,7 +110,6 @@ public class Partida {
 	public void setGolsAnfitriao(int golsAnfitriao) {
 		this.golsAnfitriao = golsAnfitriao;
 	}
-	
 
 	/**
 	 * @return the encerrada verifica se a partida está encerrada
@@ -121,12 +120,13 @@ public class Partida {
 	}
 
 	/**
-	 * @param encerrada the encerrada to set
+	 * @param encerrada
+	 *            the encerrada to set
 	 */
 	public void setEncerrada(boolean encerrada) {
 		this.encerrada = encerrada;
 	}
-	
+
 	/**
 	 * 
 	 * @return qtd gols do visitante
@@ -149,13 +149,14 @@ public class Partida {
 		String clubeVisitante = visitante.getClube().getNome();
 		String eAtletaMandante = anfitriao.geteAtleta().getNome().toUpperCase();
 		String eAtletaVisitante = visitante.geteAtleta().getNome().toUpperCase();
-		
+
 		int golsMandante = this.golsAnfitriao;
-		int golsVisitante = this.golsVisitante;		
-		
-		return  eAtletaMandante + " - " + clubeMandante + " " + golsMandante + " x " + golsVisitante + " " + clubeVisitante + " - " + eAtletaVisitante;
+		int golsVisitante = this.golsVisitante;
+
+		return eAtletaMandante + " - " + clubeMandante + " " + golsMandante + " x " + golsVisitante + " "
+				+ clubeVisitante + " - " + eAtletaVisitante;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

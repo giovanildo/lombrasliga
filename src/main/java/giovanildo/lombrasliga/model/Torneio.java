@@ -13,6 +13,7 @@ public class Torneio {
 	 * Explicação do nome
 	 */
 	private String porqueDoNome;
+
 	/**
 	 * 
 	 * @return id
@@ -20,6 +21,7 @@ public class Torneio {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @return Porque do Nome
@@ -42,7 +44,8 @@ public class Torneio {
 
 	/**
 	 * 
-	 * @param nome torneio
+	 * @param nome
+	 *            torneio
 	 */
 	public Torneio(String nome, String porqueDoNome) {
 		super();
@@ -70,6 +73,7 @@ public class Torneio {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

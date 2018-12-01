@@ -151,6 +151,7 @@ public class DAO {
 			return false;
 		}
 	}
+
 	/**
 	 * 
 	 * @param tabela
@@ -160,10 +161,11 @@ public class DAO {
 	 * @param valor2
 	 * @return
 	 */
-	public boolean inserir(String tabela, String campo, String campo2, String valor,  String valor2) {
+	public boolean inserir(String tabela, String campo, String campo2, String valor, String valor2) {
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
-			String sql = "INSERT INTO " + tabela + "(" + campo +" , " + campo2 + ")" + "values ('" + valor + "' , '" + valor2 + "')";
+			String sql = "INSERT INTO " + tabela + "(" + campo + " , " + campo2 + ")" + "values ('" + valor + "' , '"
+					+ valor2 + "')";
 			System.out.println(sql);
 			stm.executeUpdate(sql);
 			System.out.println("deu certo");
@@ -174,8 +176,6 @@ public class DAO {
 		}
 	}
 
-	
-	
 	/**
 	 * 
 	 * @param tabela
@@ -197,10 +197,12 @@ public class DAO {
 		}
 	}
 
-	public boolean alterar(String tabela, String campoApesquisar, String valorApesquisar, String campoAmodificar, String valorAmodificar) {
+	public boolean alterar(String tabela, String campoApesquisar, String valorApesquisar, String campoAmodificar,
+			String valorAmodificar) {
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
-			String sql = "UPDATE " + tabela + " SET " + campoAmodificar + " = '" + valorAmodificar + "' WHERE " + campoApesquisar + " = " + valorApesquisar; 
+			String sql = "UPDATE " + tabela + " SET " + campoAmodificar + " = '" + valorAmodificar + "' WHERE "
+					+ campoApesquisar + " = " + valorApesquisar;
 			System.out.println(sql);
 			stm.executeUpdate(sql);
 			System.out.println("deu certo");
@@ -210,19 +212,19 @@ public class DAO {
 			return false;
 		}
 	}
-	
+
 	public int ultimoID(String tabela, String campoId) {
-		
-		//ler de tabela
-		//pegar o campo que quero
-		
+
+		// ler de tabela
+		// pegar o campo que quero
+
 		String sql = "select * from " + tabela;
 		int id = 0;
 		try (Connection con = DriverManager.getConnection(url, usuario, senha);
 				PreparedStatement stm = con.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery()) {
-			while(rs.next()) {			
-				if(rs.isLast()) {
+			while (rs.next()) {
+				if (rs.isLast()) {
 					System.out.println(rs.getInt(campoId));
 					id = rs.getInt(campoId);
 				}
@@ -232,8 +234,7 @@ public class DAO {
 		}
 		return id;
 	}
-	
-	
+
 	public ArrayList<EAtleta> preencherArrayEAtleta() {
 		ArrayList<EAtleta> lista = new ArrayList<EAtleta>();
 		String sql = "select * from eatleta";
@@ -243,14 +244,14 @@ public class DAO {
 			while (rs.next()) {
 				EAtleta eatleta = new EAtleta(rs.getString("nome_eatleta"));
 				eatleta.setId(Integer.parseInt(rs.getString("id_eatleta")));
-				lista.add(eatleta);								
+				lista.add(eatleta);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return lista;
 	}
-	
+
 	public ArrayList<Clube> preencherArrayClubes() {
 		ArrayList<Clube> lista = new ArrayList<Clube>();
 		String sql = "select id_clube, nome_clube from clube";
@@ -260,7 +261,7 @@ public class DAO {
 			while (rs.next()) {
 				Clube clube = new Clube(rs.getString("nome_clube"));
 				clube.setId(Integer.parseInt(rs.getString("id_clube")));
-				lista.add(clube);								
+				lista.add(clube);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -276,22 +277,22 @@ public class DAO {
 				ResultSet rs = stm.executeQuery()) {
 			while (rs.next()) {
 				Torneio torneio = new Torneio(rs.getString("nome_torneio"), rs.getString("porque_nome_torneio"));
-				torneio.setId(rs.getInt("id_torneio"));				
-				lista.add(torneio);								
+				torneio.setId(rs.getInt("id_torneio"));
+				lista.add(torneio);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lista;		
+		return lista;
 	}
 
-	
-	public ArrayList<EAtletaTorneio> preencherArrayEAtletasTorneio(ArrayList<EAtleta> listaEatleta, ArrayList<Torneio> listaTorneios, ArrayList<Clube> listaClubes) {
-		
+	public ArrayList<EAtletaTorneio> preencherArrayEAtletasTorneio(ArrayList<EAtleta> listaEatleta,
+			ArrayList<Torneio> listaTorneios, ArrayList<Clube> listaClubes) {
+
 		ArrayList<EAtletaTorneio> lista = new ArrayList<EAtletaTorneio>();
-		
+
 		String sql = "select id_eatletatorneio, id_eatleta, id_clube, id_torneio from eatletatorneio";
-		
+
 		try (Connection con = DriverManager.getConnection(url, usuario, senha);
 				PreparedStatement stm = con.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery()) {
@@ -299,78 +300,80 @@ public class DAO {
 				EAtleta eatletaDaLista = null;
 				Torneio torneioDaLista = null;
 				Clube clubeDaLista = null;
-				
-				//busca clube, torneio e eatleta baseado no id e colocando na lista de eatletatorneio
-				for(EAtleta ea : listaEatleta) {
-					if(ea.getId()==rs.getInt("id_eatleta")){
+
+				// busca clube, torneio e eatleta baseado no id e colocando na lista de
+				// eatletatorneio
+				for (EAtleta ea : listaEatleta) {
+					if (ea.getId() == rs.getInt("id_eatleta")) {
 						eatletaDaLista = ea;
 					} else {
 						System.out.println("erro, não tem esse id na lista de eatletas");
 					}
 				}
-				for(Torneio t : listaTorneios) {
-					if(t.getId()==rs.getInt("id_torneio")) {
-						torneioDaLista=t;
+				for (Torneio t : listaTorneios) {
+					if (t.getId() == rs.getInt("id_torneio")) {
+						torneioDaLista = t;
 					} else {
 						System.out.println("erro, não tem esse id na lista de torneios");
 					}
 				}
-				for(Clube c : listaClubes) {
-					if(c.getId()==rs.getInt("id_clube")) {
+				for (Clube c : listaClubes) {
+					if (c.getId() == rs.getInt("id_clube")) {
 						clubeDaLista = c;
 					} else {
 						System.out.println("erro, não tem esse id na lista de clubes");
 					}
 				}
-				
+
 				EAtletaTorneio eat = new EAtletaTorneio(eatletaDaLista, torneioDaLista, clubeDaLista);
 				eat.setId(rs.getInt("id_eatletatorneio"));
-				lista.add(eat);								
+				lista.add(eat);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return lista;
-		
+
 	}
 
 	public ArrayList<Partida> preencherArrayPartidas(ArrayList<EAtletaTorneio> listaEatletaTorneio) {
 		ArrayList<Partida> lista = new ArrayList<Partida>();
-		
+
 		String sql = "select id_partida, visitante, anfitriao, golsvisitante, golsanfitriao, encerrada from partida";
-		
+
 		try (Connection con = DriverManager.getConnection(url, usuario, senha);
 				PreparedStatement stm = con.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery()) {
 			while (rs.next()) {
 				EAtletaTorneio anfitriao = null;
 				EAtletaTorneio visitante = null;
-				
-				//busca visitante e anfitriao na listaetleta torneio
-				for(EAtletaTorneio eat : listaEatletaTorneio) {
-					if(eat.getId()==rs.getInt("anfitriao")){
+
+				// busca visitante e anfitriao na listaetleta torneio
+				for (EAtletaTorneio eat : listaEatletaTorneio) {
+					if (eat.getId() == rs.getInt("anfitriao")) {
 						anfitriao = eat;
 					} else {
 						System.out.println("erro, não tem esse id na lista de eatletaTorneio");
 					}
 				}
-				
-				for(EAtletaTorneio eat : listaEatletaTorneio) {
-					if(eat.getId()==rs.getInt("visitante")){
+
+				for (EAtletaTorneio eat : listaEatletaTorneio) {
+					if (eat.getId() == rs.getInt("visitante")) {
 						visitante = eat;
 					} else {
 						System.out.println("erro, não tem esse id na lista de eatletaTorneio");
 					}
 				}
-				
-				Partida partida1 = new Partida(anfitriao, rs.getInt("golsanfitriao"), visitante, rs.getInt("golsvisitante"));
+
+				Partida partida1 = new Partida(anfitriao, rs.getInt("golsanfitriao"), visitante,
+						rs.getInt("golsvisitante"));
 				partida1.setId(rs.getInt("id_partida"));
-				lista.add(partida1);								
+				lista.add(partida1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return lista;
 	}
-	
+
 }

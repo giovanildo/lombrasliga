@@ -73,8 +73,8 @@ public class TorneioController {
 
 	public TorneioController() {
 		super();
-		//preencher as arrays com os dados que estão no banco de dados
-		
+		// preencher as arrays com os dados que estão no banco de dados
+
 		this.dao = new DAO();
 		this.listaClubes = dao.preencherArrayClubes();
 		this.listaEatleta = dao.preencherArrayEAtleta();
@@ -82,7 +82,7 @@ public class TorneioController {
 
 		this.listaEatletasTorneio = dao.preencherArrayEAtletasTorneio(listaEatleta, listaTorneios, listaClubes);
 		this.listaPartidas = dao.preencherArrayPartidas(listaEatletasTorneio);
-		
+
 		this.frameCadastros = new FrameCadastros();
 		this.frameTorneios = new FrameTorneios();
 		this.framePartidas = new FramePartidas();
@@ -90,31 +90,30 @@ public class TorneioController {
 
 	private void preencherJLists() {
 
-		//preechendo JList com a lista de torneios
-		for(Torneio t : listaTorneios) {
+		// preechendo JList com a lista de torneios
+		for (Torneio t : listaTorneios) {
 			System.out.println(t);
 			getFrameTorneios().getModelTorneios().addElement(t);
 		}
-		
-		//preechendo JList com a lista de eatletaTorneio
-		for(EAtletaTorneio eat : listaEatletasTorneio) {
+
+		// preechendo JList com a lista de eatletaTorneio
+		for (EAtletaTorneio eat : listaEatletasTorneio) {
 			System.out.println(eat);
 			getFrameTorneios().getModelEatletaTorneio().addElement(eat);
 		}
-			
-		//preechendo JList com a lista de clubes
-		for(Clube c : listaClubes) {
+
+		// preechendo JList com a lista de clubes
+		for (Clube c : listaClubes) {
 			System.out.println(c);
 			getFrameCadastros().getModelClubes().addElement(c);
 		}
-		
-		//preechendo JList com a lista de atletas
-		for(EAtleta ea : listaEatleta) {
+
+		// preechendo JList com a lista de atletas
+		for (EAtleta ea : listaEatleta) {
 			System.out.println(ea.getNome() + ea.getId());
 			getFrameCadastros().getModelEatletas().addElement(ea);
-		}		
+		}
 	}
-	
 
 	/**
 	 * Preenche a JList Classificação na Frame Partidas
@@ -212,7 +211,7 @@ public class TorneioController {
 						vitorias++;
 						pontos += 3;
 					}
-						
+
 					if (partida.getGolsAnfitriao() == partida.getGolsVisitante()) {
 						empates++;
 						pontos++;
@@ -301,37 +300,40 @@ public class TorneioController {
 
 	}
 
-	public void iniciar() {				
+	public void iniciar() {
 		iniciarFrameTorneios();
 		preencherComboBox();
 		preencherJLists();
-		
+
+		getFramePartidas().getBtnTelaPrincipal().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iniciarFrameTorneios();
+			}
+		});
+
 		getFrameTorneios().getJlstEatletaClube().addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				Torneio torneio = getFrameTorneios().getJlstTorneios().getSelectedValue();
-				
-				//preencher o jlist eatleta torneio com as informações
-				
-				
+
+				// preencher o jlist eatleta torneio com as informações
+
 				getFrameTorneios().getModelEatletaTorneio().clear();
-				for(EAtletaTorneio eat : listaEatletasTorneio) {
-					
-					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
+				for (EAtletaTorneio eat : listaEatletasTorneio) {
+					if (eat.getTorneio().getNome().equals(torneio.getNome())) {
 						getFrameTorneios().getModelEatletaTorneio().addElement(eat);
 					}
 				}
-				
-				
+
 			}
 		});
-		
+
 		getFrameTorneios().getJlstTorneios().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				getFrameTorneios().getJlstEatletaClube().requestFocus();
 			}
 		});
-		
+
 		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				iniciarFrameCadastros();
@@ -342,20 +344,20 @@ public class TorneioController {
 		getFrameCadastros().getBtnEditarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String eatleta = getFrameCadastros().getTxtEatleta().getText();
-				//altera no JList
-				EAtleta eaJlist = getFrameCadastros().getJlstEatleta().getSelectedValue(); 
+				// altera no JList
+				EAtleta eaJlist = getFrameCadastros().getJlstEatleta().getSelectedValue();
 				getFrameCadastros().getJlstEatleta().getSelectedValue().setNome(eatleta);
 				getFrameCadastros().getJlstEatleta().setModel(getFrameCadastros().getModelEatletas());
-				
-				//alterar no array
-				
-				for(EAtleta eaArray : listaEatleta) {
-					if(eaJlist.getId()==eaArray.getId()) {
+
+				// alterar no array
+
+				for (EAtleta eaArray : listaEatleta) {
+					if (eaJlist.getId() == eaArray.getId()) {
 						eaArray.setNome(eatleta);
 					}
 				}
-				
-				//alterar no banco de dados
+
+				// alterar no banco de dados
 				dao.alterar("eatleta", "id_eatleta", Integer.toString(eaJlist.getId()), "nome_eatleta", eatleta);
 			}
 		});
@@ -369,29 +371,25 @@ public class TorneioController {
 		// editar Clube
 		getFrameCadastros().getBtnEditarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String clubeTxt = getFrameCadastros().getTxtClube().getText();
 				Clube clubeJlist = getFrameCadastros().getJlstClubes().getSelectedValue();
 
-				//alterar no jlist
-				getFrameCadastros().getJlstClubes().getSelectedValue().setNome(clubeTxt);				
+				// alterar no jlist
+				getFrameCadastros().getJlstClubes().getSelectedValue().setNome(clubeTxt);
 				getFrameCadastros().getJlstClubes().setModel(getFrameCadastros().getModelClubes());
-				//alterar no array
-				for(Clube clubeArray : listaClubes) {
-					if(clubeArray.getId()==clubeJlist.getId()) {
+				// alterar no array
+				for (Clube clubeArray : listaClubes) {
+					if (clubeArray.getId() == clubeJlist.getId()) {
 						clubeArray.setNome(clubeTxt);
 					}
 				}
-				//alterar banco de dados
+				// alterar banco de dados
 				dao.alterar("clube", "id_clube", Integer.toString(clubeJlist.getId()), "nome_clube", clubeTxt);
-				
-				
+
 			}
 		});
 
-		
-		
-		
 		getFrameCadastros().getJlstClubes().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				getFrameCadastros().getTxtClube().requestFocus();
@@ -401,31 +399,33 @@ public class TorneioController {
 		getFrameTorneios().getBtnNovoTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getFrameTorneios().getModelEatletaTorneio().clear();
-				
+
 				String torneioTxt = getFrameTorneios().getTxtNomeTorneio().getText();
-				
+
 				for (Torneio torneio : listaTorneios) {
 					if (torneio.getNome().equals(torneioTxt)) {
 						System.out.println("repetido");
 						return;
 					}
 				}
-				
-				//incluindo id para não termos inconsistencia de dados entre
+
+				// incluindo id para não termos inconsistencia de dados entre
 				// jlist, model, combobox
-				dao.inserir("torneio", "nome_torneio", "porque_nome_torneio", getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText());
-				int id = dao.ultimoID("torneio", "id_torneio");			
-				Torneio torneio = new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(), getFrameTorneios().getTxtPorqueDoNome().getText());
+				dao.inserir("torneio", "nome_torneio", "porque_nome_torneio",
+						getFrameTorneios().getTxtNomeTorneio().getText(),
+						getFrameTorneios().getTxtPorqueDoNome().getText());
+				int id = dao.ultimoID("torneio", "id_torneio");
+				Torneio torneio = new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
+						getFrameTorneios().getTxtPorqueDoNome().getText());
 				torneio.setId(id);
 				// inclue na lista
 				listaTorneios.add(torneio);
-				
+
 				getFrameTorneios().getModelTorneios().addElement(torneio);
-				//incluindo na tabela
-				
-				
+				// incluindo na tabela
+
 			}
-			
+
 		});
 		// remove EAtelta Torneio
 		getFrameTorneios().getBtnRemoverJogador().addActionListener(new ActionListener() {
@@ -467,38 +467,48 @@ public class TorneioController {
 				listaEatletasTorneio.add(eat);
 			}
 		});
-//		// Salva Torneio
-//		getFrameTorneios().getBtnSalvarTorneio().addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				// evita que adicione torneios com o mesmo nome
-//				// salva edições do torneio
-//				for (int i = 0; i < getFrameTorneios().getJlstTorneios().getModel().getSize(); i++) {
-//					Torneio torneioDaVez = getFrameTorneios().getJlstTorneios().getModel().getElementAt(i);
-//					// verifica se o nome já existe o registro no JList
-//					if (torneioDaVez.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
-//						// salva na JList dos torneios
-//						torneioDaVez.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
-//						System.out.println("Esse registro existe, salvando os dados do objeto Torneio");
-//						// salva no lista Torneios
-//						for (Torneio torneioArray : listaTorneios) {
-//							if (torneioArray.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
-//								torneioArray.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
-//							}
-//						}
-//						return;
-//					}
-//				}
-//				System.out.println("novo torneio");
-//				// no caso de um novo torneio...
-//				Torneio torneio = new Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
-//						getFrameTorneios().getTxtPorqueDoNome().getText());
-//				// adiciona tanto na lista temporaria(jlist) como na lista permanente(arraylist)
-//				System.out.println("adicionando ao lista Torneios");
-//				listaTorneios.add(torneio);
-//				getFrameTorneios().getModelTorneios().addElement(torneio);
-//				System.out.println("adicionando ao Jist Torneio");
-//			}
-//		});
+		// // Salva Torneio
+		// getFrameTorneios().getBtnSalvarTorneio().addActionListener(new
+		// ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// // evita que adicione torneios com o mesmo nome
+		// // salva edições do torneio
+		// for (int i = 0; i <
+		// getFrameTorneios().getJlstTorneios().getModel().getSize(); i++) {
+		// Torneio torneioDaVez =
+		// getFrameTorneios().getJlstTorneios().getModel().getElementAt(i);
+		// // verifica se o nome já existe o registro no JList
+		// if
+		// (torneioDaVez.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText()))
+		// {
+		// // salva na JList dos torneios
+		// torneioDaVez.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
+		// System.out.println("Esse registro existe, salvando os dados do objeto
+		// Torneio");
+		// // salva no lista Torneios
+		// for (Torneio torneioArray : listaTorneios) {
+		// if
+		// (torneioArray.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText()))
+		// {
+		// torneioArray.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
+		// }
+		// }
+		// return;
+		// }
+		// }
+		// System.out.println("novo torneio");
+		// // no caso de um novo torneio...
+		// Torneio torneio = new
+		// Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
+		// getFrameTorneios().getTxtPorqueDoNome().getText());
+		// // adiciona tanto na lista temporaria(jlist) como na lista
+		// permanente(arraylist)
+		// System.out.println("adicionando ao lista Torneios");
+		// listaTorneios.add(torneio);
+		// getFrameTorneios().getModelTorneios().addElement(torneio);
+		// System.out.println("adicionando ao Jist Torneio");
+		// }
+		// });
 		// Gera Partidas e Edita Partidas
 
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
@@ -545,8 +555,8 @@ public class TorneioController {
 				Torneio torneioNoModel = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
 
 				getFrameTorneios().getModelEatletaTorneio().clear();
-				
-				//removendo do JList e da Lista Torneios
+
+				// removendo do JList e da Lista Torneios
 				getFrameTorneios().getModelTorneios().remove(index);
 				listaTorneios.remove(index);
 
@@ -558,23 +568,21 @@ public class TorneioController {
 						System.out.println("apagando linha " + torneioEAtleta);
 						dao.excluir("eatletatorneio", "id_eatletatorneio", torneioNoModel.getId());
 						listaEatletasTorneio.remove(i);
-						
+
 					}
 				}
 				// apagar as referencias da lista de partidas
 				for (int i = 0; i < listaPartidas.size(); i++) {
-					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().getTorneio()
-							.getNome();
+					String torneioNaListaPartidas = listaPartidas.get(i).getAnfitriao().getTorneio().getNome();
 					if (torneioNaListaPartidas.equals(torneioNoModel.getNome())) {
 						listaPartidas.remove(i);
 					}
 
 				}
 				// apagar no banco de dados
-				//apagando na tabela torneio
+				// apagando na tabela torneio
 				dao.excluir("torneio", "id_torneio", torneioNoModel.getId());
-				
-				
+
 				System.out.println("deletado com sucesso " + torneioNoModel.getNome());
 			}
 		});
@@ -629,7 +637,7 @@ public class TorneioController {
 						return;
 					}
 				}
-				//incluindo id para não termos inconsistencia de dados entre
+				// incluindo id para não termos inconsistencia de dados entre
 				// jlist, model, combobox
 				dao.inserir("clube", "nome_clube", getFrameCadastros().getTxtClube().getText());
 				Clube clube = new Clube(getFrameCadastros().getTxtClube().getText());
@@ -639,7 +647,7 @@ public class TorneioController {
 				listaClubes.add(clube);
 				getFrameTorneios().getTxtClube().addItem(clube);
 				getFrameCadastros().getModelClubes().addElement(clube);
-				//incluindo na tabela
+				// incluindo na tabela
 				getFrameCadastros().getTxtClube().setText("");
 			}
 		});
@@ -647,19 +655,19 @@ public class TorneioController {
 		getFrameCadastros().getBtnAdicionarEatleta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String eAtletaTextField = getFrameCadastros().getTxtEatleta().getText();
-				
+
 				for (EAtleta ea : listaEatleta) {
 					if (ea.getNome().equals(eAtletaTextField)) {
 						System.out.println("repetido");
 						return;
 					}
 				}
-				
+
 				dao.inserir("eatleta", "nome_eatleta", eAtletaTextField);
-				int id = dao.ultimoID("eatleta", "id_eatleta");				
+				int id = dao.ultimoID("eatleta", "id_eatleta");
 
 				EAtleta eAtleta = new EAtleta(getFrameCadastros().getTxtEatleta().getText());
-				//adicionando id para evitar inconsistencias de dados
+				// adicionando id para evitar inconsistencias de dados
 				eAtleta.setId(id);
 
 				// adicionar na lista, no model e no combobox do frame torneios e banco de dados
@@ -673,7 +681,7 @@ public class TorneioController {
 		// descadastrar clube
 		getFrameCadastros().getBtnApagarClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Clube clube = getFrameCadastros().getJlstClubes().getSelectedValue();
 				int id = clube.getId();
 				String clubeNoJlist = clube.getNome();
@@ -688,7 +696,7 @@ public class TorneioController {
 						listaClubes.remove(i);
 					}
 				}
-				//remove do banco de dados
+				// remove do banco de dados
 				dao.excluir("clube", "id_clube", id);
 
 			}
@@ -700,16 +708,16 @@ public class TorneioController {
 				String eAtletaNoJlist = getFrameCadastros().getModelEatletas().get(index).getNome();
 				getFrameCadastros().getModelEatletas().remove(index);
 				getFrameTorneios().getTxtEatleta().removeItemAt(index);
-				
+
 				for (int i = 0; i < listaEatleta.size(); i++) {
 					String eAtletaNaLista = listaEatleta.get(i).getNome();
 					if (eAtletaNoJlist.equals(eAtletaNaLista)) {
 						dao.excluir("eatleta", "id_eatleta", listaEatleta.get(i).getId());
 						listaEatleta.remove(i);
-						
+
 					}
 				}
-				
+
 			}
 		});
 
@@ -724,7 +732,7 @@ public class TorneioController {
 	private boolean seTorneioFoiDisputado() {
 		boolean foiDisputado = false;
 		for (Partida partida : listaPartidas) {
-			String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
+			String torneioTxtField = getFrameTorneios().getJlstTorneios().getSelectedValue().getNome();
 			String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
 			if (torneioPartida.equals(torneioTxtField)) {
 				foiDisputado = true;
@@ -765,16 +773,15 @@ public class TorneioController {
 	}
 
 	public void preencherComboBox() {
-		
-		for(Clube c: listaClubes) {
+
+		for (Clube c : listaClubes) {
 			getFrameTorneios().getTxtClube().addItem(c);
 		}
-		
-		for(EAtleta eat : listaEatleta) {
+
+		for (EAtleta eat : listaEatleta) {
 			getFrameTorneios().getTxtEatleta().addItem(eat);
 		}
-		
-	}
 
+	}
 
 }

@@ -46,6 +46,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	 * aproveitamento
 	 */
 	private int aproveitamento;
+
 	/**
 	 * 
 	 * @return clube
@@ -53,6 +54,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public String getClube() {
 		return clube;
 	}
+
 	/**
 	 * 
 	 * @param clube
@@ -60,6 +62,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setClube(String clube) {
 		this.clube = clube;
 	}
+
 	/**
 	 * 
 	 * @return pontos
@@ -67,6 +70,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getPontos() {
 		return pontos;
 	}
+
 	/**
 	 * 
 	 * @param pontos
@@ -74,6 +78,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setPontos(int pontos) {
 		this.pontos = pontos;
 	}
+
 	/**
 	 * 
 	 * @return qtd jogos
@@ -81,6 +86,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getJogos() {
 		return jogos;
 	}
+
 	/**
 	 * 
 	 * @param jogos
@@ -88,6 +94,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setJogos(int jogos) {
 		this.jogos = jogos;
 	}
+
 	/**
 	 * 
 	 * @return qtd vitorias
@@ -95,13 +102,16 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getVitorias() {
 		return vitorias;
 	}
+
 	/**
 	 * 
-	 * @param qtd vitorias
+	 * @param qtd
+	 *            vitorias
 	 */
 	public void setVitorias(int vitorias) {
 		this.vitorias = vitorias;
 	}
+
 	/**
 	 * 
 	 * @return qtd empates
@@ -109,6 +119,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getEmpates() {
 		return empates;
 	}
+
 	/**
 	 * 
 	 * @param empates
@@ -116,6 +127,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setEmpates(int empates) {
 		this.empates = empates;
 	}
+
 	/**
 	 * 
 	 * @return qtd derrotas
@@ -123,6 +135,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getDerrotas() {
 		return derrotas;
 	}
+
 	/**
 	 * 
 	 * @param derrotas
@@ -130,6 +143,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setDerrotas(int derrotas) {
 		this.derrotas = derrotas;
 	}
+
 	/**
 	 * 
 	 * @return qtd golspro
@@ -137,6 +151,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getGolspro() {
 		return golspro;
 	}
+
 	/**
 	 * 
 	 * @param golspro
@@ -144,6 +159,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setGolspro(int golspro) {
 		this.golspro = golspro;
 	}
+
 	/**
 	 * 
 	 * @return golscontra
@@ -151,6 +167,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getGolscontra() {
 		return golscontra;
 	}
+
 	/**
 	 * 
 	 * @param golscontra
@@ -158,6 +175,7 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setGolscontra(int golscontra) {
 		this.golscontra = golscontra;
 	}
+
 	/**
 	 * 
 	 * @return saldo de gols
@@ -165,13 +183,16 @@ public class Classificacao implements Comparable<Classificacao> {
 	public int getSaldo() {
 		return saldo;
 	}
+
 	/**
 	 * 
-	 * @param saldo de gols
+	 * @param saldo
+	 *            de gols
 	 */
 	public void setSaldo(int saldo) {
 		this.saldo = saldo;
 	}
+
 	/**
 	 * 
 	 * @return aproveitamento
@@ -183,12 +204,13 @@ public class Classificacao implements Comparable<Classificacao> {
 	public void setAproveitamento(int aproveitamento) {
 		this.aproveitamento = aproveitamento;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Clube" + clube + ", Pt" + pontos + ", jg=" + jogos + ", vit=" + vitorias + ", emp=" + empates + ", der="
 				+ derrotas + ", gp=" + golspro + ", gc=" + golscontra + ", sg=" + saldo + ", aprov=" + aproveitamento;
 	}
+
 	/**
 	 * 
 	 * @param clube
@@ -217,7 +239,6 @@ public class Classificacao implements Comparable<Classificacao> {
 		this.aproveitamento = aproveitamento;
 	}
 
-	
 	public int compareTo(Classificacao outro) {
 		Integer p = this.pontos;
 		Integer o = outro.getPontos();

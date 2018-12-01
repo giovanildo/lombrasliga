@@ -19,7 +19,7 @@ public class FrameTorneios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * txt Nome do Torneio 
+	 * txt Nome do Torneio
 	 * 
 	 */
 	private JTextField txtNomeTorneio;
@@ -51,10 +51,10 @@ public class FrameTorneios extends JFrame {
 	 * botão para adicionar Jogador
 	 */
 	private JButton btnAdicionarJogador;
-//	/**
-//	 * botão para salvar Torneio
-//	 */
-//	private JButton btnSalvarTorneio;
+	// /**
+	// * botão para salvar Torneio
+	// */
+	// private JButton btnSalvarTorneio;
 	/**
 	 * botão para deletar torneio
 	 */
@@ -152,6 +152,7 @@ public class FrameTorneios extends JFrame {
 		panelTorneio.add(btnRemoverJogador);
 
 		jlstEatletaClube = new JList<EAtletaTorneio>(modelEatletaTorneio);
+
 		jlstEatletaClube.setBounds(217, 11, 220, 155);
 		panelTorneio.add(jlstEatletaClube);
 
@@ -164,10 +165,10 @@ public class FrameTorneios extends JFrame {
 
 		btnEditarPartidas.setBounds(52, 464, 213, 25);
 		getContentPane().add(btnEditarPartidas);
-//		btnSalvarTorneio = new JButton("Salvar Torneio");
+		// btnSalvarTorneio = new JButton("Salvar Torneio");
 
-//		btnSalvarTorneio.setBounds(307, 180, 127, 23);
-//		getContentPane().add(btnSalvarTorneio);
+		// btnSalvarTorneio.setBounds(307, 180, 127, 23);
+		// getContentPane().add(btnSalvarTorneio);
 
 		btnDeletarTorneio = new JButton("Deletar Torneio");
 
@@ -178,12 +179,13 @@ public class FrameTorneios extends JFrame {
 
 		btnEditarTorneio.setBounds(361, 43, 152, 23);
 		getContentPane().add(btnEditarTorneio);
-		
+
 		btnNovoJogadorClube = new JButton("Novo Jogador/Clube");
-		
+
 		btnNovoJogadorClube.setBounds(383, 465, 145, 23);
 		getContentPane().add(btnNovoJogadorClube);
 	}
+
 	/**
 	 * 
 	 * @return botão para cadastrar novo jogador e clube
@@ -191,6 +193,7 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnNovoJogadorClube() {
 		return btnNovoJogadorClube;
 	}
+
 	/**
 	 * 
 	 * @return JList Torneio
@@ -198,6 +201,7 @@ public class FrameTorneios extends JFrame {
 	public JList<Torneio> getJlstTorneios() {
 		return jlstTorneios;
 	}
+
 	/**
 	 * 
 	 * @return botão novo torneio
@@ -205,6 +209,7 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnNovoTorneio() {
 		return btnNovoTorneio;
 	}
+
 	/**
 	 * 
 	 * @param btnNovoTorneio
@@ -212,6 +217,7 @@ public class FrameTorneios extends JFrame {
 	public void setBtnNovoTorneio(JButton btnNovoTorneio) {
 		this.btnNovoTorneio = btnNovoTorneio;
 	}
+
 	/**
 	 * 
 	 * @return combo box de clubes
@@ -219,6 +225,7 @@ public class FrameTorneios extends JFrame {
 	public JComboBox<Clube> getTxtClube() {
 		return txtClube;
 	}
+
 	/**
 	 * 
 	 * @return combobox de eatletas
@@ -226,6 +233,7 @@ public class FrameTorneios extends JFrame {
 	public JComboBox<EAtleta> getTxtEatleta() {
 		return txtEatleta;
 	}
+
 	/**
 	 * 
 	 * @return botão editar torneio
@@ -233,6 +241,7 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnEditarTorneio() {
 		return btnEditarTorneio;
 	}
+
 	/**
 	 * 
 	 * @return botão deletar torneio
@@ -240,6 +249,7 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnDeletarTorneio() {
 		return btnDeletarTorneio;
 	}
+
 	/**
 	 * 
 	 * @return txt de Porque do nome
@@ -247,6 +257,7 @@ public class FrameTorneios extends JFrame {
 	public JTextField getTxtPorqueDoNome() {
 		return txtPorqueDoNome;
 	}
+
 	/**
 	 * 
 	 * @return txt do nome do torneio
@@ -254,6 +265,7 @@ public class FrameTorneios extends JFrame {
 	public JTextField getTxtNomeTorneio() {
 		return txtNomeTorneio;
 	}
+
 	/**
 	 * 
 	 * @return List Model de Torneios
@@ -261,6 +273,7 @@ public class FrameTorneios extends JFrame {
 	public DefaultListModel<Torneio> getModelTorneios() {
 		return modelTorneios;
 	}
+
 	/**
 	 * 
 	 * @return list Model de eatletaTorneio
@@ -268,6 +281,7 @@ public class FrameTorneios extends JFrame {
 	public DefaultListModel<EAtletaTorneio> getModelEatletaTorneio() {
 		return modelEatletaTorneio;
 	}
+
 	/**
 	 * 
 	 * @return JList de eatleta torneio
@@ -275,6 +289,7 @@ public class FrameTorneios extends JFrame {
 	public JList<EAtletaTorneio> getJlstEatletaClube() {
 		return jlstEatletaClube;
 	}
+
 	/**
 	 * 
 	 * @return botão remover jogador
@@ -282,6 +297,7 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnRemoverJogador() {
 		return btnRemoverJogador;
 	}
+
 	/**
 	 * 
 	 * @return botão de adicionar jogador
@@ -289,13 +305,14 @@ public class FrameTorneios extends JFrame {
 	public JButton getBtnAdicionarJogador() {
 		return btnAdicionarJogador;
 	}
-//	/**
-//	 * 
-//	 * @return botão salvar torneio
-//	 */
-//	public JButton getBtnSalvarTorneio() {
-//		return btnSalvarTorneio;
-//	}
+
+	// /**
+	// *
+	// * @return botão salvar torneio
+	// */
+	// public JButton getBtnSalvarTorneio() {
+	// return btnSalvarTorneio;
+	// }
 	/**
 	 * 
 	 * @return botão de editar partidas

@@ -12,7 +12,7 @@ import giovanildo.lombrasliga.model.Clube;
 import giovanildo.lombrasliga.model.EAtleta;
 
 public class FrameCadastros extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * TextField do Clube
@@ -49,7 +49,7 @@ public class FrameCadastros extends JFrame {
 	/**
 	 * botão que permite retornar a tela principal
 	 */
-	private JButton  btnTelaPrincipal;
+	private JButton btnTelaPrincipal;
 	/**
 	 * botão que permite descadastrar um Eatleta
 	 */
@@ -59,11 +59,11 @@ public class FrameCadastros extends JFrame {
 	 */
 	private JButton btnApagarClube;
 
-	
 	private JButton btnEditarClube;
 	private JButton btnEditarEatleta;
+
 	/**
-	 * Monta a tela de Cadastros de Clube e Jogadores 
+	 * Monta a tela de Cadastros de Clube e Jogadores
 	 */
 	public FrameCadastros() {
 
@@ -117,26 +117,27 @@ public class FrameCadastros extends JFrame {
 		getContentPane().add(btnApagarClube);
 		btnAdicionarEatleta.setBounds(292, 96, 221, 25);
 		getContentPane().add(btnAdicionarEatleta);
-		
+
 		btnApagarEatleta = new JButton("Apagar");
 		btnApagarEatleta.setBounds(292, 133, 221, 25);
 		getContentPane().add(btnApagarEatleta);
-		
+
 		btnTelaPrincipal = new JButton("Tela Principal");
-		
+
 		btnTelaPrincipal.setBounds(186, 495, 150, 25);
 		getContentPane().add(btnTelaPrincipal);
-		
+
 		btnEditarClube = new JButton("Editar");
 
 		btnEditarClube.setBounds(56, 172, 178, 23);
 		getContentPane().add(btnEditarClube);
-		
+
 		btnEditarEatleta = new JButton("Editar");
 
 		btnEditarEatleta.setBounds(292, 166, 221, 23);
 		getContentPane().add(btnEditarEatleta);
 	}
+
 	/**
 	 * 
 	 * @return Botão editar clube
@@ -152,6 +153,7 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnEditarEatleta() {
 		return btnEditarEatleta;
 	}
+
 	/**
 	 * 
 	 * @return txt de clube
@@ -159,7 +161,7 @@ public class FrameCadastros extends JFrame {
 	public JTextField getTxtClube() {
 		return txtClube;
 	}
-	
+
 	/**
 	 * 
 	 * @return botão de apagar eatleta
@@ -167,6 +169,7 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnApagarEatleta() {
 		return btnApagarEatleta;
 	}
+
 	/**
 	 * 
 	 * @return txt de EAtleta
@@ -174,6 +177,7 @@ public class FrameCadastros extends JFrame {
 	public JTextField getTxtEatleta() {
 		return txtEatleta;
 	}
+
 	/**
 	 * 
 	 * @return model List de Clubes
@@ -181,6 +185,7 @@ public class FrameCadastros extends JFrame {
 	public DefaultListModel<Clube> getModelClubes() {
 		return modelClubes;
 	}
+
 	/**
 	 * 
 	 * @return botão que direciona à tela principal
@@ -188,13 +193,16 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnTelaPrincipal() {
 		return btnTelaPrincipal;
 	}
+
 	/**
 	 * Model List de EAtlets
+	 * 
 	 * @return
 	 */
 	public DefaultListModel<EAtleta> getModelEatletas() {
 		return modelEatletas;
 	}
+
 	/**
 	 * 
 	 * @return JList de Clubes
@@ -202,6 +210,7 @@ public class FrameCadastros extends JFrame {
 	public JList<Clube> getJlstClubes() {
 		return jlstClubes;
 	}
+
 	/**
 	 * 
 	 * @return retorna botão de cadastrar clube
@@ -209,6 +218,7 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnAdicionarClube() {
 		return btnAdicionarClube;
 	}
+
 	/**
 	 * 
 	 * @return botão de cadastrar eatleta
@@ -216,6 +226,7 @@ public class FrameCadastros extends JFrame {
 	public JButton getBtnAdicionarEatleta() {
 		return btnAdicionarEatleta;
 	}
+
 	/**
 	 * 
 	 * @return Jlist de EAtleta
@@ -223,6 +234,7 @@ public class FrameCadastros extends JFrame {
 	public JList<EAtleta> getJlstEatleta() {
 		return jlstEatleta;
 	}
+
 	/**
 	 * 
 	 * @return botão de descadastrar clube

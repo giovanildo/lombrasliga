@@ -11,12 +11,13 @@ import javax.swing.ListSelectionModel;
 
 import giovanildo.lombrasliga.model.Classificacao;
 import giovanildo.lombrasliga.model.Partida;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FramePartidas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * txt dos gols do anfitrião
 	 */
@@ -25,7 +26,7 @@ public class FramePartidas extends JFrame {
 	 * txt gols do visitante
 	 */
 	private JTextField txtGolsVisitante;
-	
+
 	/**
 	 * Botão de confirmar placar da partida
 	 */
@@ -47,14 +48,25 @@ public class FramePartidas extends JFrame {
 	 */
 	private DefaultListModel<Partida> modelPartidas;
 	/**
-	 * JList de Classificação 
+	 * JList de Classificação
 	 */
 	private JList<Classificacao> jlstClassif;
 	/**
 	 * Model List de Classificação
 	 */
 	private DefaultListModel<Classificacao> modelClassif;
-	
+	/**
+	 * Botão de retorno a tela principal
+	 */
+	private JButton btnTelaPrincipal;
+
+	/**
+	 * @return the btnTelaPrincipal
+	 */
+	public JButton getBtnTelaPrincipal() {
+		return btnTelaPrincipal;
+	}
+
 	public FramePartidas() {
 		getContentPane().setLayout(null);
 
@@ -88,7 +100,6 @@ public class FramePartidas extends JFrame {
 
 		btnConfirmar = new JButton("Confirmar");
 
-
 		btnConfirmar.setBounds(183, 549, 117, 25);
 		getContentPane().add(btnConfirmar);
 
@@ -99,14 +110,19 @@ public class FramePartidas extends JFrame {
 		jlstPartidas.setModel(modelPartidas);
 		jlstPartidas.setBounds(34, 53, 359, 444);
 		getContentPane().add(jlstPartidas);
-		
+
 		modelClassif = new DefaultListModel<Classificacao>();
 		jlstClassif = new JList<Classificacao>(modelClassif);
 		jlstClassif.setBounds(419, 53, 477, 444);
 		getContentPane().add(jlstClassif);
-		
+
+		btnTelaPrincipal = new JButton("Tela Principal");
+
+		btnTelaPrincipal.setBounds(418, 550, 89, 23);
+		getContentPane().add(btnTelaPrincipal);
+
 	}
-	
+
 	/**
 	 * @return the modelClassif
 	 */
@@ -129,21 +145,21 @@ public class FramePartidas extends JFrame {
 		return txtGolsAnfitriao;
 	}
 
-/**
- * 
- * @return txt gols fora
- */
+	/**
+	 * 
+	 * @return txt gols fora
+	 */
 	public JTextField getTxtGolsVisitante() {
 		return txtGolsVisitante;
 	}
-	
+
 	/**
 	 * @return the btnConfirmar
 	 */
 	public JButton getBtnConfirmar() {
 		return btnConfirmar;
 	}
-	
+
 	/**
 	 * @return the lblAnfitriao
 	 */

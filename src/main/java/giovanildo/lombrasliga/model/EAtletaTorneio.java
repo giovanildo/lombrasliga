@@ -2,15 +2,15 @@ package giovanildo.lombrasliga.model;
 
 /**
  * 
- * @author giovanildo classe que guarda as informações do clube/jogador de vídeo game
- *         na partida
+ * @author giovanildo classe que guarda as informações do clube/jogador de vídeo
+ *         game na partida
  */
 public class EAtletaTorneio {
 	/**
 	 * id único do eatleta no torneio
 	 */
 	private int id;
-	
+
 	/**
 	 * Jogador de Video Game
 	 */
@@ -51,7 +51,8 @@ public class EAtletaTorneio {
 
 	/**
 	 * 
-	 * @param eAtleta o jogador de videogame
+	 * @param eAtleta
+	 *            o jogador de videogame
 	 * 
 	 */
 	public void seteAtleta(EAtleta eAtleta) {
@@ -97,7 +98,7 @@ public class EAtletaTorneio {
 	 * @param clube
 	 * 
 	 */
-	
+
 	public EAtletaTorneio(EAtleta eAtleta, Torneio torneio, Clube clube) {
 		super();
 		this.eAtleta = eAtleta;
@@ -139,5 +140,4 @@ public class EAtletaTorneio {
 		return true;
 	}
 
-	
 }

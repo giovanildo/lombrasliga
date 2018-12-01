@@ -14,6 +14,7 @@ public class EAtleta {
 	 * Nome do Jogador de Vídeo Game
 	 */
 	private String nome;
+
 	/**
 	 * 
 	 * @return id
@@ -26,6 +27,7 @@ public class EAtleta {
 	public String toString() {
 		return nome;
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -41,9 +43,11 @@ public class EAtleta {
 	public String getNome() {
 		return nome;
 	}
+
 	/**
 	 * 
-	 * @param nome do eatleta
+	 * @param nome
+	 *            do eatleta
 	 */
 	public EAtleta(String nome) {
 		super();
@@ -52,12 +56,13 @@ public class EAtleta {
 
 	/**
 	 * 
-	 * @param nome do eatleta
+	 * @param nome
+	 *            do eatleta
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
