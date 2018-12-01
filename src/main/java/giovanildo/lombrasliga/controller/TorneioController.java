@@ -96,12 +96,6 @@ public class TorneioController {
 			getFrameTorneios().getModelTorneios().addElement(t);
 		}
 
-		// preechendo JList com a lista de eatletaTorneio
-		for (EAtletaTorneio eat : listaEatletasTorneio) {
-			System.out.println(eat);
-			getFrameTorneios().getModelEatletaTorneio().addElement(eat);
-		}
-
 		// preechendo JList com a lista de clubes
 		for (Clube c : listaClubes) {
 			System.out.println(c);
@@ -123,11 +117,11 @@ public class TorneioController {
 
 		// gerar lista eatletaTorneio atual
 		ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<EAtletaTorneio>();
-		String torneioTxtField = getFrameTorneios().getTxtNomeTorneio().getText();
+		String torneioJList = getFrameTorneios().getJlstTorneios().getSelectedValue().getNome();
 
 		for (EAtletaTorneio eat : listaEatletasTorneio) {
 			String torneioEat = eat.getTorneio().getNome();
-			if (torneioEat.equals(torneioTxtField)) {
+			if (torneioEat.equals(torneioJList)) {
 				listaTorneioAtual.add(eat);
 			}
 		}
@@ -136,7 +130,7 @@ public class TorneioController {
 		ArrayList<Partida> listaPartidasAtual = new ArrayList<Partida>();
 		for (Partida partida : listaPartidas) {
 			String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
-			if (torneioPartida.equals(torneioTxtField)) {
+			if (torneioPartida.equals(torneioJList)) {
 				listaPartidasAtual.add(partida);
 			}
 		}
@@ -175,7 +169,6 @@ public class TorneioController {
 		}
 
 		preencherJListClassificacao();
-
 	}
 
 	/**
@@ -291,7 +284,14 @@ public class TorneioController {
 						}
 					}
 				}
+
+				String sql = "INSERT INTO partida (visitante, anfitriao, golsvisitante, golsanfitriao, encerrada) "
+						+ "VALUES (" + partida.getVisitante().getId() + "," + partida.getAnfitriao().getId() + ","
+						+ partida.getGolsVisitante() + "," + partida.getGolsAnfitriao() + "," + false + ")";
+				// inserindo na lista
 				listaPartidas.add(partida);
+				// inserindo no banco de dados
+				dao.inserir(sql);
 				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
 				EAtletaTorneio remove = listaEAtletaTorneioAtual.remove(listaEAtletaTorneioAtual.size() - 1);
 				listaEAtletaTorneioAtual.add(1, remove);
@@ -439,7 +439,11 @@ public class TorneioController {
 						listaEatletasTorneio.remove(i);
 					}
 				}
+				// removendo do JList
 				getFrameTorneios().getModelEatletaTorneio().remove(index);
+
+				// removendo do banco de dados
+				dao.excluir("eatletatorneio", "id_eatletatorneio", eatDoModel.getId());
 			}
 		});
 
@@ -451,6 +455,7 @@ public class TorneioController {
 					EAtletaTorneio eat = getFrameTorneios().getJlstEatletaClube().getModel().getElementAt(i);
 					String itemClube = getFrameTorneios().getTxtClube().getSelectedItem().toString();
 					String itemEatleta = getFrameTorneios().getTxtEatleta().getSelectedItem().toString();
+
 					// se não for repetido adiciona tanto a JList como a lista EAtleta Torneio
 					if (eat.getClube().getNome().equals(itemClube) && eat.geteAtleta().getNome().equals(itemEatleta)
 							&& eat.getTorneio().getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText())) {
@@ -459,30 +464,26 @@ public class TorneioController {
 					}
 				}
 
-				String eatletatorneio = "CREATE TABLE eatletatorneio( "
-						+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
-						+ "id_eatleta integer NOT NULL, " + "id_clube integer NOT NULL, " + "id_torneio integer NOT NULL, "
-						+ "FOREIGN KEY (id_eatleta) REFERENCES eatleta (id_eatleta) ON DELETE CASCADE, "
-						+ "FOREIGN KEY (id_clube) REFERENCES clube (id_clube) ON DELETE CASCADE, "
-						+ "FOREIGN KEY (id_torneio) REFERENCES torneio (id_torneio) ON DELETE CASCADE);";
-
-				String partida = "CREATE TABLE partida(" + "id_partida SERIAL CONSTRAINT pk_id_partida PRIMARY KEY, "
-						+ "visitante integer not null, " + "anfitriao integer not null, " + "golsvisitante integer not null, "
-						+ "golsanfitriao integer not null, " + "encerrada boolean, "
-						+ "FOREIGN KEY(visitante) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE,"
-						+ "FOREIGN KEY(anfitriao) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE);";
-
-				
-				
-				
-				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem(),
-						(Torneio) getFrameTorneios().getJlstTorneios().getSelectedValue(),
-						(Clube) getFrameTorneios().getTxtClube().getSelectedItem());
-				//adicionando ao JList, lista, e banco de dados
-				getFrameTorneios().getModelEatletaTorneio().addElement(eat);
-				listaEatletasTorneio.add(eat);
-				String sql = "INSERT INTO eatletatorneio (id_eatleta, id_clube, id_torneio) VALUES ('http://www.facebook.com','Facebook','2013-06-01');";
+				EAtleta eatleta = (EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem();
+				Torneio torneio = (Torneio) getFrameTorneios().getJlstTorneios().getSelectedValue();
+				Clube clube = (Clube) getFrameTorneios().getTxtClube().getSelectedItem();
+				// adicionando no banco de dados
+				String sql = "INSERT INTO eatletatorneio (id_eatleta, id_clube, id_torneio) VALUES (" + eatleta.getId()
+						+ "," + clube.getId() + "," + torneio.getId() + ");";
+				System.out.println(sql);
 				dao.inserir(sql);
+
+				int id = dao.ultimoID("eatletatorneio", "id_eatletatorneio");
+
+				EAtletaTorneio eat = new EAtletaTorneio(eatleta, torneio, clube);
+				// colocando id do banco de dados para os objetos para não ter inconsistencia
+				eat.setId(id);
+				// adicionando ao JList
+				getFrameTorneios().getModelEatletaTorneio().addElement(eat);
+				// adicionando a lista
+				listaEatletasTorneio.add(eat);
+				// adicionando ao banco de dados
+
 			}
 		});
 		// // Salva Torneio
@@ -534,28 +535,28 @@ public class TorneioController {
 
 				getFramePartidas().getModelPartidas().clear();
 
-				// saber se já existe o torneio já foi disputado ou não - comparar a lista das
-				// partidas com a lista dos eats
+				// saber se já existe o torneio, se já foi disputado ou não
 
 				ArrayList<EAtletaTorneio> listaTorneioAtual = new ArrayList<EAtletaTorneio>();
-				String torneioTxtField = getFrameTorneios().getJlstTorneios().getSelectedValue().getNome();
+
+				String torneioJList = getFrameTorneios().getJlstTorneios().getSelectedValue().getNome();
+
 				for (EAtletaTorneio eat : listaEatletasTorneio) {
 					String torneioEat = eat.getTorneio().getNome();
-					if (torneioEat.equals(torneioTxtField)) {
+					if (torneioEat.equals(torneioJList)) {
 						listaTorneioAtual.add(eat);
 					}
 				}
-				// caso não exista gera normalmente - código já montado
+				// caso não exista gera normalmente
 				if (!seTorneioFoiDisputado()) {
+
 					geraPartidas(listaTorneioAtual);
 				}
 
-				// caso exista seleciona as partidas existentes e joga para o model list - fazer
-				// um for selecionando
-
+				// caso exista seleciona as partidas existentes e joga para o model list
 				for (Partida partida : listaPartidas) {
 					String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
-					if (torneioPartida.equals(torneioTxtField)) {
+					if (torneioPartida.equals(torneioJList)) {
 						getFramePartidas().getModelPartidas().addElement(partida);
 					}
 				}
@@ -572,11 +573,21 @@ public class TorneioController {
 				int index = getFrameTorneios().getJlstTorneios().getSelectedIndex();
 				Torneio torneioNoModel = getFrameTorneios().getJlstTorneios().getModel().getElementAt(index);
 
+				for (int i = 0; i < listaTorneios.size(); i++) {
+					Torneio torneio = listaTorneios.get(i);
+					;
+					if (torneio.getId() == torneioNoModel.getId()) {
+						System.out.println("apagando linha " + torneio.getId());
+						dao.excluir("torneio", "id_torneio", torneioNoModel.getId());
+						listaTorneios.remove(i);
+
+					}
+				}
+
 				getFrameTorneios().getModelEatletaTorneio().clear();
 
 				// removendo do JList e da Lista Torneios
 				getFrameTorneios().getModelTorneios().remove(index);
-				listaTorneios.remove(index);
 
 				// apagar todas as referencias do torneio na lista EAtletaTorneio
 
@@ -629,19 +640,18 @@ public class TorneioController {
 
 		getFrameTorneios().getBtnEditarTorneio().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Torneio torneio = getFrameTorneios().getJlstTorneios().getModel()
-						.getElementAt(getFrameTorneios().getJlstTorneios().getSelectedIndex());
-
-				getFrameTorneios().getTxtNomeTorneio().setText(torneio.getNome());
-				getFrameTorneios().getTxtPorqueDoNome().setText(torneio.getPorqueDoNome());
-				// limpa JList EAtleta Torneio
-				getFrameTorneios().getModelEatletaTorneio().clear();
-				// recuperar do arraylist e jogar no JList do EAtletaTorneio
-				for (EAtletaTorneio eat : listaEatletasTorneio) {
-					if (eat.getTorneio().getNome().equals(torneio.getNome())) {
-						getFrameTorneios().getModelEatletaTorneio().addElement(eat);
-					}
-				}
+				// Torneio torneio = getFrameTorneios().getJlstTorneios().getSelectedValue();
+				//
+				// getFrameTorneios().getTxtNomeTorneio().setText(torneio.getNome());
+				// getFrameTorneios().getTxtPorqueDoNome().setText(torneio.getPorqueDoNome());
+				// // limpa JList EAtleta Torneio
+				// getFrameTorneios().getModelEatletaTorneio().clear();
+				// // recuperar do arraylist e jogar no JList do EAtletaTorneio
+				// for (EAtletaTorneio eat : listaEatletasTorneio) {
+				// if (eat.getTorneio().getId()==torneio.getId()) {
+				// getFrameTorneios().getModelEatletaTorneio().addElement(eat);
+				// }
+				// }
 			}
 		});
 

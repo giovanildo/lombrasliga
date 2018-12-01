@@ -320,8 +320,9 @@ public class DAO {
 				for (EAtleta ea : listaEatleta) {
 					if (ea.getId() == rs.getInt("id_eatleta")) {
 						eatletaDaLista = ea;
+						System.out.println("deu certo id atleta " + ea.getId());
 					} else {
-						System.out.println("erro, não tem esse id na lista de eatletas");
+						System.out.println("erro, não tem esse id na lista de eatletas " + ea.getId() + " tem esse " + rs.getInt("id_eatleta"));
 					}
 				}
 				for (Torneio t : listaTorneios) {
