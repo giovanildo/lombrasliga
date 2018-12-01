@@ -6,6 +6,8 @@ import giovanildo.lombrasliga.view.FrameTorneios;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -303,6 +305,33 @@ public class TorneioController {
 		iniciarFrameTorneios();
 		preencherComboBox();
 		preencherJLists();
+		
+		getFrameTorneios().getJlstEatletaClube().addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				Torneio torneio = getFrameTorneios().getJlstTorneios().getSelectedValue();
+				
+				//preencher o jlist eatleta torneio com as informações
+				
+				
+				getFrameTorneios().getModelEatletaTorneio().clear();
+				for(EAtletaTorneio eat : listaEatletasTorneio) {
+					
+					if(eat.getTorneio().getNome().equals(torneio.getNome())) {
+						getFrameTorneios().getModelEatletaTorneio().addElement(eat);
+					}
+				}
+				
+				
+			}
+		});
+		
+		getFrameTorneios().getJlstTorneios().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				getFrameTorneios().getJlstEatletaClube().requestFocus();
+			}
+		});
+		
 		getFrameTorneios().getBtnNovoJogadorClube().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				iniciarFrameCadastros();
@@ -360,6 +389,9 @@ public class TorneioController {
 			}
 		});
 
+		
+		
+		
 		getFrameCadastros().getJlstClubes().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				getFrameCadastros().getTxtClube().requestFocus();
