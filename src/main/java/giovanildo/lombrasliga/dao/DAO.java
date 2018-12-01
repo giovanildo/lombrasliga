@@ -151,6 +151,20 @@ public class DAO {
 			return false;
 		}
 	}
+	
+	public boolean inserir(String sql) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 
 	/**
 	 * 

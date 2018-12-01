@@ -459,12 +459,30 @@ public class TorneioController {
 					}
 				}
 
+				String eatletatorneio = "CREATE TABLE eatletatorneio( "
+						+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
+						+ "id_eatleta integer NOT NULL, " + "id_clube integer NOT NULL, " + "id_torneio integer NOT NULL, "
+						+ "FOREIGN KEY (id_eatleta) REFERENCES eatleta (id_eatleta) ON DELETE CASCADE, "
+						+ "FOREIGN KEY (id_clube) REFERENCES clube (id_clube) ON DELETE CASCADE, "
+						+ "FOREIGN KEY (id_torneio) REFERENCES torneio (id_torneio) ON DELETE CASCADE);";
+
+				String partida = "CREATE TABLE partida(" + "id_partida SERIAL CONSTRAINT pk_id_partida PRIMARY KEY, "
+						+ "visitante integer not null, " + "anfitriao integer not null, " + "golsvisitante integer not null, "
+						+ "golsanfitriao integer not null, " + "encerrada boolean, "
+						+ "FOREIGN KEY(visitante) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE,"
+						+ "FOREIGN KEY(anfitriao) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE);";
+
+				
+				
+				
 				EAtletaTorneio eat = new EAtletaTorneio((EAtleta) getFrameTorneios().getTxtEatleta().getSelectedItem(),
-						new Torneio(getFrameTorneios().getJlstTorneios().getSelectedValue().getNome(),
-								getFrameTorneios().getTxtPorqueDoNome().getText()),
+						(Torneio) getFrameTorneios().getJlstTorneios().getSelectedValue(),
 						(Clube) getFrameTorneios().getTxtClube().getSelectedItem());
+				//adicionando ao JList, lista, e banco de dados
 				getFrameTorneios().getModelEatletaTorneio().addElement(eat);
 				listaEatletasTorneio.add(eat);
+				String sql = "INSERT INTO eatletatorneio (id_eatleta, id_clube, id_torneio) VALUES ('http://www.facebook.com','Facebook','2013-06-01');";
+				dao.inserir(sql);
 			}
 		});
 		// // Salva Torneio

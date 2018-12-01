@@ -11,8 +11,7 @@ import javax.swing.ListSelectionModel;
 
 import giovanildo.lombrasliga.model.Classificacao;
 import giovanildo.lombrasliga.model.Partida;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class FramePartidas extends JFrame {
 
