@@ -158,13 +158,19 @@ public class TorneioController {
 
 		int golsAnfitriao = Integer.parseInt(getFramePartidas().getTxtGolsAnfitriao().getText());
 		int golsVisitante = Integer.parseInt(getFramePartidas().getTxtGolsVisitante().getText());
-
+		// colocar placar no model list
 		partidaModel.setGolsAnfitriao(golsAnfitriao);
 		partidaModel.setGolsVisitante(golsVisitante);
-
+		// colocando placar da partida no array
 		for (Partida partidaArray : listaPartidas) {
 			if (partidaArray.equals(partidaModel)) {
 				partidaArray.setEncerrada(true);
+				partidaArray.setGolsAnfitriao(golsAnfitriao);
+				partidaArray.setGolsVisitante(golsVisitante);
+				// gravando banco de dados
+				
+				
+
 			}
 		}
 
@@ -291,7 +297,7 @@ public class TorneioController {
 				// inserindo na lista
 				listaPartidas.add(partida);
 				// inserindo no banco de dados
-				dao.inserir(sql);
+				dao.execSQL(sql);
 				// Gira os clubes no sentido horário, mantendo o primeiro no lugar
 				EAtletaTorneio remove = listaEAtletaTorneioAtual.remove(listaEAtletaTorneioAtual.size() - 1);
 				listaEAtletaTorneioAtual.add(1, remove);
@@ -471,7 +477,7 @@ public class TorneioController {
 				String sql = "INSERT INTO eatletatorneio (id_eatleta, id_clube, id_torneio) VALUES (" + eatleta.getId()
 						+ "," + clube.getId() + "," + torneio.getId() + ");";
 				System.out.println(sql);
-				dao.inserir(sql);
+				dao.execSQL(sql);
 
 				int id = dao.ultimoID("eatletatorneio", "id_eatletatorneio");
 
@@ -553,6 +559,7 @@ public class TorneioController {
 					geraPartidas(listaTorneioAtual);
 				}
 
+				
 				// caso exista seleciona as partidas existentes e joga para o model list
 				for (Partida partida : listaPartidas) {
 					String torneioPartida = partida.getAnfitriao().getTorneio().getNome();
