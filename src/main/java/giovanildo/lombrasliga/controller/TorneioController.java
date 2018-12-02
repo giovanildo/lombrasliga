@@ -450,11 +450,14 @@ public class TorneioController {
 						listaEatletasTorneio.remove(i);
 					}
 				}
+				
+				// removendo do banco de dados
+				dao.excluir("eatletatorneio", "id_eatletatorneio", eatDoModel.getId());
+				
 				// removendo do JList
 				getFrameTorneios().getModelEatletaTorneio().remove(index);
 
-				// removendo do banco de dados
-				dao.excluir("eatletatorneio", "id_eatletatorneio", eatDoModel.getId());
+
 			}
 		});
 
@@ -497,49 +500,6 @@ public class TorneioController {
 
 			}
 		});
-		// // Salva Torneio
-		// getFrameTorneios().getBtnSalvarTorneio().addActionListener(new
-		// ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
-		// // evita que adicione torneios com o mesmo nome
-		// // salva edições do torneio
-		// for (int i = 0; i <
-		// getFrameTorneios().getJlstTorneios().getModel().getSize(); i++) {
-		// Torneio torneioDaVez =
-		// getFrameTorneios().getJlstTorneios().getModel().getElementAt(i);
-		// // verifica se o nome já existe o registro no JList
-		// if
-		// (torneioDaVez.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText()))
-		// {
-		// // salva na JList dos torneios
-		// torneioDaVez.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
-		// System.out.println("Esse registro existe, salvando os dados do objeto
-		// Torneio");
-		// // salva no lista Torneios
-		// for (Torneio torneioArray : listaTorneios) {
-		// if
-		// (torneioArray.getNome().equals(getFrameTorneios().getTxtNomeTorneio().getText()))
-		// {
-		// torneioArray.setPorqueDoNome(getFrameTorneios().getTxtPorqueDoNome().getText());
-		// }
-		// }
-		// return;
-		// }
-		// }
-		// System.out.println("novo torneio");
-		// // no caso de um novo torneio...
-		// Torneio torneio = new
-		// Torneio(getFrameTorneios().getTxtNomeTorneio().getText(),
-		// getFrameTorneios().getTxtPorqueDoNome().getText());
-		// // adiciona tanto na lista temporaria(jlist) como na lista
-		// permanente(arraylist)
-		// System.out.println("adicionando ao lista Torneios");
-		// listaTorneios.add(torneio);
-		// getFrameTorneios().getModelTorneios().addElement(torneio);
-		// System.out.println("adicionando ao Jist Torneio");
-		// }
-		// });
-		// Gera Partidas e Edita Partidas
 
 		getFrameTorneios().getBtnEditarPartidas().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
