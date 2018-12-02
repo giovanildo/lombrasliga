@@ -152,7 +152,7 @@ public class DAO {
 		}
 	}
 	
-	public boolean inserir(String sql) {
+	public boolean execSQL(String sql) {
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
 			System.out.println(sql);
