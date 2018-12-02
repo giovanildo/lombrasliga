@@ -383,6 +383,7 @@ public class DAO {
 				Partida partida1 = new Partida(anfitriao, rs.getInt("golsanfitriao"), visitante,
 						rs.getInt("golsvisitante"));
 				partida1.setId(rs.getInt("id_partida"));
+				partida1.setEncerrada(rs.getBoolean("encerrada"));
 				lista.add(partida1);
 			}
 		} catch (SQLException e) {
