@@ -5,9 +5,10 @@ import giovanildo.lombrasliga.dao.DAO;
 
 public class Main {
 	public static void main(String[] args) {
-		TorneioController torneio = new TorneioController();
-		torneio.iniciar();
-		// DAO dao = new DAO();
+//		TorneioController torneio = new TorneioController();
+//		torneio.iniciar();
+		DAO dao = new DAO();
+		dao.execSQL("SELECT * FROM eatleta", "sqlite");
 		// dao.apagarBaseDeDados("lombras");
 		// dao.criarBanco();
 

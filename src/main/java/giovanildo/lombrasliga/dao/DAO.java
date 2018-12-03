@@ -1,6 +1,7 @@
 package giovanildo.lombrasliga.dao;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,17 @@ public class DAO {
 		this.senha = "labti@unilab2012";
 		this.url = "jdbc:postgresql://127.0.0.1/lombras";
 	}
-
+	
+	public void fazerConexao() {
+		try {
+			Connection con = DriverManager.getConnection(url, usuario, senha);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public boolean criarBaseDeDados(String database) {
 
 		String url = "jdbc:postgresql://127.0.0.1/";
@@ -86,6 +97,58 @@ public class DAO {
 		}
 
 	}
+	
+	public void criarBancoSQLite() {
+
+		String eatleta = "CREATE TABLE eatleta (id_eatleta SERIAL CONSTRAINT pk_id_eatleta PRIMARY KEY,  nome_eatleta varchar(30) UNIQUE NOT NULL);";
+		String clube = "CREATE TABLE clube (id_clube SERIAL CONSTRAINT pk_id_clube PRIMARY KEY, nome_clube varchar(30) UNIQUE NOT NULL);";
+		String torneio = "CREATE TABLE torneio (id_torneio SERIAL CONSTRAINT pk_id_torneio PRIMARY KEY, "
+				+ " nome_torneio varchar(30), porque_nome_torneio varchar(600) NOT NULL);";
+
+		String eatletatorneio = "CREATE TABLE eatletatorneio( "
+				+ "id_eatletatorneio SERIAL CONSTRAINT pk_id_eatletatorneio PRIMARY KEY, "
+				+ "id_eatleta integer NOT NULL, " + "id_clube integer NOT NULL, " + "id_torneio integer NOT NULL, "
+				+ "FOREIGN KEY (id_eatleta) REFERENCES eatleta (id_eatleta) ON DELETE CASCADE, "
+				+ "FOREIGN KEY (id_clube) REFERENCES clube (id_clube) ON DELETE CASCADE, "
+				+ "FOREIGN KEY (id_torneio) REFERENCES torneio (id_torneio) ON DELETE CASCADE);";
+
+		String partida = "CREATE TABLE partida(" + "id_partida SERIAL CONSTRAINT pk_id_partida PRIMARY KEY, "
+				+ "visitante integer not null, " + "anfitriao integer not null, " + "golsvisitante integer not null, "
+				+ "golsanfitriao integer not null, " + "encerrada boolean, "
+				+ "FOREIGN KEY(visitante) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE,"
+				+ "FOREIGN KEY(anfitriao) REFERENCES eatletatorneio(id_eatletatorneio) ON DELETE CASCADE);";
+
+		String nomeArquivo = "lombras.db";
+
+		//criarBaseDeDados(nomeArquivo);
+
+		String url = "jdbc:sqlite:/home/giovanildo/Projetos/lombrasliga/" + nomeArquivo;
+
+		try (Connection con = DriverManager.getConnection(url)) {
+			if(con!=null) {
+				DatabaseMetaData meta = con.getMetaData();
+				System.out.println("O Nome de do driver é " + meta.getDriverName());
+				System.out.println("A base de dados " + nomeArquivo + " no SQlite foi criado com sucesso ");
+			}
+			
+			System.out.println("Tentando conexão");
+			Statement stm = con.createStatement();
+			System.out.println("Criando statement");
+			stm.executeUpdate(eatleta);
+			stm.executeUpdate(clube);
+			stm.executeUpdate(torneio);
+			stm.executeUpdate(eatletatorneio);
+			stm.executeUpdate(partida);
+			System.out.println("tabelas criadas com sucesso");
+
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			System.out.println(e.getMessage());
+			System.out.println("deu merda");
+		}
+
+	}
+
 
 	public void criarBanco() {
 
@@ -151,8 +214,47 @@ public class DAO {
 			return false;
 		}
 	}
-	
+
 	public boolean execSQL(String sql) {
+		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
+			Statement stm = con.createStatement();
+			System.out.println(sql);
+			stm.executeUpdate(sql);
+			System.out.println("deu certo");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean execSQL(String sql, String SGBD) {
+		
+		String nomeArquivo = "lombras.db";
+		if(SGBD.equals("sqlite")) {
+			String url = "jdbc:sqlite:/home/giovanildo/Projetos/lombrasliga/" + nomeArquivo;
+
+			try {
+				Connection con = DriverManager.getConnection(url);
+				System.out.println("Conexão estabelecida");
+				Statement stm = con.createStatement();
+				PreparedStatement stm2 = con.prepareStatement(sql);
+				System.out.println(sql);
+				stm.executeUpdate(sql);
+				System.out.println("deu certo");
+				
+				ResultSet rs = stm2.executeQuery();
+				
+				while (rs.next()) {
+					System.out.println(rs.getString("nome_eatleta"));
+				}
+				
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
 			System.out.println(sql);
@@ -176,6 +278,7 @@ public class DAO {
 	 * @return
 	 */
 	public boolean inserir(String tabela, String campo, String campo2, String valor, String valor2) {
+		
 		try (Connection con = DriverManager.getConnection(url, usuario, senha)) {
 			Statement stm = con.createStatement();
 			String sql = "INSERT INTO " + tabela + "(" + campo + " , " + campo2 + ")" + "values ('" + valor + "' , '"
@@ -348,7 +451,6 @@ public class DAO {
 			e.printStackTrace();
 		}
 		return lista;
-
 	}
 
 	public ArrayList<Partida> preencherArrayPartidas(ArrayList<EAtletaTorneio> listaEatletaTorneio) {
@@ -391,5 +493,4 @@ public class DAO {
 		}
 		return lista;
 	}
-
 }
