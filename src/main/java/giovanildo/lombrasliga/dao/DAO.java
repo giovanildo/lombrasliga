@@ -67,7 +67,7 @@ public class DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("deu merda");
+			System.out.println("não deu bom");
 
 			return false;
 		}
@@ -91,7 +91,7 @@ public class DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("deu merda");
+			System.out.println("não deu bom");
 
 			return false;
 		}
@@ -120,9 +120,9 @@ public class DAO {
 
 		String nomeArquivo = "lombras.db";
 
-		//criarBaseDeDados(nomeArquivo);
+		criarBaseDeDados(nomeArquivo);
 
-		String url = "jdbc:sqlite:/home/giovanildo/Projetos/lombrasliga/" + nomeArquivo;
+		String url = "jdbc:sqlite:/home/giovanildo/git/lombrasliga/" + nomeArquivo;
 
 		try (Connection con = DriverManager.getConnection(url)) {
 			if(con!=null) {
@@ -144,7 +144,7 @@ public class DAO {
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			System.out.println(e.getMessage());
-			System.out.println("deu merda");
+			System.out.println("não deu bom");
 		}
 
 	}
@@ -189,7 +189,7 @@ public class DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("deu merda");
+			System.out.println("não deu bom");
 		}
 
 	}
@@ -232,7 +232,7 @@ public class DAO {
 		
 		String nomeArquivo = "lombras.db";
 		if(SGBD.equals("sqlite")) {
-			String url = "jdbc:sqlite:/home/giovanildo/Projetos/lombrasliga/" + nomeArquivo;
+			String url = "jdbc:sqlite:/home/giovanildo/git/lombrasliga/" + nomeArquivo;
 
 			try {
 				Connection con = DriverManager.getConnection(url);
